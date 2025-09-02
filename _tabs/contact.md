@@ -1,5 +1,6 @@
 ---
-layout: tags
+layout: page
 icon: fas fa-tags
 order: 3
+title: Contact
 ---
