@@ -113,3 +113,12 @@ CNAME: www.alexmathai.online → alexmathai.github.io
 
 ### The Big Picture:
 Your custom domain (`alexmathai.online`) is like putting your own sign on GitHub's building. Visitors see your sign, but they're still visiting GitHub's servers where your website files are actually stored.
+
+# Instructions to locally develop and test the website
+
+```bash
+# Activate conda environment and start development server
+source ~/miniconda3/etc/profile.d/conda.sh && conda activate jekyll-site && bash tools/run.sh
+```
+
+This will start the Jekyll development server at `http://127.0.0.1:4000/portfolio-website/` with live reload enabled.
