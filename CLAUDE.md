@@ -81,3 +81,7 @@ bundle exec htmlproofer _site --disable-external
 - Posts go in `_posts/` with format: `YYYY-MM-DD-title.md`
 - Use Chirpy's prompt syntax: `{: .prompt-info}`, `{: .filepath}`
 - Images and assets in `assets/` directory
+
+
+## Environmnet guidelines
+- Always run conda 'source ~/miniconda3/etc/profile.d/conda.sh && conda activate jekyll-site' before running any command - like a bash command or any code
