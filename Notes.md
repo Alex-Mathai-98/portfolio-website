@@ -236,3 +236,7 @@ source ~/miniconda3/etc/profile.d/conda.sh && conda activate jekyll-site && bash
 ```
 
 This will start the Jekyll development server at `http://127.0.0.1:4000/portfolio-website/` with live reload enabled.
+
+## Hacks for this website
+1. Used claude code to remove the sidebar usualy visible in the default html code for `page.html` - thus creating `page-no-sidebar.html`.
+2. There was an issue when using this as the layout for the homepage. When reducing the screen size to mobile-size, the title of the page would become the name of the html file - i.e. `page-no-sidebar.html`. So I created a copy of `page-no-sidebar.html` and named it as `home.html`. This solved the issue. When renaming to `home.html`, the header of the page becomes the `title` in the `_config.yml` file.
