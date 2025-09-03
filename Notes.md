@@ -101,6 +101,76 @@ CNAME: www.alexmathai.online → alexmathai.github.io
 3. **Connection**: Browser connects to GitHub's server
 4. **Result**: GitHub serves your website content
 
+## How GitHub Knows Which Website to Serve
+
+### The Two-Part Process:
+
+#### Part 1: DNS A Records (Gets you to GitHub's servers)
+- A records point your domain to GitHub's IP addresses
+- **Example**: `alexmathai.com → 185.199.108.153`
+- **Issue**: GitHub hosts MILLIONS of websites on these same servers
+
+#### Part 2: GitHub Pages Setting (Tells GitHub which website to serve)
+- Configure custom domain in GitHub repository settings
+- Creates internal mapping: `alexmathai.com → your-username/your-repository`
+- **Critical**: This step tells GitHub which repository to serve for your domain
+
+### HTTP Host Header Magic:
+When browser connects to GitHub's server, it sends:
+```
+Request to: 185.199.108.153
+Host Header: alexmathai.com
+```
+
+GitHub receives this and checks its internal database:
+> "alexmathai.com is configured for alex-mathai-98/portfolio-website repository"
+
+### GitHub's Internal Mapping Table:
+```
+Domain: alexmathai.com → Repository: alex-mathai-98/portfolio-website
+Domain: johnsmith.com → Repository: john-smith/blog  
+Domain: sarahblog.net → Repository: sarah123/my-site
+```
+
+### Why Both Parts Are Essential:
+
+#### A Records alone:
+- Gets traffic to GitHub's servers
+- **Problem**: GitHub doesn't know which website to serve
+
+#### GitHub Pages setting alone:
+- GitHub knows which repository belongs to your domain
+- **Problem**: DNS doesn't know where to send traffic
+
+#### Both together:
+- ✅ DNS sends traffic to GitHub's servers
+- ✅ GitHub serves the correct repository content
+- ✅ Website works perfectly!
+
+## Complete Routing Workflow
+
+### When user types `alexmathai.com`:
+1. **DNS Lookup**: "What's the IP for alexmathai.com?"
+2. **DNS Response**: "185.199.108.153" (GitHub's server - direct from A record)
+3. **Browser Connection**: Connects to GitHub's server
+4. **Host Header**: Browser sends "Host: alexmathai.com"
+5. **GitHub Lookup**: Checks internal mapping for alexmathai.com
+6. **Repository Match**: Finds alex-mathai-98/portfolio-website
+7. **Content Served**: GitHub serves your website content
+8. **User Sees**: Your website at alexmathai.com
+
+### When user types `www.alexmathai.com`:
+1. **DNS Lookup**: "What's the IP for www.alexmathai.com?"
+2. **DNS Response**: "It's an alias for alex-mathai-98.github.io" (from CNAME)
+3. **Second Lookup**: "What's the IP for alex-mathai-98.github.io?"
+4. **DNS Response**: "185.199.108.153" (GitHub's server)
+5. **Browser Connection**: Connects to GitHub's server
+6. **Host Header**: Browser sends "Host: www.alexmathai.com"
+7. **GitHub Lookup**: Checks internal mapping for www.alexmathai.com
+8. **Repository Match**: Finds alex-mathai-98/portfolio-website
+9. **Content Served**: GitHub serves your website content
+10. **User Sees**: Your website at www.alexmathai.com
+
 ## Key Takeaways
 
 ### Remember:
@@ -110,9 +180,16 @@ CNAME: www.alexmathai.online → alexmathai.github.io
 - **DNS treats** = `domain.com` and `www.domain.com` as different addresses
 - **CNAME points to** = GitHub's domain (`alexmathai.github.io`), not your custom domain
 - **A Record points to** = GitHub's IP addresses directly
+- **GitHub Pages setting** = Creates the crucial mapping between your domain and repository
+- **Host Header** = How GitHub knows which website to serve from millions on the same servers
 
-### The Big Picture:
-Your custom domain (`alexmathai.online`) is like putting your own sign on GitHub's building. Visitors see your sign, but they're still visiting GitHub's servers where your website files are actually stored.
+### The Complete Picture:
+Your custom domain setup requires **THREE components**:
+1. **DNS A Records**: Point your domain to GitHub's servers
+2. **DNS CNAME Record**: Handle www subdomain routing
+3. **GitHub Pages Configuration**: Tell GitHub which repository to serve for your domain
+
+It's like a relay race: DNS gets the request to GitHub's servers, then GitHub's internal system takes over to serve the right content based on your Pages configuration.
 
 # Instructions to locally develop and test the website
 
