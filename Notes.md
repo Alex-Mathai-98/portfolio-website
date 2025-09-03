@@ -85,6 +85,43 @@ A Record: alexmathai.online → 185.199.108.153
 CNAME: www.alexmathai.online → alexmathai.github.io
 ```
 
+## Alternative CNAME Configuration Options
+
+### Option 1: CNAME → GitHub Domain (Standard)
+```
+A Record: alexmathai.com → 185.199.108.153
+CNAME: www → alex-mathai-98.github.io
+```
+- **Pros**: GitHub's official recommendation, follows their documentation
+- **Cons**: Slightly more complex routing path
+
+### Option 2: CNAME → Your Custom Domain (Alternative)
+```
+A Record: alexmathai.com → 185.199.108.153  
+CNAME: www → alexmathai.com
+```
+- **Pros**: More logical routing, easier to understand, common practice
+- **Cons**: One additional DNS lookup step
+
+### How Option 2 Works:
+When user visits `www.alexmathai.com`:
+1. **DNS Lookup**: "What's the IP for www.alexmathai.com?"
+2. **DNS Response**: "It's an alias for alexmathai.com"
+3. **Second Lookup**: "What's the IP for alexmathai.com?"
+4. **DNS Response**: "185.199.108.153" (from A record)
+5. **Connection**: Browser connects to GitHub's server
+
+### Hub and Spoke Model:
+Option 2 creates a centralized approach where all subdomains point to your root domain:
+```
+A Record: alexmathai.com → GitHub's IP
+CNAME: www → alexmathai.com
+CNAME: blog → alexmathai.com  
+CNAME: shop → alexmathai.com
+```
+
+**Both options work perfectly** - choose based on preference or follow GitHub's standard recommendation.
+
 ## Real-World Flow Example
 
 ### When user visits `www.alexmathai.online`:
