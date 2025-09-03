@@ -27,9 +27,11 @@ layout: compress
               {% if page.layout == 'page-no-sidebar' or page.collection == 'tabs' %}
                 {% assign tab_key = page.title | downcase %}
                 {% assign title = site.data.locales[lang].tabs[tab_key] | default: page.title %}
-                <h1 class="dynamic-title">
-                  {{ title }}
-                </h1>
+                {% if title != "" and title != blank %}
+                  <h1 class="dynamic-title">
+                    {{ title }}
+                  </h1>
+                {% endif %}
                 <div class="content">
                   {{ content }}
                 </div>
