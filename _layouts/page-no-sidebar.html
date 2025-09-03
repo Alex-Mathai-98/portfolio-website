@@ -1,0 +1,67 @@
+---
+layout: compress
+---
+
+<!doctype html>
+
+{% include origin-type.html %}
+{% include lang.html %}
+
+{% if site.theme_mode %}
+  {% capture prefer_mode %}data-mode="{{ site.theme_mode }}"{% endcapture %}
+{% endif %}
+
+<html lang="{{ page.lang | default: site.alt_lang | default: site.lang }}" {{ prefer_mode }}>
+  {% include head.html %}
+
+  <body>
+    {% include sidebar.html lang=lang %}
+
+    <div id="main-wrapper" class="d-flex justify-content-center">
+      <div class="container d-flex flex-column px-xxl-5">
+        {% include topbar.html lang=lang %}
+
+        <div class="row flex-grow-1">
+          <main aria-label="Main Content" class="col-12 px-md-4">
+            <article class="px-1">
+              {% if page.layout == 'page-no-sidebar' or page.collection == 'tabs' %}
+                {% assign tab_key = page.title | downcase %}
+                {% assign title = site.data.locales[lang].tabs[tab_key] | default: page.title %}
+                <h1 class="dynamic-title">
+                  {{ title }}
+                </h1>
+                <div class="content">
+                  {{ content }}
+                </div>
+              {% else %}
+                {{ content }}
+              {% endif %}
+            </article>
+          </main>
+        </div>
+
+        <div class="row">
+          <div id="tail-wrapper" class="col-12 px-md-4">
+            {% include_cached footer.html lang=lang %}
+          </div>
+        </div>
+
+        {% include_cached search-results.html lang=lang %}
+      </div>
+
+      <aside aria-label="Scroll to Top">
+        <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow">
+          <i class="fas fa-angle-up"></i>
+        </button>
+      </aside>
+    </div>
+
+    <div id="mask" class="d-none position-fixed w-100 h-100 z-1"></div>
+
+    {% if site.pwa.enabled %}
+      {% include_cached notification.html lang=lang %}
+    {% endif %}
+
+    {% include_cached search-loader.html lang=lang %}
+  </body>
+</html>

@@ -1,8 +1,10 @@
 ---
-layout: page
+layout: page-no-sidebar
 order: 1
 # title: Home
 ---
+
+<div style="padding: 0 10%; max-width: 1200px; margin: 0 auto;">
 
 <div style="text-align: center; margin: 40px 0;">
   <h2 style="font-size: 2.5em; font-weight: bold; margin-bottom: 40px;">About me</h2>
@@ -141,4 +143,6 @@ I interned at the Indian Institute of Remote Sensing (ISRO Dehradun) where I wor
 I was part of a project that developed AI-powered Surveillance Systems. Under the guidance of Sanjay Singh (Research Scientist) and Sumeet Saurav (Research Scientist), I successfully implemented an Unsupervised Deep Learning Model using Generative Adversarial Networks for Optical flow prediction.
     </div>
   </div>
+</div>
+
 </div>
