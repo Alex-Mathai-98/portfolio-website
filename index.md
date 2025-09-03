@@ -1,7 +1,7 @@
 ---
-layout: page-no-sidebar
+layout: home
 order: 1
-title: ""
+title: " "
 ---
 
 <div style="padding: 0 10%; max-width: 1200px; margin: 0 auto;">
