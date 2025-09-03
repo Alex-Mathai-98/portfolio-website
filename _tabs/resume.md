@@ -8,7 +8,7 @@ order: 4
   relative_url }}" type="application/pdf" width="100%" 
   height="100%">
       <iframe src="https://mozilla.github.io/pdf.js/web
-  /viewer.html?file={{ '/assets/pdf/Alex_Mathai_CV.pdf' | 
+  /viewer.html?file={{ '/assets/pdf/Alex_Mathai_CV2.pdf' | 
   absolute_url }}" width="100%" height="100%">
         <p>Your browser doesn't support PDF viewing. <a
    href="{{ '/assets/pdf/Alex_Mathai_CV.pdf' | relative_url 
