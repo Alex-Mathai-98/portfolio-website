@@ -10,6 +10,10 @@
   icon: "fas fa-envelope"
   noblank: true # open link in current tab
 
+- type: google-scholar
+  icon: "fa-brands fa-google-scholar"
+  url: "https://scholar.google.com/citations?hl=en&view_op=list_works&gmla=AH8HC4z5TvrKkT3zj70L1kxR8P9wFVHAsvXVDQq3RGaYGRex9jmVf_fuIiQcxf6gqzhTc6mM6PT94lmCPCzQGedIfch-&user=uG9zSdUAAAAJ"
+
 # - type: rss
 #   icon: "fas fa-rss"
 #   noblank: true
