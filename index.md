@@ -35,9 +35,12 @@ title: " "
   div[style*="padding: 0 10%"] {
     padding: 0 5% !important;
   }
-  /* Make stacked children full-width so images can center */
+  /* Make stacked children full-width */
   div[style*="display: flex"][style*="align-items"] > div {
     width: 100% !important;
+  }
+  /* Center only image containers */
+  div[style*="display: flex"][style*="align-items"] > div:has(img) {
     text-align: center !important;
   }
   /* Always show image above text when stacked, regardless of HTML order */
@@ -71,7 +74,7 @@ title: " "
   <div style="height: 3px; background-color: #333; margin: 0 auto 60px auto; width: 200px;"></div>
 </div>
 
-<div style="text-align: justify;">
+<div style="text-align: justify; max-width: 600px; margin-left: auto; margin-right: auto;">
 
 Hi there, I'm <strong>Alex Mathai</strong>! I am a computer science PhD student at Columbia University. My PhD research combines AI and software engineering – where I design LLM Agents to resolve bugs in million-line codebases.
 
@@ -84,15 +87,13 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
   <div style="height: 3px; background-color: #333; margin: 0 auto 60px auto; width: 200px;"></div>
 </div>
 
-<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px;">
-  <div style="flex: 2; text-align: justify;">
+<div style="text-align: center; margin-bottom: 30px;">
+    <img src="/assets/img/columbia-logo.jpg" alt="Columbia University" style="max-width: 200px; border-radius: 8px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1);">
+</div>
+<div style="text-align: justify; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
     I am currently a PhD student at Columbia University, New York. I am grateful to be advised by Professor Baishakhi Ray, Professor Junfeng Yang, and Professor Suman Jana. 
 
     I currently focus my time and effort on designing LLM Agents that help assist in the bug resolution process of vast, complicated, and challenging repositories like the Linux kernel (20 million lines long and counting).
-  </div>
-  <div style="flex: 1;">
-    <img src="/assets/img/columbia-logo.jpg" alt="Columbia University" style="width: 100%; max-width: 200px; border-radius: 8px;">
-  </div>
 </div> 
 
 <div style="text-align: center; margin: 40px 0;">
