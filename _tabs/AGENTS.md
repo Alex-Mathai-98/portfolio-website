@@ -2,7 +2,7 @@
 
 ## Layout and Front Matter
 - All tabs use `layout: page-no-sidebar` — a custom override in `_layouts/`, NOT Chirpy's default `page` layout. This removes the right sidebar/TOC panel for full-width content.
-- `order` controls sidebar navigation position (0 = first). Current assignments: papers=0, contact=3, resume=4. The homepage (`index.md` at root) occupies order=1 with `layout: home`.
+- `order` controls sidebar navigation position (0 = first). Current assignments: papers=0, writing=2, contact=3, resume=4. The homepage (`index.md` at root) occupies order=1 with `layout: home`.
 - `icon` uses FontAwesome class names (e.g., `fas fa-info-circle`).
 - Setting `title: " "` (a space) suppresses the auto-generated page heading — papers.md does this because it renders its own styled headings in HTML.
 

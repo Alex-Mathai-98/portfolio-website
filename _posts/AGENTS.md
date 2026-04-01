@@ -7,7 +7,7 @@ Files MUST follow `YYYY-MM-DD-title.md` format. Jekyll derives the post date fro
 - `layout: post` is applied automatically by `_config.yml` defaults — do not add it explicitly.
 - `last_modified_at` is **auto-set** by `_plugins/posts-lastmod-hook.rb` from git history. Never set this field manually.
 - `date` in front matter is optional if the filename date is sufficient.
-- `categories` and `tags` are available but currently unused.
+- `categories` is **required** on every post. Current categories: `[Technical]`, `[Faith]`. The permalink includes the category, so omitting it breaks the URL.
 
 ## Content Formatting Conventions
 - Blockquotes (`>`) for scripture and quotations

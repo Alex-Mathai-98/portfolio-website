@@ -2,7 +2,7 @@
 layout: post
 title: Welcome to my blog
 date: 2025-09-01 10:00:00 +0000
-# categories: [Blogging, Tutorial]
+categories: [Technical]
 # tags: [hello-world, first-post]
 ---
 
