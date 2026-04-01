@@ -10,6 +10,58 @@ title: " "
   max-width: 1200px !important;
   margin: 0 auto !important;
 }
+
+@media (max-width: 768px) {
+  /* Stack side-by-side sections vertically */
+  div[style*="display: flex"][style*="align-items"] {
+    flex-direction: column !important;
+  }
+  /* Stack research interests columns */
+  div[style*="display: flex"][style*="justify-content: space-around"] {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  /* Shrink headings */
+  h2[style*="font-size: 2.5em"] {
+    font-size: 1.8em !important;
+  }
+  h3[style*="font-size: 1.8em"] {
+    font-size: 1.4em !important;
+  }
+  h3[style*="font-size: 1.5em"] {
+    font-size: 1.2em !important;
+  }
+  /* Reduce outer padding */
+  div[style*="padding: 0 10%"] {
+    padding: 0 5% !important;
+  }
+  /* Make stacked children full-width so images can center */
+  div[style*="display: flex"][style*="align-items"] > div {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  /* Always show image above text when stacked, regardless of HTML order */
+  div[style*="display: flex"][style*="align-items"] > div:has(img) {
+    order: -1 !important;
+  }
+  /* Cap and center images */
+  img {
+    width: 80% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto 20px auto !important;
+  }
+  /* Constrain stacked sections to 80% width, centered */
+  div[style*="display: flex"][style*="align-items"] > div {
+    max-width: 80% !important;
+    margin: 0 auto !important;
+  }
+  /* Center text headings that are left/right aligned */
+  h3[style*="text-align: right"],
+  h3[style*="text-align: left"] {
+    text-align: center !important;
+  }
+}
 </style>
 
 <div style="padding: 0 10%; max-width: 1200px; margin: 0 auto;">
@@ -85,7 +137,7 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
 
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
-    <img src="/assets/img/ibm-think.jpg" alt="IBM Research" style="width: 100%; max-width: 800px; border-radius: 1px;">
+    <img src="/assets/img/ibm-think.jpg" alt="IBM Research" style="width: 100%; max-width: 800px; border-radius: 15px;">
   </div>
   <div style="flex: 2;">
     <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">IBM Research AI & Cloud</h3>
@@ -105,14 +157,14 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
     </div>
   </div>
     <div style="flex: 1.5;">
-    <img src="/assets/img/unsw-logo.jpg" alt="Canopus Networks, Intern" style="width: 100%; max-width: 800px; border-radius: 1px;">
+    <img src="/assets/img/unsw-logo.jpg" alt="Canopus Networks, Intern" style="width: 100%; max-width: 800px; border-radius: 15px;">
   </div>
 </div>
 
 
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
-    <img src="/assets/img/ibm-think.jpg" alt="IBM Research" style="width: 100%; max-width: 800px; border-radius: 1px;">
+    <img src="/assets/img/ibm-think.jpg" alt="IBM Research" style="width: 100%; max-width: 800px; border-radius: 15px;">
   </div>
   <div style="flex: 2;">
     <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">IBM Research AI, Intern
@@ -134,7 +186,7 @@ I interned at the Indian Institute of Remote Sensing (ISRO Dehradun) where I wor
     </div>
   </div>
     <div style="flex: 1.5;">
-    <img src="/assets/img/isro.jpg" alt="Canopus Networks, Intern" style="width: 100%; max-width: 800px; border-radius: 1px;">
+    <img src="/assets/img/isro.jpg" alt="Canopus Networks, Intern" style="width: 100%; max-width: 800px; border-radius: 15px;">
   </div>
 </div>
 
@@ -142,7 +194,7 @@ I interned at the Indian Institute of Remote Sensing (ISRO Dehradun) where I wor
 
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
-    <img src="/assets/img/ceeri.png" alt="IBM Research" style="width: 100%; max-width: 100; border-radius: 1px;">
+    <img src="/assets/img/ceeri.png" alt="IBM Research" style="width: 100%; max-width: 100; border-radius: 15px;">
   </div>
   <div style="flex: 2;">
     <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:10px;">Central Electronics Engineering Research Institute, Intern
