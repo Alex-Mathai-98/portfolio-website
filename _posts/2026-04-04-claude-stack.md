@@ -134,7 +134,7 @@ cd slack-mcp-plugin
 claude --plugin-dir ./
 ```
 
-The MCP server is automatically configured when the plugin loads. Claude Code will prompt you to open a browser URL to authenticate with your Slack account via OAuth.
+The MCP server connection is automatically configured when the plugin loads. Authentication happens lazily — the first time Claude actually tries to call a Slack tool, you'll be prompted to authenticate via OAuth.
 
 Alternatively, you can skip the plugin and add the connection manually:
 
