@@ -135,6 +135,11 @@ claude --plugin-dir ./
 ```
 
 The MCP server connection is automatically configured when the plugin loads. Authentication happens lazily — the first time Claude actually tries to call a Slack tool, you'll be prompted to authenticate via OAuth.
+You can also do it by running the command below in Claude code.
+
+```bash
+/mcp
+```
 
 Alternatively, you can skip the plugin and add the connection manually:
 
