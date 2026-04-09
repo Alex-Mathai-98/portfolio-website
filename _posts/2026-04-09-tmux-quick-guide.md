@@ -1,6 +1,5 @@
 ---
 categories: [Technical]
-tags: [terminal, tmux, productivity]
 math: false
 ---
 
