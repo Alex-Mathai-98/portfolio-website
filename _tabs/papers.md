@@ -11,6 +11,117 @@ title:
   max-width: 1200px !important;
   margin: 0 auto !important;
 }
+
+/* AIDEV-NOTE: pill badge styles for paper/project links */
+.badge-paper, .badge-project {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 1em;
+  vertical-align: middle;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: opacity 0.2s ease;
+}
+.badge-paper:hover, .badge-project:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+.badge-paper {
+  background-color: #0073aa;
+  color: #fff !important;
+}
+.badge-project {
+  background-color: #28a745;
+  color: #fff !important;
+}
+/* AIDEV-NOTE: conditional sizing for KBench Columbia logo */
+.kbench-logo {
+  max-width: 200px;
+}
+
+/* AIDEV-NOTE: ornamental flourish divider between paper sections */
+.section-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px 0 40px 0;
+  color: #b0b0b0;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to var(--dir), transparent, #c0c0c0);
+}
+.section-divider::before {
+  --dir: right;
+  margin-right: 16px;
+}
+.section-divider::after {
+  --dir: left;
+  margin-left: 16px;
+}
+.section-divider span {
+  font-size: 1.2em;
+  letter-spacing: 8px;
+  color: #b0b0b0;
+}
+
+.resources-label {
+  font-size: 1em;
+  font-weight: 600;
+  color: #5ba4cf;
+  margin-right: 8px;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* AIDEV-NOTE: mobile responsive rules mirrored from index.md home page */
+@media (max-width: 768px) {
+  /* Stack side-by-side paper sections vertically */
+  div[style*="display: flex"][style*="align-items"] {
+    flex-direction: column !important;
+  }
+  /* Reduce outer padding */
+  div[style*="padding: 0 10%"] {
+    padding: 0 5% !important;
+  }
+  /* Make stacked children full-width */
+  div[style*="display: flex"][style*="align-items"] > div {
+    width: 100% !important;
+  }
+  /* Center only image containers */
+  div[style*="display: flex"][style*="align-items"] > div:has(img) {
+    text-align: center !important;
+  }
+  /* Always show image above text when stacked */
+  div[style*="display: flex"][style*="align-items"] > div:has(img) {
+    order: -1 !important;
+  }
+  /* Cap and center images — use max-width instead of width so logos don't blow up */
+  img {
+    max-width: 200px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto 20px auto !important;
+  }
+  /* Constrain stacked sections to 80% width, centered */
+  div[style*="display: flex"][style*="align-items"] > div {
+    max-width: 80% !important;
+    margin: 0 auto !important;
+  }
+  /* Shrink paper title headings */
+  h3[style*="font-size: 1.35em"] {
+    font-size: 1.1em !important;
+  }
+  /* Titles and badges are already center-aligned, no override needed */
+  .kbench-logo {
+    max-width: 180px !important;
+  }
+}
 </style>
 
 
@@ -22,10 +133,11 @@ title:
   <div style="height: 3px; background-color: #333; margin: 0 auto 60px auto; width: 200px;"></div>
 </div>
 
-<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom: 20px; text-align: left;">KBench & KGym - A Benchmark And Platform To Test LLMs On Linux Kernel Bug Resolution <a href="https://arxiv.org/abs/2407.02680" style="color: #0073aa; text-decoration: none; font-size: 0.8em;">[Paper]</a></h3>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">KBench & KGym - A Benchmark And Platform To Test LLMs On Linux Kernel Bug Resolution</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2407.02680" class="badge-paper">Paper</a> <a href="https://github.com/Alex-Mathai-98/kGym-Kernel-Gym" class="badge-project">Project</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
-    <a href="https://arxiv.org/abs/2407.02680"><img src="/assets/img/columbia-logo.jpg" alt="Columbia University" style="width: 80%; max-width: 100; border-radius: 15px;"></a>
+    <a href="https://arxiv.org/abs/2407.02680"><img src="/assets/img/columbia-logo.jpg" alt="Columbia University" class="kbench-logo" style="width: 100%; border-radius: 8px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1);"></a>
   </div>
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -34,8 +146,10 @@ title:
   </div>
 </div>
 
+<div class="section-divider"><span>&#10022;</span></div>
 
-<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom: 20px; text-align: right;">COMEX - Generating Customized Source Code Representations <a href="https://github.com/IBM/tree-sitter-codeviews" style="color: #0073aa; text-decoration: none; font-size: 0.8em;">[Project]</a></h3>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">COMEX - Generating Customized Source Code Representations</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://github.com/IBM/tree-sitter-codeviews" class="badge-project">Project</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -47,8 +161,10 @@ title:
   </div>
 </div>
 
+<div class="section-divider"><span>&#10022;</span></div>
 
-<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom: 20px; text-align: left;">Graph Neural Networks For The Recommendation Of Candidate Microservices <a href="https://www.ijcai.org/proceedings/2022/0542.pdf" style="color: #0073aa; text-decoration: none; font-size: 0.8em;">[Paper]</a></h3>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Graph Neural Networks For The Recommendation Of Candidate Microservices</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://www.ijcai.org/proceedings/2022/0542.pdf" class="badge-paper">Paper</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
     <a href="https://www.ijcai.org/proceedings/2022/0542.pdf"><img src="/assets/wordpress/webiste_image.png" alt="Graph Neural Networks" style="width: 100%; max-width: 200px; border-radius: 15px;"></a>
@@ -60,8 +176,10 @@ title:
   </div>
 </div>
 
+<div class="section-divider"><span>&#10022;</span></div>
 
-<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom: 20px; text-align: right;">Knowledge Graph Modelling For Mainframe Application <br> Modernization <a href="https://dl.acm.org/doi/abs/10.1145/3493700.3493735" style="color: #0073aa; text-decoration: none; font-size: 0.8em;">[Paper]</a></h3>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Knowledge Graph Modelling For Mainframe Application Modernization</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://dl.acm.org/doi/abs/10.1145/3493700.3493735" class="badge-paper">Paper</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -73,8 +191,10 @@ title:
   </div>
 </div>
 
+<div class="section-divider"><span>&#10022;</span></div>
 
-<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom: 20px; text-align: left;">Network Traffic Classification And Estimating User Experience - UNSW, Sydney <a href="https://ieeexplore.ieee.org/abstract/document/9521288" style="color: #0073aa; text-decoration: none; font-size: 0.8em;">[Paper]</a></h3>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Network Traffic Classification And Estimating User Experience</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://ieeexplore.ieee.org/abstract/document/9521288" class="badge-paper">Paper</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
     <a href="https://ieeexplore.ieee.org/abstract/document/9521288"><img src="/assets/wordpress/UNSW.png" alt="UNSW Sydney" style="width: 100%; max-width: 800px; border-radius: 15px;"></a>
@@ -86,8 +206,10 @@ title:
   </div>
 </div>
 
+<div class="section-divider"><span>&#10022;</span></div>
 
-<h3 style="font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom: 20px; text-align: right;">Adversarial Black-Box Attacks On Text Classifiers Using Genetic Algorithms Guided By Deep Networks - IBM Research AI <a href="https://arxiv.org/abs/2011.03901" style="color: #0073aa; text-decoration: none; font-size: 0.8em;">[Paper]</a></h3>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Adversarial Black-Box Attacks On Text Classifiers Using Genetic Algorithms Guided By Deep Networks</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2011.03901" class="badge-paper">Paper</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
