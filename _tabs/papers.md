@@ -149,7 +149,7 @@ title:
 <div class="section-divider"><span>&#10022;</span></div>
 
 <h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">COMEX - Generating Customized Source Code Representations</h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://github.com/IBM/tree-sitter-codeviews" class="badge-project">Project</a></div>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://ieeexplore.ieee.org/abstract/document/10298568" class="badge-paper">Paper</a> <a href="https://github.com/IBM/tree-sitter-codeviews" class="badge-project">Project</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -164,7 +164,7 @@ title:
 <div class="section-divider"><span>&#10022;</span></div>
 
 <h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Graph Neural Networks For The Recommendation Of Candidate Microservices</h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://www.ijcai.org/proceedings/2022/0542.pdf" class="badge-paper">Paper</a></div>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://www.ijcai.org/proceedings/2022/0542.pdf" class="badge-paper">Paper</a> <a href="https://github.com/Alex-Mathai-98/Monolith-to-Microservices" class="badge-project">Project</a></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
     <a href="https://www.ijcai.org/proceedings/2022/0542.pdf"><img src="/assets/wordpress/webiste_image.png" alt="Graph Neural Networks" style="width: 100%; max-width: 200px; border-radius: 15px;"></a>
