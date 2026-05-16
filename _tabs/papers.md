@@ -36,14 +36,22 @@ title:
   background-color: #28a745;
   color: #fff !important;
 }
+/* AIDEV-NOTE: conference badge - solid pill, same height as paper/project pills */
+.badge-conference {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: #6366f1;
+  color: #fff;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
 /* AIDEV-NOTE: conditional sizing for KBench Columbia logo */
 .kbench-logo {
   max-width: 200px;
-}
-
-/* AIDEV-NOTE: paper title rows use flex; gap ensures conference badge never crowds the title */
-.paper-title {
-  gap: 40px;
 }
 
 /* AIDEV-NOTE: ornamental flourish divider between paper sections */
@@ -122,7 +130,6 @@ title:
   h3[style*="font-size: 1.35em"] {
     font-size: 1.1em !important;
   }
-  /* Titles and badges are already center-aligned, no override needed */
   .kbench-logo {
     max-width: 180px !important;
   }
@@ -138,8 +145,8 @@ title:
   <div style="height: 3px; background-color: #333; margin: 0 auto 60px auto; width: 200px;"></div>
 </div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">Outrunning LLM Cutoffs - A Live Kernel Crash Resolution Benchmark For All</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[ICML]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2602.02690" class="badge-paper">Paper</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Outrunning LLM Cutoffs - A Live Kernel Crash Resolution Benchmark For All</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2602.02690" class="badge-paper">Paper</a> <span class="badge-conference">ICML</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
     <a href="https://arxiv.org/abs/2602.02690"><img src="/assets/img/columbia-logo.jpg" alt="Columbia University" class="kbench-logo" style="width: 100%; border-radius: 8px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1);"></a>
@@ -153,8 +160,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">CrashFixer - An Execution-Guided Crash Resolution Agent For The Linux Kernel</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[Arxiv]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2504.20412" class="badge-paper">Paper</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">CrashFixer - An Execution-Guided Crash Resolution Agent For The Linux Kernel</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2504.20412" class="badge-paper">Paper</a> <span class="badge-conference">Arxiv</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -168,8 +175,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">kBench - A Benchmark & Platform to test LLMs On Linux Kernel Crash Resolution</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[NeurIPS]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2407.02680" class="badge-paper">Paper</a> <a href="https://github.com/Alex-Mathai-98/kGym-Kernel-Gym" class="badge-project">Project</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">kBench - A Benchmark & Platform to test LLMs On Linux Kernel Crash Resolution</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2407.02680" class="badge-paper">Paper</a> <a href="https://github.com/Alex-Mathai-98/kGym-Kernel-Gym" class="badge-project">Project</a> <span class="badge-conference">NeurIPS</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
     <a href="https://arxiv.org/abs/2407.02680"><img src="/assets/img/columbia-logo.jpg" alt="Columbia University" class="kbench-logo" style="width: 100%; border-radius: 8px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1);"></a>
@@ -183,8 +190,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">COMEX - Generating Customized Source Code Representations</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[ASE]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://ieeexplore.ieee.org/abstract/document/10298568" class="badge-paper">Paper</a> <a href="https://github.com/IBM/tree-sitter-codeviews" class="badge-project">Project</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">COMEX - Generating Customized Source Code Representations</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://ieeexplore.ieee.org/abstract/document/10298568" class="badge-paper">Paper</a> <a href="https://github.com/IBM/tree-sitter-codeviews" class="badge-project">Project</a> <span class="badge-conference">ASE</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -198,8 +205,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">Graph Neural Networks For The Recommendation Of Candidate Microservices</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[IJCAI]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://www.ijcai.org/proceedings/2022/0542.pdf" class="badge-paper">Paper</a> <a href="https://github.com/Alex-Mathai-98/Monolith-to-Microservices" class="badge-project">Project</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Graph Neural Networks For The Recommendation Of Candidate Microservices</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://www.ijcai.org/proceedings/2022/0542.pdf" class="badge-paper">Paper</a> <a href="https://github.com/Alex-Mathai-98/Monolith-to-Microservices" class="badge-project">Project</a> <span class="badge-conference">IJCAI</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1;">
     <a href="https://www.ijcai.org/proceedings/2022/0542.pdf"><img src="/assets/wordpress/webiste_image.png" alt="Graph Neural Networks" style="width: 100%; max-width: 200px; border-radius: 15px;"></a>
@@ -213,8 +220,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">Knowledge Graph Modelling For Mainframe Application Modernization</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[CODS-COMAD]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://dl.acm.org/doi/abs/10.1145/3493700.3493735" class="badge-paper">Paper</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Knowledge Graph Modelling For Mainframe Application Modernization</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://dl.acm.org/doi/abs/10.1145/3493700.3493735" class="badge-paper">Paper</a> <span class="badge-conference">CODS-COMAD</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
@@ -228,8 +235,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">Network Traffic Classification And Estimating User Experience</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[IWQoS]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://ieeexplore.ieee.org/abstract/document/9521288" class="badge-paper">Paper</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Network Traffic Classification And Estimating User Experience</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://ieeexplore.ieee.org/abstract/document/9521288" class="badge-paper">Paper</a> <span class="badge-conference">IWQoS</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
     <a href="https://ieeexplore.ieee.org/abstract/document/9521288"><img src="/assets/wordpress/UNSW.png" alt="UNSW Sydney" style="width: 100%; max-width: 800px; border-radius: 15px;"></a>
@@ -243,8 +250,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 class="paper-title" style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center;"><span style="flex: 1;"></span><span class="paper-title-text">Adversarial Black-Box Attacks On Text Classifiers Using Genetic Algorithms Guided By Deep Networks</span><span style="flex: 1; text-align: right; font-size: 0.7em; color: #5ba4cf; font-weight: 500;">[Arxiv]</span></h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2011.03901" class="badge-paper">Paper</a></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Adversarial Black-Box Attacks On Text Classifiers Using Genetic Algorithms Guided By Deep Networks</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2011.03901" class="badge-paper">Paper</a> <span class="badge-conference">Arxiv</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
