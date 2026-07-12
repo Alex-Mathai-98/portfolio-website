@@ -1,7 +1,6 @@
 # Bundler cache
 .bundle
 vendor
-Gemfile.lock
 
 # Jekyll cache
 .jekyll-cache
@@ -21,6 +20,13 @@ package-lock.json
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/tasks.json
+.DS_Store
+assets/.DS_Store
+git_stage_command.txt
+
+# Claude Code (independent repo)
+.claude
+claude_plans
 
 # Misc
 _sass/vendors
