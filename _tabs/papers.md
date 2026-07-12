@@ -160,8 +160,8 @@ title:
 
 <div class="section-divider"><span>&#10022;</span></div>
 
-<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">CrashFixer - An Execution-Guided Crash Resolution Agent For The Linux Kernel</h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2504.20412" class="badge-paper">Paper</a> <span class="badge-conference">Arxiv</span></div>
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">kAgent: An execution-guided crash resolution agent for the Linux Kernel</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2504.20412" class="badge-paper">Paper</a> <span class="badge-conference">DL4C - ICML</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
