@@ -76,9 +76,9 @@ title: " "
 
 <div style="text-align: justify; max-width: 600px; margin-left: auto; margin-right: auto;">
 
-Hi there, I'm <strong>Alex Mathai</strong>! I am a computer science PhD student at Columbia University. My PhD research combines AI and software engineering – where I design LLM Agents to resolve bugs in million-line codebases.
+Hi there, I'm <strong>Alex Mathai</strong>! I am a computer science PhD student at Columbia University. My PhD research combines AI and software engineering – where I design LLM Agents to resolve bugs in million-line codebases. During my PhD, I have also worked at <a href="#google-experience" style="font-weight: bold; color: #4285F4; text-decoration: underline;">Google</a> and <a href="#amazon-experience" style="font-weight: bold; color: #FF9900; text-decoration: underline;">Amazon</a> — in teams focused on improving AI-led productivity for internal developers.
 
-Before this, I was a Research Engineer at IBM Research. At IBM, I integrated practical AI tools for open-sourced and commercial software. My previous contributions include modernizing monolithic applications using AI, classifying & analyzing internet traffic at gigabyte scales, and making AI models robust in real-life scenarios.
+Before this, I was a Research Engineer at <a href="#ibm-experience" style="font-weight: bold; color: #8B0000; text-decoration: underline;">IBM Research</a>. At IBM, I integrated practical AI tools for open-sourced and commercial software. My previous contributions include modernizing monolithic applications using AI, classifying & analyzing internet traffic at gigabyte scales, and making AI models robust in real-life scenarios.
 
 </div>
 
@@ -136,12 +136,12 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
 </div>
 
 
-<div style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
+<div id="google-experience" style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
     <img src="/assets/img/google-logo.svg" alt="Google Dev AI Research" style="width: 100%; max-width: 800px; border-radius: 15px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1); padding: 20px; background-color: white;">
   </div>
   <div style="flex: 2;">
-    <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">Google Dev AI Research, Intern</h3>
+    <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">Google Dev AI Research, Research Intern</h3>
     <div style="text-align: justify;">
       In summer 2026, I interned at Google Dev AI Research in NYC, where I developed patch verification techniques to stress test AI and human authored patches for security bugs. I showed that ~25% of patches for signed-integer overflow bugs can be rejected by proving they are incomplete or introduce subtle arithmetic errors. Most promisingly, I developed verification techniques that can deterministically trigger extremely rare data races with a 100% reproduction rate. This feature is now being rolled out as a tool into Gemini for Google.
     </div>
@@ -149,9 +149,9 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
 </div>
 
 
-<div style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
+<div id="amazon-experience" style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2;">
-    <h3 style="text-align: left; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">Amazon Code Whisperer, Intern</h3>
+    <h3 style="text-align: left; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">Amazon Code Whisperer, Research Intern</h3>
     <div style="text-align: justify;">
       In summer 2025, I interned as an Applied Scientist at Amazon Code Whisperer in California, where I developed techniques for effective bug localization from large codebases given a natural language issue. I showed up to 6% performance improvements on the perfect recall of code snippets relevant to bug localization by training custom embedding models on the development history of the codebase.
     </div>
@@ -162,12 +162,12 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
 </div>
 
 
-<div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
+<div id="ibm-experience" style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
     <img src="/assets/img/ibm-think.jpg" alt="IBM Research" style="width: 100%; max-width: 800px; border-radius: 15px;">
   </div>
   <div style="flex: 2;">
-    <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">IBM Research AI & Cloud</h3>
+    <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">IBM Research AI, Research Engineer</h3>
     <div style="text-align: justify;">
       From 2020-23, I was a research engineer at IBM Research, where I worked on multiple projects at the intersection of AI and software engineering. Collaborating with Amith Singhee (Director, IBM Research), I modeled large monolithic codebases as knowledge graphs. I then partnered with Srikanth Tamilselvam (Research Scientist) to apply graph neural network techniques that partition these graphs and suggest candidate microservices.
     </div>

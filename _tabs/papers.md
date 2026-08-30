@@ -145,6 +145,36 @@ title:
   <div style="height: 3px; background-color: #333; margin: 0 auto 60px auto; width: 200px;"></div>
 </div>
 
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">TRIM - Reducing AI-Generated CodeSlop via Agent Trajectory Minimization</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2607.18161" class="badge-paper">Paper</a> <span class="badge-conference">Under Submission</span></div>
+<div style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
+  <div style="flex: 1;">
+    <img src="/assets/img/columbia-logo.jpg" alt="Columbia University" class="kbench-logo" style="width: 100%; border-radius: 8px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1);">
+  </div>
+  <div style="flex: 2.5;">
+    <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
+      I worked with Shobini Iyer on <code>TRIM</code>, an efficient technique to reduce AI-generated code slop. Rather than minimizing agent-authored code directly (i.e. text), <code>TRIM</code> addresses the growing problem of bloated and unnecessary agent code by analyzing and minimizing agent trajectories to produce concise outputs. <code>TRIM</code> avoids combinatorial explosion by leveraging the trajectory topology to first remove large code sections, before reasoning about smaller granularities.
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><span>&#10022;</span></div>
+
+<h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">REFINE - Enhancing Program Repair Agents through Context-Aware Patch Refinement</h3>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2510.03588" class="badge-paper">Paper</a> <span class="badge-conference">EMNLP Findings 2026</span></div>
+<div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
+  <div style="flex: 2.5;">
+    <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
+      I worked with Anvith Pabba and Simin Chen on <code>REFINE</code> - a context-aware patch refinement technique that enhances program repair agents. In this work, we first highlight a new sub-task for program repair called as "patch refinement". We then propose <code>REFINE</code>, a refinement technique to improve the quality of patches authored by LLM-based repair agents. <code>REFINE</code> incorporates rich contextual information during the refinement stage such as "issue semantics" and "code semantics", leading to accurate and reliable bug fixes.
+    </div>
+  </div>
+  <div style="flex: 1;">
+    <img src="/assets/img/columbia-logo.jpg" alt="Columbia University" class="kbench-logo" style="width: 100%; border-radius: 8px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1);">
+  </div>
+</div>
+
+<div class="section-divider"><span>&#10022;</span></div>
+
 <h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">Outrunning LLM Cutoffs - A Live Kernel Crash Resolution Benchmark For All</h3>
 <div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2602.02690" class="badge-paper">Paper</a> <span class="badge-conference">ICML</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
