@@ -136,6 +136,32 @@ Before this, I was a Research Engineer at IBM Research. At IBM, I integrated pra
 </div>
 
 
+<div style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
+  <div style="flex: 1.5;">
+    <img src="/assets/img/google-logo.svg" alt="Google Dev AI Research" style="width: 100%; max-width: 800px; border-radius: 15px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1); padding: 20px; background-color: white;">
+  </div>
+  <div style="flex: 2;">
+    <h3 style="text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">Google Dev AI Research, Intern</h3>
+    <div style="text-align: justify;">
+      In summer 2026, I interned at Google Dev AI Research in NYC, where I developed patch verification techniques to stress test AI and human authored patches for security bugs. I showed that ~25% of patches for signed-integer overflow bugs can be rejected by proving they are incomplete or introduce subtle arithmetic errors. Most promisingly, I developed verification techniques that can deterministically trigger extremely rare data races with a 100% reproduction rate. This feature is now being rolled out as a tool into Gemini for Google.
+    </div>
+  </div>
+</div>
+
+
+<div style="display: flex; align-items: center; gap: 30px; margin-bottom: 60px;">
+  <div style="flex: 2;">
+    <h3 style="text-align: left; font-size: 1.5em; font-weight: bold; margin-top: 0; margin-bottom:5px;">Amazon Code Whisperer, Intern</h3>
+    <div style="text-align: justify;">
+      In summer 2025, I interned as an Applied Scientist at Amazon Code Whisperer in California, where I developed techniques for effective bug localization from large codebases given a natural language issue. I showed up to 6% performance improvements on the perfect recall of code snippets relevant to bug localization by training custom embedding models on the development history of the codebase.
+    </div>
+  </div>
+  <div style="flex: 1.5;">
+    <img src="/assets/img/amazon-logo.svg" alt="Amazon Code Whisperer" style="width: 100%; max-width: 800px; border-radius: 15px; border: 4px solid transparent; box-shadow: 0 0 8px 4px rgba(0, 115, 170, 0.4), 0 0 20px 8px rgba(0, 115, 170, 0.1); padding: 20px; background-color: white;">
+  </div>
+</div>
+
+
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 1.5;">
     <img src="/assets/img/ibm-think.jpg" alt="IBM Research" style="width: 100%; max-width: 800px; border-radius: 15px;">
