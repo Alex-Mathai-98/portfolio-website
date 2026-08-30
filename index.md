@@ -78,7 +78,7 @@ title: " "
 
 Hi there, I'm <strong>Alex Mathai</strong>! I am a computer science PhD student at Columbia University. My PhD research combines AI and software engineering – where I design LLM Agents to resolve bugs in million-line codebases. During my PhD, I have also worked at <a href="#google-experience" style="font-weight: bold; color: #4285F4; text-decoration: underline;">Google</a> and <a href="#amazon-experience" style="font-weight: bold; color: #FF9900; text-decoration: underline;">Amazon</a> — in teams focused on improving AI-led productivity for internal developers.
 
-Before this, I was a Research Engineer at <a href="#ibm-experience" style="font-weight: bold; color: #8B0000; text-decoration: underline;">IBM Research</a>. At IBM, I integrated practical AI tools for open-sourced and commercial software. My previous contributions include modernizing monolithic applications using AI, classifying & analyzing internet traffic at gigabyte scales, and making AI models robust in real-life scenarios.
+Before this, I was a Research Engineer at <a href="#ibm-experience" style="font-weight: bold; color: #34A853; text-decoration: underline;">IBM Research</a>. At IBM, I integrated practical AI tools for open-sourced and commercial software. My previous contributions include modernizing monolithic applications using AI, classifying & analyzing internet traffic at gigabyte scales, and making AI models robust in real-life scenarios.
 
 </div>
 
