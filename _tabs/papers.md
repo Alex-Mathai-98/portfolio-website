@@ -161,7 +161,7 @@ title:
 <div class="section-divider"><span>&#10022;</span></div>
 
 <h3 style="font-size: 1.35em; font-weight: 600; margin-top: 0; margin-bottom: 6px; text-align: center;">REFINE - Enhancing Program Repair Agents through Context-Aware Patch Refinement</h3>
-<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2510.03588" class="badge-paper">Paper</a> <span class="badge-conference">EMNLP Findings 2026</span></div>
+<div style="margin-bottom: 20px; text-align: center;"><span class="resources-label">Resources</span><a href="https://arxiv.org/abs/2510.03588" class="badge-paper">Paper</a> <span class="badge-conference">EMNLP Findings</span></div>
 <div style="display: flex; align-items: flex-start; gap: 30px; margin-bottom: 60px;">
   <div style="flex: 2.5;">
     <div style="text-align: justify; font-size: 1.2em; line-height: 1.5;">
