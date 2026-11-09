@@ -1,7 +1,7 @@
 ---
 title: "ExVerus: Counterexample-Guided Verus Proof Repair"
 categories: [Technical]
-date: 2026-11-09 11:00:00 -0500
+date: 2026-11-09 10:00:00 -0500
 math: true
 mermaid: false
 ---

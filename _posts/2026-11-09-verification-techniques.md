@@ -1,7 +1,7 @@
 ---
 title: "The range of verification techniques: from model checking to interactive proof"
 categories: [Technical]
-date: 2026-11-09 10:00:00 -0500
+date: 2026-11-09 11:00:00 -0500
 math: false
 mermaid: false
 ---
