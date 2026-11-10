@@ -1,7 +1,7 @@
 ---
 title: "What is Concurrency?"
 categories: [Technical]
-math: false
+math: true
 mermaid: false
 ---
 
@@ -36,7 +36,9 @@ In plain terms, **a → b means information could have flowed from a to b.** If 
 
 Here is the running example used throughout this post: three processes, P, Q and R, exchanging three messages.
 
-![Space-time diagram: processes P, Q and R exchange messages m1, m2 and m3. Each event is labeled with its Lamport timestamp; r2 jumps from 1 to 5.](/assets/img/posts/lamport-clocks/spacetime-diagram.svg)
+![The running example: 3 processes, 3 messages, with Lamport timestamps](/assets/img/posts/lamport-clocks/figure-1-running-example.png)
+
+***Figure 1: The running example: 3 processes, 3 messages, with the Lamport timestamps computed in the next section.***
 
 To check whether a → b, look for a path from a to b that moves forward along process lines and message arrows.
 
@@ -114,12 +116,99 @@ This gives a lexicographic order on (timestamp, process ID). Lamport writes it a
 | (4, ·) | p4, q4 |
 | (5, ·) | r2 |
 
+***Table 1: The total order ⇒ on the running example.***
+
 Two things are worth seeing here.
 
 - **The order is fixed when the tie-break rule is kept constant.** Other clock values or another tie-break rule would give a different, equally valid order. Only → is a real property of the execution.
 - **That is fine.** No process needs the "true" order. What matters is that every process computes the same one, on its own. Each event carries a fixed stamp chosen by its sender, and everyone sorts with the same rule. Same inputs and same rule give the same output, with no coordination.
 
 Compare this with sorting by **arrival time**. One process might receive A then B, while another receives B then A, and the two would disagree.
+
+## Telling concurrent from ordered: vector clocks
+
+The tie-breaks above show the only thing a single Lamport number can say about concurrency: **equal timestamps mean concurrent**. In the running example that finds 6 of the 21 concurrent pairs, and it never proves that two events are ordered. **Vector clocks** decide every pair exactly. They are not in Lamport's paper; Colin Fidge and Friedemann Mattern introduced them independently in 1988.
+
+### What a single number can tell you
+
+| What you see, for a and b on different processes | What you can conclude | Why |
+| --- | --- | --- |
+| C(a) = C(b) | a ∥ b | a → b would force C(a) < C(b) |
+| C(a) < C(b) | Only that b does not happen before a; a and b may be ordered or concurrent | The Clock Condition only works one way |
+
+***Table 2: What a single Lamport number lets you conclude about two events.***
+
+So with one number, concurrency shows up only as a tie, and an order can never be proven.
+
+### The idea
+
+Instead of one counter, every process keeps **one counter per process**. Q's entry for P records how much of P's history Q has heard about, directly or through a chain of messages.
+
+### The rules
+
+These are a small change to Lamport's two rules:
+
+1. Every process starts with all entries at 0.
+2. Before each event, a process adds 1 to **its own** entry.
+3. A message carries the sender's whole vector.
+4. On a receive, the process first takes the **larger value of each entry** (its own vector vs. the message's), then applies rule 2.
+
+### The test
+
+For two events a and b:
+
+- **a → b** exactly when every entry of V(a) is ≤ the matching entry of V(b), and the vectors differ.
+- **a ∥ b** exactly when each vector is larger in some entry.
+- **Shortcut:** a → b exactly when b's entry for a's process is at least a's own entry. In words: b has heard of a.
+
+**Why the shortcut gives the same answer as the full comparison.** a's own entry, say k, simply means "a is the k-th event of its process". If b's entry for that process is at least k, then a chain of messages carried news of a to b, so a → b; and anything a had heard of, b has heard of too, so the whole vector of a is ≤ b's.
+
+### Vector clocks on the running example
+
+![Vector clocks on the running example](/assets/img/posts/lamport-clocks/figure-2-vector-clocks.png)
+
+***Figure 2: Vector clocks on the running example. p1 → r2 shows up as "≤ in every entry"; r1 and q4 are each larger somewhere, so they are concurrent, even though Lamport's numbers gave 1 < 4.***
+
+| Event | Rule | Computation | V(event) as (P, Q, R) | Lamport C |
+| --- | --- | --- | --- | --- |
+| p1 | local | P entry 0 + 1 | (1, 0, 0) | 1 |
+| p2 (send m1) | send | P entry + 1; m1 carries (2, 0, 0) | (2, 0, 0) | 2 |
+| p3 | local | P entry + 1 | (3, 0, 0) | 3 |
+| q1 | local | Q entry 0 + 1 | (0, 1, 0) | 1 |
+| q2 | local | Q entry + 1 | (0, 2, 0) | 2 |
+| q3 (recv m1) | receive | max((0, 2, 0), (2, 0, 0)) = (2, 2, 0), then Q + 1 | (2, 3, 0) | 3 |
+| q4 (send m2) | send | Q entry + 1; m2 carries (2, 4, 0) | (2, 4, 0) | 4 |
+| r1 (send m3) | send | R entry 0 + 1; m3 carries (0, 0, 1) | (0, 0, 1) | 1 |
+| p4 (recv m3) | receive | max((3, 0, 0), (0, 0, 1)) = (3, 0, 1), then P + 1 | (4, 0, 1) | 4 |
+| r2 (recv m2) | receive | max((0, 0, 1), (2, 4, 0)) = (2, 4, 1), then R + 1 | (2, 4, 2) | 5 |
+
+***Table 3: Vector clocks on the running example, next to the Lamport numbers.***
+
+### Side by side: single number vs. vector clocks
+
+The running example has 32 pairs of events on different processes. Figure 3 judges every one of them both ways.
+
+![Single number vs. vector clocks on every cross-process pair](/assets/img/posts/lamport-clocks/figure-3-single-vs-vector.png)
+
+***Figure 3: Every pair of events on different processes in the running example, judged with a single Lamport number (left) and with vector clocks (right). Equal timestamps catch 6 of the 21 concurrent pairs; vector clocks catch all 21 and prove the other 11 pairs ordered.***
+
+|  | Single Lamport number | Vector clocks |
+| --- | --- | --- |
+| Concurrent pairs found | 6 (only the ties) | **21** (all of them) |
+| Ordered pairs proven | 0 | **11** (all of them) |
+| Pairs left undecided | 26 | **0** |
+
+***Table 4: How each method classifies the 32 pairs of events on different processes.***
+
+The six ties (p1–q1, p1–r1, q1–r1, p2–q2, p3–q3, p4–q4) are found by both methods. Every other verdict comes only from the vectors, for example:
+
+- **r1 ∥ q4.** C = 1 vs 4 looks like an order. V = (0, 0, 1) vs (2, 4, 0): each is larger somewhere, so they are concurrent.
+- **p3 ∥ r2.** C = 3 vs 5 looks like an order. V = (3, 0, 0) vs (2, 4, 2): p3 is larger in P's entry, r2 in Q's and R's.
+- **p1 → r2.** C = 1 vs 5 is only consistent with an order. V = (1, 0, 0) ≤ (2, 4, 2) in every entry proves it.
+
+### The price
+
+A vector has one entry per process, so every timestamp and message grows with the number of processes. Charron-Bost showed in 1991 that no smaller exact encoding exists in the worst case. Dynamic data race detectors pay that cost to decide whether two memory accesses are ordered.
 
 ## Mutual exclusion without a coordinator
 
@@ -227,7 +316,7 @@ There are two ways out:
 
 Lamport then shows how to keep clocks that close with a simple rule: **on receiving a message, never set your clock backward, only forward**, to at least the sender's stamp plus the minimum delay. He proves that clocks stay within about
 
-> **ε ≈ d (2κτ + ξ)**
+$$\varepsilon \approx d\,(2\kappa\tau + \xi)$$
 
 where d is the network diameter, κ the clock drift rate, τ the interval between messages, and ξ the unpredictable part of message delay.
 
@@ -245,6 +334,8 @@ Nearly every idea in these eight pages grew into its own field.
 | Failure needs physical time | Timeouts, failure detectors, and the FLP impossibility result (1985) |
 | Physical clocks prevent anomalies | Google Spanner's TrueTime, which waits out clock uncertainty before committing |
 | Mixing logical and physical time | Hybrid Logical Clocks (2014) |
+
+***Table 5: What each idea in the paper became.***
 
 The lasting lesson is the change of question. Distributed systems rarely need to know **what time** something happened. They need to know **what could have caused what**, and to agree on **one order** everyone can compute alone. Lamport showed that a counter and two rules give you both.
 

@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>body{margin:0}[hidden]{display:none!important}</style>
-<title>Lamport Mutex Walkthrough</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lamport mutual exclusion, step by step</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
+:root{box-sizing:border-box}
+body{margin:0;padding:0}
+[hidden]{display:none!important}
+img{max-width:100%}
 /* Layout: one stage (three process cards on a triangle, messages travel between them), then controls, then narration beside the five rules. */
 :root{
   --bg:#F4F6F9; --surface:#FFFFFF; --ink:#1B2130; --muted:#5A6375; --line:#C8CEDA; --faint:#E4E8EF;
@@ -16,6 +19,7 @@
   --good:#1B8254; --good-tint:#DCF1E6; --bad:#B53F2B;
   --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -106,13 +110,13 @@ code,.m{font-family:var(--mono);font-size:.92em}
 .env text{font:600 12px var(--mono);fill:var(--ink)}
 @media (prefers-reduced-motion: reduce){.box,.rules li{transition:none}}
 </style>
-
 </head>
 <body>
+
 <div class="wrap">
   <header>
     <h1>Lamport mutual exclusion, step by step</h1>
-    <p>Three processes, one shared resource, no coordinator. Watch each process decide on its own, using only its clock, its queue, and the messages it has received. This is the Part 5 trace from the tutorial.</p>
+    <p>Three processes, one shared resource, no coordinator. Watch each process decide on its own, using only its clock, its queue, and the messages it has received.</p>
   </header>
 
   <div class="stage">
