@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 610" width="1320" height="610" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: redrawn from the post's figure-1-running-example.png (same coordinates) for the candidacy
+       page only; adds the coloured p1->r2 and r1->p4 paths and the r1/q4 concurrency lasso. -->
+  <defs>
+    <marker id="ah-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c8c7bc"/></marker>
+    <marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d9480f"/></marker>
+    <marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2b8a3e"/></marker>
+  </defs>
+  <rect width="1320" height="610" fill="#ffffff"/>
+
+  <text x="42" y="54" font-size="25" font-weight="600" fill="#1f1f1f">Two causal paths, and two events with no path between them</text>
+  <text x="42" y="88" font-size="19" fill="#555">
+    <tspan fill="#d9480f" font-weight="600">Orange: p1 → r2</tspan><tspan> · </tspan><tspan fill="#2b8a3e" font-weight="600">Green: r1 → p4</tspan><tspan> · </tspan><tspan fill="#7048e8" font-weight="600">Dashed loop: r1 and q4 are concurrent</tspan>
+  </text>
+
+  <!-- process lines -->
+  <g font-size="24" font-weight="700" fill="#1f1f1f">
+    <text x="72" y="186">P</text><text x="72" y="345">Q</text><text x="72" y="503">R</text>
+  </g>
+  <g stroke="#c8c7bc" stroke-width="2" fill="none">
+    <line x1="160" y1="177" x2="1245" y2="177" marker-end="url(#ah-grey)"/>
+    <line x1="160" y1="336" x2="1245" y2="336" marker-end="url(#ah-grey)"/>
+    <line x1="160" y1="494" x2="1245" y2="494" marker-end="url(#ah-grey)"/>
+  </g>
+  <text x="1245" y="149" font-size="18" fill="#555" text-anchor="end">time →</text>
+
+  <!-- concurrency lasso around r1 and q4 (drawn first so paths sit on top) -->
+  <ellipse cx="672" cy="415" rx="300" ry="46" transform="rotate(-20.45 672 415)"
+           fill="#7048e8" fill-opacity="0.07" stroke="#7048e8" stroke-width="2.5" stroke-dasharray="9 7"/>
+  <text x="395" y="588" font-size="19" font-weight="600" fill="#7048e8">r1 and q4 are concurrent: no path runs either way</text>
+
+  <!-- orange path p1 -> p2 -m1-> q3 -> q4 -m2-> r2 -->
+  <g stroke="#d9480f" stroke-width="4" fill="none" stroke-linecap="round">
+    <line x1="248" y1="177" x2="406" y2="177"/>
+    <line x1="406" y1="177" x2="591" y2="328" marker-end="url(#ah-orange)"/>
+    <line x1="601" y1="336" x2="884" y2="336"/>
+    <line x1="884" y1="336" x2="1084" y2="485" marker-end="url(#ah-orange)"/>
+  </g>
+  <!-- green path r1 -m3-> p4 -->
+  <line x1="460" y1="494" x2="979" y2="184" stroke="#2b8a3e" stroke-width="4" stroke-linecap="round" marker-end="url(#ah-green)"/>
+
+  <!-- message labels -->
+  <g font-size="17" fill="#555">
+    <text x="410" y="272">m1, T=2</text>
+    <text x="730" y="226">m3, T=1</text>
+    <text x="893" y="444">m2, T=4</text>
+  </g>
+
+  <!-- events -->
+  <g fill="#c8c7bc">
+    <circle cx="672" cy="177" r="8"/>
+    <circle cx="230" cy="336" r="8"/><circle cx="460" cy="336" r="8"/>
+  </g>
+  <g fill="#d9480f">
+    <circle cx="248" cy="177" r="9"/><circle cx="406" cy="177" r="8"/>
+    <circle cx="601" cy="336" r="8"/><circle cx="1097" cy="494" r="11"/>
+  </g>
+  <circle cx="884" cy="336" r="9" fill="#d9480f" stroke="#7048e8" stroke-width="3"/>
+  <circle cx="460" cy="494" r="9" fill="#2b8a3e" stroke="#7048e8" stroke-width="3"/>
+  <circle cx="990" cy="177" r="9" fill="#2b8a3e"/>
+
+  <!-- event labels (name · timestamp) -->
+  <g font-size="20" fill="#1f1f1f" text-anchor="middle">
+    <text x="248" y="152">p1 · 1</text><text x="406" y="152">p2 · 2</text>
+    <text x="672" y="152">p3 · 3</text><text x="990" y="152">p4 · 4</text>
+    <text x="230" y="374">q1 · 1</text><text x="460" y="374">q2 · 2</text>
+    <text x="601" y="374">q3 · 3</text><text x="884" y="290">q4 · 4</text>
+    <text x="460" y="546">r1 · 1</text>
+    <text x="1097" y="533" font-weight="700">r2 · 5 (jumped from 1)</text>
+  </g>
+</svg>

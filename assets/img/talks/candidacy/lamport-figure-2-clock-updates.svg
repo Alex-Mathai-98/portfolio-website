@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 770" width="1320" height="770" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: candidacy page only. Same layout/coordinates as lamport-figure-1-causality.svg, but shows how
+       each clock value is computed: +1 ticks (IR1), message stamps, and max(C, T) + 1 on receive (IR2). -->
+  <defs>
+    <marker id="ah-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c8c7bc"/></marker>
+    <marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1c6dd0"/></marker>
+    <marker id="ah-in" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6a60"/></marker>
+    <marker id="ah-out" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0b7a75"/></marker>
+  </defs>
+  <rect width="1320" height="770" fill="#ffffff"/>
+
+  <text x="42" y="44" font-size="25" font-weight="600" fill="#1f1f1f">How each clock value is computed: tick on every event, catch up on receive</text>
+  <text x="42" y="76" font-size="19" fill="#555">
+    <tspan font-weight="600" fill="#6b6a60">+1: local tick (IR1)</tspan><tspan> · </tspan><tspan font-weight="600" fill="#1c6dd0">Blue: a message carries its sender's clock T</tspan><tspan> · </tspan><tspan font-weight="600" fill="#d9480f">Orange: receive, C = max(C, T) + 1 (IR2)</tspan>
+  </text>
+
+  <text x="42" y="103" font-size="19" fill="#555"><tspan font-weight="600" fill="#6b6a60">Grey arrows in: the clock before, and the stamp T a message delivers</tspan><tspan> · </tspan><tspan font-weight="600" fill="#0b7a75">Arrow out: the clock after it</tspan></text>
+
+  <g font-size="24" font-weight="700" fill="#1f1f1f">
+    <text x="72" y="186">P</text><text x="72" y="345">Q</text><text x="72" y="503">R</text>
+  </g>
+  <g stroke="#c8c7bc" stroke-width="2" fill="none">
+    <line x1="160" y1="177" x2="1245" y2="177" marker-end="url(#ah-grey)"/>
+    <line x1="160" y1="336" x2="1245" y2="336" marker-end="url(#ah-grey)"/>
+    <line x1="160" y1="494" x2="1245" y2="494" marker-end="url(#ah-grey)"/>
+  </g>
+  <text x="1245" y="141" font-size="18" fill="#555" text-anchor="end">time →</text>
+
+  <!-- IR1 ticks between consecutive local events -->
+  <g font-size="17" font-weight="600" fill="#6b6a60" text-anchor="middle">
+    <text x="327" y="168">+1</text><text x="539" y="168">+1</text>
+    <text x="345" y="327">+1</text><text x="800" y="327">+1</text>
+  </g>
+
+  <!-- R sits still -->
+  <line x1="545" y1="494" x2="1015" y2="494" stroke="#d9480f" stroke-width="2" stroke-dasharray="3 6" opacity="0.7"/>
+  <text x="770" y="482" font-size="17" font-style="italic" fill="#b0451a" text-anchor="middle">R's clock stays at 1 while P and Q move on</text>
+
+  <!-- messages -->
+  <g stroke="#1c6dd0" stroke-width="3" fill="none">
+    <line x1="406" y1="177" x2="591" y2="328" marker-end="url(#ah-blue)"/>
+    <line x1="460" y1="494" x2="979" y2="184" marker-end="url(#ah-blue)"/>
+    <line x1="884" y1="336" x2="1084" y2="485" marker-end="url(#ah-blue)"/>
+  </g>
+  <g font-size="17" font-weight="600" fill="#1c6dd0">
+    <text x="352" y="272">m1 carries T=2</text>
+    <text x="700" y="226">m3 carries T=1</text>
+    <text x="893" y="444">m2 carries T=4</text>
+  </g>
+
+  <!-- events -->
+  <g fill="#c8c7bc">
+    <circle cx="248" cy="177" r="8"/><circle cx="406" cy="177" r="8"/><circle cx="672" cy="177" r="8"/>
+    <circle cx="230" cy="336" r="8"/><circle cx="460" cy="336" r="8"/><circle cx="884" cy="336" r="8"/>
+    <circle cx="460" cy="494" r="8"/>
+  </g>
+  <g fill="#d9480f">
+    <circle cx="601" cy="336" r="9"/><circle cx="990" cy="177" r="9"/>
+    <circle cx="1097" cy="494" r="13"/>
+  </g>
+  <circle cx="1097" cy="494" r="20" fill="none" stroke="#d9480f" stroke-width="2"/>
+
+  <!-- receive badges -->
+  <g font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">
+    <circle cx="628" cy="310" r="12" fill="#d9480f"/><text x="628" y="315">1</text>
+    <circle cx="1018" cy="200" r="12" fill="#d9480f"/><text x="1018" y="205">2</text>
+    <circle cx="1128" cy="466" r="12" fill="#d9480f"/><text x="1128" y="471">3</text>
+  </g>
+
+  <!-- clock in/out at each send and receive: arrow into the dot = clock before, arrow out = clock after -->
+  <g font-size="15" font-weight="700" text-anchor="middle">
+    <line x1="347" y1="177" x2="393" y2="177" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <line x1="419" y1="177" x2="465" y2="177" stroke="#0b7a75" stroke-width="3" marker-end="url(#ah-out)"/>
+    <text x="370" y="168" fill="#6b6a60">C=1</text>
+    <text x="442" y="168" fill="#0b7a75">C=2</text>
+    <line x1="931" y1="177" x2="977" y2="177" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <line x1="1003" y1="177" x2="1049" y2="177" stroke="#0b7a75" stroke-width="3" marker-end="url(#ah-out)"/>
+    <text x="954" y="168" fill="#6b6a60">C=3</text>
+    <text x="1026" y="168" fill="#0b7a75">C=4</text>
+    <line x1="542" y1="336" x2="588" y2="336" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <line x1="614" y1="336" x2="660" y2="336" stroke="#0b7a75" stroke-width="3" marker-end="url(#ah-out)"/>
+    <text x="565" y="355" fill="#6b6a60">C=2</text>
+    <text x="637" y="355" fill="#0b7a75">C=3</text>
+    <line x1="825" y1="336" x2="871" y2="336" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <line x1="897" y1="336" x2="943" y2="336" stroke="#0b7a75" stroke-width="3" marker-end="url(#ah-out)"/>
+    <text x="848" y="327" fill="#6b6a60">C=3</text>
+    <text x="920" y="327" fill="#0b7a75">C=4</text>
+    <line x1="401" y1="494" x2="447" y2="494" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <line x1="473" y1="494" x2="519" y2="494" stroke="#0b7a75" stroke-width="3" marker-end="url(#ah-out)"/>
+    <text x="424" y="513" fill="#6b6a60">C=0</text>
+    <text x="496" y="513" fill="#0b7a75">C=1</text>
+    <line x1="1027" y1="494" x2="1073" y2="494" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <line x1="1121" y1="494" x2="1167" y2="494" stroke="#0b7a75" stroke-width="3" marker-end="url(#ah-out)"/>
+    <text x="1050" y="513" fill="#6b6a60">C=1</text>
+    <text x="1144" y="513" fill="#0b7a75">C=5</text>
+  </g>
+  <!-- grey arrows parallel to each message: the stamp T it delivers into the receive -->
+  <g font-size="15" font-weight="700" fill="#6b6a60">
+    <line x1="536" y1="262" x2="590" y2="307" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <text x="576" y="274" text-anchor="middle">T=2</text>
+    <line x1="915" y1="241" x2="975" y2="205" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <text x="955" y="245" text-anchor="middle">T=1</text>
+    <line x1="1026" y1="422" x2="1082" y2="464" stroke="#6b6a60" stroke-width="3" marker-end="url(#ah-in)"/>
+    <text x="1066" y="432" text-anchor="middle">T=4</text>
+  </g>
+  <!-- event labels -->
+  <g font-size="20" fill="#1f1f1f" text-anchor="middle">
+    <text x="248" y="141">p1 · 1</text><text x="406" y="141">p2 · 2</text>
+    <text x="672" y="141">p3 · 3</text><text x="990" y="141" fill="#d9480f" font-weight="700">p4 · 4</text>
+    <text x="230" y="374">q1 · 1</text><text x="460" y="374">q2 · 2</text>
+    <text x="601" y="374" fill="#d9480f" font-weight="700">q3 · 3</text><text x="884" y="298">q4 · 4</text>
+    <text x="460" y="542">r1 · 1</text>
+    <text x="1097" y="540" fill="#d9480f" font-weight="700">r2 · 5</text>
+  </g>
+
+  <!-- worked receives -->
+  <line x1="42" y1="585" x2="1278" y2="585" stroke="#e4e3dc" stroke-width="1.5"/>
+  <g font-size="19" fill="#1f1f1f">
+    <circle cx="58" cy="625" r="12" fill="#d9480f"/><text x="58" y="631" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">1</text>
+    <text x="84" y="631"><tspan font-weight="700">q3</tspan> receives m1 (T=2). Q's clock is 2:  max(2, 2) + 1 = <tspan font-weight="700" fill="#d9480f">3</tspan></text>
+    <circle cx="58" cy="675" r="12" fill="#d9480f"/><text x="58" y="681" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">2</text>
+    <text x="84" y="681"><tspan font-weight="700">p4</tspan> receives m3 (T=1). P's clock is 3:  max(3, 1) + 1 = <tspan font-weight="700" fill="#d9480f">4</tspan><tspan dx="14" fill="#555">(the stamp is older, so P just ticks)</tspan></text>
+    <circle cx="58" cy="725" r="12" fill="#d9480f"/><text x="58" y="731" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+    <text x="84" y="731"><tspan font-weight="700">r2</tspan> receives m2 (T=4). R's clock is 1:  max(1, 4) + 1 = <tspan font-weight="700" fill="#d9480f">5</tspan><tspan dx="14" font-weight="700" fill="#b0451a">← R jumps from 1 to 5</tspan></text>
+  </g>
+</svg>

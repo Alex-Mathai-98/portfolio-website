@@ -16,15 +16,15 @@ In plain terms, **a → b means information could have flowed from a to b.** If 
 
 Here is the running example used throughout this post: three processes, P, Q and R, exchanging three messages.
 
-![The running example: 3 processes, 3 messages, with Lamport timestamps](/assets/img/posts/lamport-clocks/figure-1-running-example.png)
+![The running example: 3 processes, 3 messages, with the p1 to r2 and r1 to p4 causal paths coloured and r1 and q4 circled as concurrent](/assets/img/talks/candidacy/lamport-figure-1-causality.svg)
 
-***Figure 1: The running example: 3 processes, 3 messages, with the Lamport timestamps computed in the next section.***
+***Figure 1: The running example: 3 processes, 3 messages, with the Lamport timestamps computed in the next section. Orange is the path p1 → r2, green is r1 → p4, and the dashed loop marks r1 and q4 as concurrent.***
 
-To check whether a → b, look for a path from a to b that moves forward along process lines and message arrows.
+To check whether a → b, look for a path from a to b that moves forward along process lines and message arrows. **p1 → r2:** is ordered (orange line); **r1 → p4:** is ordered (green line); but **r1 vs q4:** is concurrent (even if r1 is to the left).
 
-- **p1 → r2:** p1 → p2 → (m1) → q3 → q4 → (m2) → r2. Yes.
+<!-- - **p1 → r2:** p1 → p2 → (m1) → q3 → q4 → (m2) → r2. Yes.
 - **r1 → p4:** r1 sends m3, p4 receives it. Yes.
-- **r1 vs q4:** there is no path either way, so they are **concurrent**. That holds even though r1 is drawn to the left.
+- **r1 vs q4:** there is no path either way, so they are **concurrent**. That holds even though r1 is drawn to the left. -->
 
 <!-- A note on the word **"smallest"**: it simply means that → is the **transitive closure** of the three rules. It contains every pair the rules force, and not a single pair more. -->
 
@@ -39,29 +39,9 @@ If a could have influenced b, then a gets the smaller number. Two implementation
 - **IR1:** tick your counter between any two of your own events.
 - **IR2:** stamp every message with your counter. When you receive a message with stamp T, move your counter past T.
 
-In code, the whole algorithm is a few lines:
+![Lamport clock updates on the running example: +1 ticks on local events, message stamps, and max(C, T) + 1 at each receive](/assets/img/talks/candidacy/lamport-figure-2-clock-updates.svg)
 
-```python
-C = 0  # this process's logical clock
-
-def local_event():
-    global C
-    C += 1
-    return C
-
-def send(msg):
-    global C
-    C += 1
-    msg.T = C
-    transmit(msg)
-
-def receive(msg):
-    global C
-    C = max(C, msg.T) + 1
-    return C
-```
-
-Run it on the example above and you get the numbers in the diagram. The interesting moment is **r2**. R's clock reads 1, but the message m2 arrives stamped 4, so R jumps straight to **5**. A slow process gets pulled forward the moment it learns about later events.
+***Figure 2: The update rules at work. Every event ticks the clock by 1 (IR1); each message carries its sender's clock; each receive (orange) sets the clock to max(C, T) + 1 (IR2). At every send and receive, the grey arrows show what goes in (the clock, and on a receive the message's stamp T) and the teal arrow the clock coming out. Only r2 actually jumps.***
 
 ##### The catch: it only works in one direction
 
@@ -147,7 +127,7 @@ For two events a and b:
 
 ![Vector clocks on the running example](/assets/img/posts/lamport-clocks/figure-2-vector-clocks.png)
 
-***Figure 2: Vector clocks on the running example. p1 → r2 shows up as "≤ in every entry"; r1 and q4 are each larger somewhere, so they are concurrent, even though Lamport's numbers gave 1 < 4.***
+***Figure 3: Vector clocks on the running example. p1 → r2 shows up as "≤ in every entry"; r1 and q4 are each larger somewhere, so they are concurrent, even though Lamport's numbers gave 1 < 4.***
 
 | Event | Rule | Computation | V(event) as (P, Q, R) | Lamport C |
 | --- | --- | --- | --- | --- |
@@ -166,11 +146,11 @@ For two events a and b:
 
 ##### Side by side: single number vs. vector clocks
 
-The running example has 32 pairs of events on different processes. Figure 3 judges every one of them both ways.
+The running example has 32 pairs of events on different processes. Figure 4 judges every one of them both ways.
 
 ![Single number vs. vector clocks on every cross-process pair](/assets/img/posts/lamport-clocks/figure-3-single-vs-vector.png)
 
-***Figure 3: Every pair of events on different processes in the running example, judged with a single Lamport number (left) and with vector clocks (right). Equal timestamps catch 6 of the 21 concurrent pairs; vector clocks catch all 21 and prove the other 11 pairs ordered.***
+***Figure 4: Every pair of events on different processes in the running example, judged with a single Lamport number (left) and with vector clocks (right). Equal timestamps catch 6 of the 21 concurrent pairs; vector clocks catch all 21 and prove the other 11 pairs ordered.***
 
 |  | Single Lamport number | Vector clocks |
 | --- | --- | --- |
