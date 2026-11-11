@@ -2,15 +2,15 @@
 
 **Paper:** Leslie Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 1978. [Read the full post]({% post_url 2026-10-17-lamport-clocks %}). Its central idea fits in one sentence: **in a distributed system, "time" really means causality.**
 
-#### Causality, not time
+#### Thinking about Causality, and not the absolute time
 
-Lamport models a distributed system as a set of **processes**. Each process does one thing after another, so its events are in a fixed order. Sending a message is an event, and receiving one is an event.
+Lamport models a distributed system as a set of **processes**. Each process does one thing after another, so its events are in a fixed order. Additionally, each process and can send messages to and receive messages from other processes---thus sending a message is an event, and receiving one is an event.
 
 He then defines **happened before**, written **a → b**, as the smallest relation satisfying three rules:
 
 1. **Same process:** if a comes before b in the same process, then a → b.
 2. **Messages:** if a sends a message and b receives it, then a → b.
-3. **Chains:** if a → b and b → c, then a → c.
+3. **Chains:** if a → b and b → c, then a → c (think **transitive closure**).
 
 In plain terms, **a → b means information could have flowed from a to b.** If neither a → b nor b → a, the two events are **concurrent**. Neither could have influenced the other, so neither came "first" in any sense the system can observe.
 
@@ -26,7 +26,7 @@ To check whether a → b, look for a path from a to b that moves forward along p
 - **r1 → p4:** r1 sends m3, p4 receives it. Yes.
 - **r1 vs q4:** there is no path either way, so they are **concurrent**. That holds even though r1 is drawn to the left.
 
-A note on the word **"smallest"**: it simply means that → is the **transitive closure** of the three rules. It contains every pair the rules force, and not a single pair more.
+<!-- A note on the word **"smallest"**: it simply means that → is the **transitive closure** of the three rules. It contains every pair the rules force, and not a single pair more. -->
 
 #### Logical clocks: a counter is enough
 
