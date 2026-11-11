@@ -2,6 +2,8 @@
 
 **Paper:** Leslie Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 1978. [Read the full post]({% post_url 2026-10-17-lamport-clocks %}). Its central idea fits in one sentence: **in a distributed system, "time" really means causality.**
 
+**Vector clocks:** Colin Fidge, [*Timestamps in Message-Passing Systems That Preserve the Partial Ordering*](https://www.cs.uky.edu/~manivann/cs570/Fidge.pdf), Australian Computer Science Conference 1988; Friedemann Mattern, [*Virtual Time and Global States of Distributed Systems*](https://www.vs.inf.ethz.ch/publ/papers/VirtTimeGlobStates.pdf), Workshop on Parallel and Distributed Algorithms 1988.
+
 #### Thinking about Causality, and not the absolute time
 
 Lamport models a distributed system as a set of **processes**. Each process does one thing after another, so its events are in a fixed order. Additionally, each process and can send messages to and receive messages from other processes---thus sending a message is an event, and receiving one is an event.
@@ -43,68 +45,68 @@ If a could have influenced b, then a gets the smaller number. Two implementation
 
 ***Figure 2: The update rules at work. Every event ticks the clock by 1 (IR1); each message carries its sender's clock; each receive (orange) sets the clock to max(C, T) + 1 (IR2). At every send and receive, the grey arrows show what goes in (the clock, and on a receive the message's stamp T) and the teal arrow the clock coming out. Only r2 actually jumps.***
 
-##### The catch: it only works in one direction
-
-If a → b, then C(a) < C(b); but this does **not** mean that
-
-> If C(a) < C(b), then a → b.
-
 #### What is concurrent?
 
-If two events have **no happened-before relationship** in either direction (neither a → b nor b → a), they are **concurrent**, written a ∥ b.
+##### The definition
 
-In the example, r1 and q4 are concurrent: no path of messages connects them. Concurrent does not mean simultaneous, and it does not mean equal timestamps (r1 has 1, q4 has 4). It only means that neither event could have influenced the other.
+Concurrency is defined in terms of happened-before, not clocks:
 
-#### One order everyone agrees on
+> If two events have **no happened-before relationship** in either direction (neither a → b nor b → a), they are **concurrent**, written a ∥ b.
 
-Happened-before is a **partial** order: concurrent events are left unordered. Many algorithms need more than that. They need **one sequence of all events that every process agrees on**.
+- **Example:** r1 and q4 are concurrent. No path of messages connects them.
+- **What it does not mean:** concurrent is not "simultaneous". It only means that neither event could have influenced the other.
 
-Lamport writes this total order as **⇒**: a ⇒ b means "a comes before b in the agreed order (i.e., numbering system)", whether or not a actually happened before b.
+##### The problem: deriving it from clock numbers
 
-Lamport's construction takes two steps:
+- **The goal:** the definition talks about paths, but an algorithm cannot "see" paths. All it has are the logical clock numbers we just assigned. So we would like to decide a ∥ b from C(a) and C(b) alone.
+- **The catch:** the Clock Condition only works in one direction. If a → b, then C(a) < C(b); but this does **not** mean that
 
-1. **Sort by timestamp.** This puts every causal pair in the right order, because of the Clock Condition.
-2. **Break ties by process ID** (P ≺ Q ≺ R). Only concurrent events can share a timestamp, so the tie-break never contradicts causality.
+  > If C(a) < C(b), then a → b.
 
-This gives a lexicographic order on (timestamp, process ID). Lamport writes it as **⇒**. For the example:
+- **A counterexample:** C(r1) = 1 < C(q4) = 4, yet r1 ∥ q4. A smaller number shows up for ordered pairs, but also for plenty of concurrent ones.
+- **So:** C(a) < C(b) only rules out b → a. It cannot tell "ordered" from "concurrent".
 
-| (C, process) | Events in ⇒ order |
-| --- | --- |
-| (1, ·) | p1, q1, r1 |
-| (2, ·) | p2, q2 |
-| (3, ·) | p3, q3 |
-| (4, ·) | p4, q4 |
-| (5, ·) | r2 |
+##### The rule used in practice: equal timestamps mean concurrent
 
-***Table 1: The total order ⇒ on the running example.***
+**Claim.** If two events have the **same** timestamp, C(a) = C(b), then a ∥ b.
 
-Two things are worth seeing here.
+**Why.**
 
-- **The order is fixed when the tie-break rule is kept constant.** Other clock values or another tie-break rule would give a different, equally valid order. Only → is a real property of the execution.
-- **That is fine.** No process needs the "true" order. What matters is that every process computes the same one, on its own. Each event carries a fixed stamp chosen by its sender, and everyone sorts with the same rule. Same inputs and same rule give the same output, with no coordination.
+1. If a → b, the Clock Condition would force C(a) < C(b). It doesn't, so **not a → b**.
+2. If b → a, it would force C(b) < C(a). It doesn't, so **not b → a**.
+3. Neither direction holds, which is exactly the definition: **a ∥ b**.
 
-Compare this with sorting by **arrival time**. One process might receive A then B, while another receives B then A, and the two would disagree.
+**On the running example**, the rule groups events into one loop per timestamp. Every pair inside a loop is concurrent:
+
+![The running example with one lasso per timestamp: p1, q1 and r1 at 1; p2 and q2 at 2; p3 and q3 at 3; p4 and q4 at 4](/assets/img/talks/candidacy/lamport-figure-equal-timestamps.svg)
+
+***Figure 3: The equal-timestamp rule on the running example. The four loops hold 6 concurrent pairs: p1 ∥ q1, p1 ∥ r1, q1 ∥ r1, p2 ∥ q2, p3 ∥ q3 and p4 ∥ q4. The dotted pair, r1 and q4, is concurrent too, but their timestamps differ, so the rule misses it.***
+
+**Strengths and limits.**
+
+- **No false alarms:** every pair it reports really is concurrent.
+- **Misses many pairs:** it also works in one direction only. Concurrent events with different timestamps, like r1 (1) and q4 (4), slip through. It finds only 6 of the running example's 21 concurrent pairs. Catching the rest needs [vector clocks](#telling-concurrent-from-ordered-vector-clocks), below.
 
 #### Telling concurrent from ordered: vector clocks
 
-The tie-breaks above show the only thing a single Lamport number can say about concurrency: **equal timestamps mean concurrent**. In the running example that finds 6 of the 21 concurrent pairs, and it never proves that two events are ordered. **Vector clocks** decide every pair exactly. They are not in Lamport's paper; Colin Fidge and Friedemann Mattern introduced them independently in 1988.
+As [shown above](#what-is-concurrent), the only thing a single Lamport number can say about concurrency is that **equal timestamps mean concurrent**. In the running example that finds 6 of the 21 concurrent pairs, and it never proves that two events are ordered. **Vector clocks** decide every pair exactly. They are not in Lamport's paper; Colin Fidge ([*Timestamps in Message-Passing Systems That Preserve the Partial Ordering*](https://www.cs.uky.edu/~manivann/cs570/Fidge.pdf)) and Friedemann Mattern ([*Virtual Time and Global States of Distributed Systems*](https://www.vs.inf.ethz.ch/publ/papers/VirtTimeGlobStates.pdf)) introduced them independently in 1988.
 
 ##### What a single number can tell you
 
 | What you see, for a and b on different processes | What you can conclude | Why |
 | --- | --- | --- |
-| C(a) = C(b) | a ∥ b | a → b would force C(a) < C(b) |
+| C(a) = C(b) | a ∥ b | a → b would force C(a) < C(b), and b → a would force C(b) < C(a) |
 | C(a) < C(b) | Only that b does not happen before a; a and b may be ordered or concurrent | The Clock Condition only works one way |
 
-***Table 2: What a single Lamport number lets you conclude about two events.***
+***Table 1: What a single Lamport number lets you conclude about two events.***
 
 So with one number, concurrency shows up only as a tie, and an order can never be proven.
 
-##### The idea
+##### **The idea**
 
-Instead of one counter, every process keeps **one counter per process**. Q's entry for P records how much of P's history Q has heard about, directly or through a chain of messages.
+- Instead of one counter, every process keeps **one counter per process**. Q's entry for P records how much of P's history Q has heard about, directly or through a chain of messages. If a vector that reaches a process is **≤ its own in every entry**, the process has already heard everything that vector carries. So the event behind that vector **happened before** the process's current event.
 
-##### The rules
+##### **The rules**
 
 These are a small change to Lamport's two rules:
 
@@ -113,59 +115,71 @@ These are a small change to Lamport's two rules:
 3. A message carries the sender's whole vector.
 4. On a receive, the process first takes the **larger value of each entry** (its own vector vs. the message's), then applies rule 2.
 
-##### The test
+##### **The test**
 
-For two events a and b:
+For two events A and B:
 
-- **a → b** exactly when every entry of V(a) is ≤ the matching entry of V(b), and the vectors differ.
-- **a ∥ b** exactly when each vector is larger in some entry.
-- **Shortcut:** a → b exactly when b's entry for a's process is at least a's own entry. In words: b has heard of a.
+- **A → B** exactly when every entry of V(A) is ≤ the matching entry of V(B), and the vectors differ.
+- **A ∥ B** exactly when each vector is larger in some entry.
+- **Shortcut:** A → B exactly when B's entry for A's process is at least A's own entry. In words: B has heard of A.
 
-**Why the shortcut gives the same answer as the full comparison.** a's own entry, say k, simply means "a is the k-th event of its process". If b's entry for that process is at least k, then a chain of messages carried news of a to b, so a → b; and anything a had heard of, b has heard of too, so the whole vector of a is ≤ b's.
+##### Why the shortcut gives the same answer as the full comparison?
+- A's own entry, say k, simply means "A is the k-th event of its process". 
+- If B's entry for that process is at least k, then a chain of messages carried news of A to B, so A → B; and anything A had heard of, B has heard of too, so the whole vector of A is ≤ B's.
 
 ##### Vector clocks on the running example
 
-![Vector clocks on the running example](/assets/img/posts/lamport-clocks/figure-2-vector-clocks.png)
+![Vector clocks on the running example, with each event labelled by its (P, Q, R) vector and the concurrent pairs r1, q4 and p3, r2 lassoed](/assets/img/talks/candidacy/lamport-figure-vector-clocks.svg)
 
-***Figure 3: Vector clocks on the running example. p1 → r2 shows up as "≤ in every entry"; r1 and q4 are each larger somewhere, so they are concurrent, even though Lamport's numbers gave 1 < 4.***
-
-| Event | Rule | Computation | V(event) as (P, Q, R) | Lamport C |
-| --- | --- | --- | --- | --- |
-| p1 | local | P entry 0 + 1 | (1, 0, 0) | 1 |
-| p2 (send m1) | send | P entry + 1; m1 carries (2, 0, 0) | (2, 0, 0) | 2 |
-| p3 | local | P entry + 1 | (3, 0, 0) | 3 |
-| q1 | local | Q entry 0 + 1 | (0, 1, 0) | 1 |
-| q2 | local | Q entry + 1 | (0, 2, 0) | 2 |
-| q3 (recv m1) | receive | max((0, 2, 0), (2, 0, 0)) = (2, 2, 0), then Q + 1 | (2, 3, 0) | 3 |
-| q4 (send m2) | send | Q entry + 1; m2 carries (2, 4, 0) | (2, 4, 0) | 4 |
-| r1 (send m3) | send | R entry 0 + 1; m3 carries (0, 0, 1) | (0, 0, 1) | 1 |
-| p4 (recv m3) | receive | max((3, 0, 0), (0, 0, 1)) = (3, 0, 1), then P + 1 | (4, 0, 1) | 4 |
-| r2 (recv m2) | receive | max((0, 0, 1), (2, 4, 0)) = (2, 4, 1), then R + 1 | (2, 4, 2) | 5 |
-
-***Table 3: Vector clocks on the running example, next to the Lamport numbers.***
+***Figure 4: Vector clocks on the running example. p1 → r2 (orange) shows up as "≤ in every entry". The two loops are concurrent pairs, r1 and q4 and p3 and r2: in each, every vector is larger somewhere, even though Lamport's numbers (1 < 4, 3 < 5) look like an order.***
 
 ##### Side by side: single number vs. vector clocks
 
-The running example has 32 pairs of events on different processes. Figure 4 judges every one of them both ways.
-
-![Single number vs. vector clocks on every cross-process pair](/assets/img/posts/lamport-clocks/figure-3-single-vs-vector.png)
-
-***Figure 4: Every pair of events on different processes in the running example, judged with a single Lamport number (left) and with vector clocks (right). Equal timestamps catch 6 of the 21 concurrent pairs; vector clocks catch all 21 and prove the other 11 pairs ordered.***
+- The running example has 32 pairs of events on different processes. Table 2 counts how each method judges them.
 
 |  | Single Lamport number | Vector clocks |
 | --- | --- | --- |
-| Concurrent pairs found | 6 (only the ties) | **21** (all of them) |
+| Concurrent pairs found | 6 (only the ties) | **21** (all of them; including the six) |
 | Ordered pairs proven | 0 | **11** (all of them) |
 | Pairs left undecided | 26 | **0** |
 
-***Table 4: How each method classifies the 32 pairs of events on different processes.***
-
-The six ties (p1–q1, p1–r1, q1–r1, p2–q2, p3–q3, p4–q4) are found by both methods. Every other verdict comes only from the vectors, for example:
-
-- **r1 ∥ q4.** C = 1 vs 4 looks like an order. V = (0, 0, 1) vs (2, 4, 0): each is larger somewhere, so they are concurrent.
-- **p3 ∥ r2.** C = 3 vs 5 looks like an order. V = (3, 0, 0) vs (2, 4, 2): p3 is larger in P's entry, r2 in Q's and R's.
-- **p1 → r2.** C = 1 vs 5 is only consistent with an order. V = (1, 0, 0) ≤ (2, 4, 2) in every entry proves it.
+***Table 2: How each method classifies the 32 pairs of events on different processes.***
 
 ##### The price
 
-A vector has one entry per process, so every timestamp and message grows with the number of processes. Charron-Bost showed in 1991 that no smaller exact encoding exists in the worst case. Dynamic data race detectors pay that cost to decide whether two memory accesses are ordered.
+- A vector has one entry per process. With N processes, every timestamp is N numbers, every message carries N extra numbers, and every comparison checks up to N entries, where a Lamport clock needs just one. Charron-Bost showed in 1991 that no smaller exact encoding exists in the worst case. Dynamic data race detectors, where the processes are threads, pay that cost on memory accesses to decide whether two of them are ordered.
+
+#### Strengths and weaknesses for race detection
+
+A happens-before race detector treats threads as the processes and synchronization as the messages: an unlock followed by a lock of the same lock, a fork, a join. It keeps vector clocks and reports two conflicting accesses (same location, at least one write) when neither happened before the other.
+
+##### Strengths
+
+- **No false alarms on the run (i.e  specific schedule) it sees.** If two accesses are unordered in this run, nothing kept them apart, so they really could be concurrent. Every report is a real race.
+- **Works with any synchronization.** Locks, fork/join and messages all become edges.
+- **Exact.** Vector clocks decide every pair as ordered or concurrent, with no guessing.
+
+##### Weaknesses
+
+- **It only knows the observed run (i.e. specific schedule).** It judges the one interleaving that actually happened, and cannot predict what another interleaving would do.
+- **Unrelated synchronization hides races.** The example below shows this.
+- **Cost.** N-entry vectors on memory accesses, as described above.
+
+##### Example: one race, two runs
+
+Two threads write `x` without holding any lock. Each also takes lock `m` for some unrelated work:
+
+```text
+T1:  x = 1                 T2:  lock(m)
+     lock(m)                    ...
+     ...                        unlock(m)
+     unlock(m)                  x = 2
+```
+
+The writes to `x` race in every run, because no lock protects them. Whether happens-before notices depends on which thread takes `m` first (see Figure. 5) :
+
+![Two runs of the same program: in run A the lock hand-off orders x = 1 before x = 2, in run B the two writes are concurrent](/assets/img/talks/candidacy/lamport-figure-observed-run.svg)
+
+***Figure 5: The same race in two runs. In run A, T1 releases m before T2 takes it, so happens-before records a partial order (i.e. no race). In run B, T2 is done with m before T1 takes it, nothing orders the two writes, and the race is reported.***
+
+So happens-before is **very conservative**. It reports only what the observed run proves, and stays silent about races that a different schedule would expose. Lockset analysis (Eraser, next) addresses this.
