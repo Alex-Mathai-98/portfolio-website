@@ -1,4 +1,4 @@
-### 1. Lamport's algorithm: logical and vector clocks
+### 1. Lamport's algorithm: Happens-Before Algorithm
 
 **Paper:** Leslie Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*, CACM 1978. [Read the full post]({% post_url 2026-10-17-lamport-clocks %}). Its central idea fits in one sentence: **in a distributed system, "time" really means causality.**
 
