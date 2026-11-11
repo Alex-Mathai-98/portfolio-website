@@ -27,7 +27,7 @@ I will discuss four data-race detection techniques that build on each other:
 <!-- AIDEV-NOTE: precision/recall scale (pure HTML; styles in the <style> block below). Positions are qualitative:
      pure HB reports ⊆ hybrid ⊆ lockset (Hybrid post, Fig. 4); RaceFuzzer has no false alarms but only confirms
      races its Phase 1 detector suspects. Below 640px it becomes a vertical list. -->
-<div class="tradeoff-scale" role="figure" aria-label="Precision versus recall of the four approaches">
+<div class="tradeoff-scale" role="figure" aria-label="Precision versus recall of the four approaches (five papers)">
   <div class="ts-ends">
     <span><strong>&larr; More precise</strong><small>fewer false alarms</small></span>
     <span><strong>More recall &rarr;</strong><small>fewer missed races</small></span>
@@ -36,17 +36,20 @@ I will discuss four data-race detection techniques that build on each other:
     <div class="ts-line" aria-hidden="true"></div>
     <div class="ts-mark ts-p0">
       <span class="ts-dot" aria-hidden="true"></span>
-      <span class="ts-name">Lamport</span>
-      <span class="ts-note">Pure happens-before. No false alarms on the schedule it sees, but an unrelated lock hand-off can hide a real race.</span>
+      <span class="ts-name">Lamport + Vector Clocks</span>
+      <span class="ts-cite">Lamport 1978 · Fidge & Mattern 1988</span>
+      <span class="ts-note">Pure happens-before, computed exactly with vector clocks. No false alarms on the schedule it sees, but an unrelated lock hand-off can hide a real race.</span>
     </div>
     <div class="ts-mark ts-p1">
       <span class="ts-dot" aria-hidden="true"></span>
       <span class="ts-name">RaceFuzzer</span>
+      <span class="ts-cite">Sen 2008</span>
       <span class="ts-note">Reports only races it actually makes happen, but can only confirm races its detector suspected.</span>
     </div>
     <div class="ts-mark ts-p2">
       <span class="ts-dot" aria-hidden="true"></span>
       <span class="ts-name">Hybrid</span>
+      <span class="ts-cite">O'Callahan &amp; Choi 2003</span>
       <span class="ts-note">Lockset plus a limited happens-before. 
       <!-- Its reports sit between the two: pure HB &sube; hybrid &sube; lockset. -->
       </span>
@@ -54,6 +57,7 @@ I will discuss four data-race detection techniques that build on each other:
     <div class="ts-mark ts-p3">
       <span class="ts-dot" aria-hidden="true"></span>
       <span class="ts-name">Eraser (lockset)</span>
+      <span class="ts-cite">Savage et al. 1997</span>
       <span class="ts-note">Flags every access without a common lock, so it misses the least but has false positives due to non-lock synchronization.</span>
     </div>
   </div>
@@ -87,7 +91,7 @@ I will discuss four data-race detection techniques that build on each other:
   .ts-ends span { display: flex; flex-direction: column; line-height: 1.3; }
   .ts-ends span:last-child { text-align: right; }
   .ts-ends small { color: var(--text-muted-color); font-size: .8rem; }
-  .ts-track { position: relative; min-height: 10.5rem; }
+  .ts-track { position: relative; min-height: 15.5rem; }
   .ts-line {
     position: absolute; top: .55rem; left: 0; right: 0; height: 2px; background: var(--text-muted-color);
   }
@@ -102,6 +106,7 @@ I will discuss four data-race detection techniques that build on each other:
     border: 3px solid var(--card-bg, var(--main-bg)); box-sizing: border-box; margin-bottom: .5rem;
   }
   .ts-name { font-weight: 600; color: var(--heading-color, var(--text-color)); line-height: 1.3; }
+  .ts-cite { color: var(--text-muted-color); font-size: .75rem; font-style: italic; line-height: 1.3; }
   .ts-note { color: var(--text-muted-color); font-size: .82rem; line-height: 1.45; margin-top: .2rem; }
   .ts-p0 { left: .9rem; align-items: flex-start; text-align: left; }
   .ts-p1 { left: 37%; transform: translateX(-50%); align-items: center; text-align: center; }
