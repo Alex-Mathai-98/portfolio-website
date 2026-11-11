@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 640" width="1320" height="640" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: candidacy page only (Eraser, last subsection). Same program and runs as
+       lamport-figure-observed-run.svg; lockset ignores the hand-offs (faded) and warns in both runs. -->
+  <defs>
+    <marker id="ah-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c8c7bc"/></marker>
+    <marker id="ah-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1c6dd0"/></marker>
+  </defs>
+  <rect width="1320" height="640" fill="#ffffff"/>
+  <text x="42" y="44" font-size="25" font-weight="600" fill="#1f1f1f">Lockset reports the race in both runs: no lock is held at either write</text>
+  <text x="42" y="76" font-size="19" fill="#555">Same program and runs as the happens-before example. Lockset ignores the lock hand-offs (faded) and only checks the locks held.</text>
+  <text x="42" y="130" font-size="21" font-weight="700" fill="#1f1f1f">Run A: T1 takes the lock first</text>
+  <g font-size="22" font-weight="700" fill="#1f1f1f"><text x="42" y="228">T1</text><text x="42" y="368">T2</text></g>
+  <g stroke="#c8c7bc" stroke-width="2"><line x1="92" y1="220" x2="632" y2="220" marker-end="url(#ah-grey)"/><line x1="92" y1="360" x2="632" y2="360" marker-end="url(#ah-grey)"/></g>
+  <line x1="360" y1="226" x2="380" y2="350" stroke="#1c6dd0" stroke-width="3" opacity="0.3" marker-end="url(#ah-blue)"/>
+  <rect x="240" y="207" width="120" height="26" rx="6" fill="#eef3fb" stroke="#1c6dd0" stroke-width="2" opacity="0.55"/>
+  <text x="300.0" y="196" font-size="17" fill="#1c6dd0" opacity="0.6" font-weight="600" text-anchor="middle">lock(m) … unlock(m)</text>
+  <rect x="380" y="347" width="120" height="26" rx="6" fill="#eef3fb" stroke="#1c6dd0" stroke-width="2" opacity="0.55"/>
+  <text x="440.0" y="400" font-size="17" fill="#1c6dd0" opacity="0.6" font-weight="600" text-anchor="middle">lock(m) … unlock(m)</text>
+  <circle cx="150" cy="220" r="10" fill="#0b7a75"/>
+  <text x="150" y="196" font-size="20" font-weight="700" fill="#0b7a75" text-anchor="middle">x = 1</text>
+  <text x="150" y="170" font-size="17" fill="#555" text-anchor="middle">locks held: { }</text>
+  <circle cx="585" cy="360" r="10" fill="#0b7a75"/>
+  <text x="585" y="400" font-size="20" font-weight="700" fill="#0b7a75" text-anchor="middle">x = 2</text>
+  <text x="585" y="424" font-size="17" fill="#555" text-anchor="middle">locks held: { }</text>
+  <text x="700" y="130" font-size="21" font-weight="700" fill="#1f1f1f">Run B: T2 takes the lock first</text>
+  <g font-size="22" font-weight="700" fill="#1f1f1f"><text x="700" y="228">T1</text><text x="700" y="368">T2</text></g>
+  <g stroke="#c8c7bc" stroke-width="2"><line x1="750" y1="220" x2="1290" y2="220" marker-end="url(#ah-grey)"/><line x1="750" y1="360" x2="1290" y2="360" marker-end="url(#ah-grey)"/></g>
+  <line x1="900" y1="354" x2="1080" y2="230" stroke="#1c6dd0" stroke-width="3" opacity="0.3" marker-end="url(#ah-blue)"/>
+  <rect x="1080" y="207" width="120" height="26" rx="6" fill="#eef3fb" stroke="#1c6dd0" stroke-width="2" opacity="0.55"/>
+  <text x="1140.0" y="196" font-size="17" fill="#1c6dd0" opacity="0.6" font-weight="600" text-anchor="middle">lock(m) … unlock(m)</text>
+  <rect x="780" y="347" width="120" height="26" rx="6" fill="#eef3fb" stroke="#1c6dd0" stroke-width="2" opacity="0.55"/>
+  <text x="840.0" y="400" font-size="17" fill="#1c6dd0" opacity="0.6" font-weight="600" text-anchor="middle">lock(m) … unlock(m)</text>
+  <circle cx="960" cy="220" r="10" fill="#0b7a75"/>
+  <text x="960" y="196" font-size="20" font-weight="700" fill="#0b7a75" text-anchor="middle">x = 1</text>
+  <text x="960" y="170" font-size="17" fill="#555" text-anchor="middle">locks held: { }</text>
+  <circle cx="1030" cy="360" r="10" fill="#0b7a75"/>
+  <text x="1030" y="400" font-size="20" font-weight="700" fill="#0b7a75" text-anchor="middle">x = 2</text>
+  <text x="1030" y="424" font-size="17" fill="#555" text-anchor="middle">locks held: { }</text>
+  <rect x="42" y="480" width="598" height="128" rx="12" fill="none" stroke="#0b7a75" stroke-width="2.5"/>
+  <text x="66" y="516" font-size="18" font-weight="700" fill="#0b7a75">Race reported</text>
+  <text x="66" y="543" font-size="18" fill="#1f1f1f">C(x) = { } ∩ { } = empty: no lock is common to the writes.</text>
+  <text x="66" y="570" font-size="18" fill="#1f1f1f">Happens-before missed this run; lockset does not.</text>
+  <rect x="700" y="480" width="598" height="128" rx="12" fill="none" stroke="#0b7a75" stroke-width="2.5"/>
+  <text x="724" y="516" font-size="18" font-weight="700" fill="#0b7a75">Race reported</text>
+  <text x="724" y="543" font-size="18" fill="#1f1f1f">The same two lock sets, so the same verdict.</text>
+  <text x="724" y="570" font-size="18" fill="#1f1f1f">Lockset does not depend on which thread went first.</text>
+</svg>
