@@ -71,8 +71,11 @@ I will discuss four data-race detection techniques that build on each other:
 
 {% include_relative _data-races/04-racefuzzer.md %}
 
-<!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper. Each gets a ">" toggle that wraps
-     what follows it in a .fold-body: an h3 up to the next h2/h3, an h2 up to the next h2 (so it nests papers).
+<!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
+     a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
+     (so an h2 nests its papers and an h3 its subsections). h4s are numbered "<paper>.<n>" here, not in the .md:
+     <paper> is the h3's leading "N." (else its position). This runs before the layout's tocbot start-up
+     (document listeners fire before window ones), so the TOC shows the numbers and toggles do not break it.
      Moves all nodes, not just elements: kramdown emits $$ math as bare \[...\] text nodes between elements.
      Everything starts expanded; following a link into collapsed content opens every collapsed level above it.
      Figures are lazy and unsized, so after a jump they load late and push the target down: settle()
@@ -160,6 +163,21 @@ I will discuss four data-race detection techniques that build on each other:
       });
       heading.prepend(btn);
     };
+    let paper = 0, sub = 0;
+    content.querySelectorAll('h2, h3, h4').forEach(function (h) {
+      if (h.tagName === 'H2') { paper = 0; return; }
+      if (h.tagName === 'H3') {
+        const m = h.textContent.trim().match(/^(\d+)\./);
+        paper = m ? Number(m[1]) : paper + 1;
+        sub = 0;
+        return;
+      }
+      const num = document.createElement('span');
+      num.className = 'heading-num';
+      num.textContent = paper + '.' + (++sub) + ' ';
+      h.prepend(num);
+    });
+    content.querySelectorAll('h4').forEach(function (h) { fold(h, /^H[234]$/, 'subsection'); });
     content.querySelectorAll('h3').forEach(function (h) { fold(h, /^H[23]$/, 'paper'); });
     content.querySelectorAll('h2').forEach(function (h) { fold(h, /^H2$/, 'section'); });
     const openFor = function (id) {
