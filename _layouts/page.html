@@ -1,6 +1,12 @@
 ---
 layout: default
+panel_includes:
+  - toc
 ---
+
+{% comment %}
+  AIDEV-NOTE: toc panel shows only when a page sets `toc: true` (see toc-status.html); used by talks/candidacy/candidacy.md.
+{% endcomment %}
 
 {% include lang.html %}
 
@@ -11,6 +17,83 @@ layout: default
     <h1 class="dynamic-title">
       {{ title }}
     </h1>
+
+    {% comment %}
+      AIDEV-NOTE: copied from the theme's post.html (7.3.1): sticky TOC bar + "Contents" button + popup for
+      screens too narrow for the right-hand TOC panel (< 1200px). page.min.js already drives these ids.
+    {% endcomment %}
+    {% include toc-status.html %}
+    {% if enable_toc %}
+      <div id="toc-bar" class="d-flex align-items-center justify-content-between invisible">
+        <span class="label text-truncate">{{ title }}</span>
+        <button type="button" class="toc-trigger btn me-1">
+          <i class="fa-solid fa-list-ul fa-fw"></i>
+        </button>
+      </div>
+
+      <button id="toc-solo-trigger" type="button" class="toc-trigger btn btn-outline-secondary btn-sm">
+        <span class="label ps-2 pe-1">{{- site.data.locales[lang].panel.toc -}}</span>
+        <i class="fa-solid fa-angle-right fa-fw"></i>
+      </button>
+
+      <dialog id="toc-popup" class="p-0">
+        <div class="header d-flex flex-row align-items-center justify-content-between">
+          <div class="label text-truncate py-2 ms-4">{{- title -}}</div>
+          <button id="toc-popup-close" type="button" class="btn mx-1 my-1 opacity-75">
+            <i class="fas fa-close"></i>
+          </button>
+        </div>
+        <div id="toc-popup-content" class="px-4 py-3 pb-4"></div>
+      </dialog>
+
+      {% comment %}
+        AIDEV-NOTE: page.min.js bundles Chirpy's TOC classes but never starts them (only post.min.js does, and it
+        also needs dayjs). This mirrors post.min.js's TOC start-up with the same tocbot options. No // comments:
+        the compress layout minifies HTML.
+      {% endcomment %}
+      <script>
+        window.addEventListener('DOMContentLoaded', function () {
+          if (typeof tocbot === 'undefined') return;
+          const wide = matchMedia('(min-width: 1200px)');
+          const wrapper = document.getElementById('toc-wrapper');
+          const bar = document.getElementById('toc-bar');
+          const solo = document.getElementById('toc-solo-trigger');
+          const popup = document.getElementById('toc-popup');
+          const base = {
+            contentSelector: '.content', ignoreSelector: '[data-toc-skip]',
+            headingSelector: 'h2, h3, h4', orderedList: false, scrollSmooth: false
+          };
+          const closePopup = function () { if (popup.open) popup.close(); };
+          const start = function () {
+            tocbot.destroy();
+            if (wide.matches) {
+              tocbot.init(Object.assign({}, base, { tocSelector: '#toc', headingsOffset: 32 }));
+              if (wrapper) wrapper.classList.remove('invisible');
+            } else {
+              tocbot.init(Object.assign({}, base, {
+                tocSelector: '#toc-popup-content', collapseDepth: 4, headingsOffset: 48
+              }));
+              popup.querySelectorAll('.toc-link').forEach(function (a) { a.addEventListener('click', closePopup); });
+            }
+          };
+          document.querySelectorAll('.toc-trigger').forEach(function (b) {
+            b.addEventListener('click', function () {
+              popup.showModal();
+              const active = popup.querySelector('li.is-active-li');
+              if (active) active.scrollIntoView({ block: 'center' });
+            });
+          });
+          document.getElementById('toc-popup-close').addEventListener('click', closePopup);
+          popup.addEventListener('click', function (e) { if (e.target === popup) closePopup(); });
+          new IntersectionObserver(function (entries) {
+            bar.classList.toggle('invisible', entries[0].isIntersecting || wide.matches);
+          }).observe(solo);
+          wide.addEventListener('change', function () { closePopup(); start(); });
+          start();
+        });
+      </script>
+    {% endif %}
+
     <div class="content">
       {{ content }}
     </div>
