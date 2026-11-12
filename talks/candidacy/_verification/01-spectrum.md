@@ -31,7 +31,7 @@ The three approaches differ in who writes the proof and how much the result cove
     <div class="ts-mark ts-p3">
       <span class="ts-dot" aria-hidden="true"></span>
       <span class="ts-name">Interactive proof</span>
-      <span class="ts-cite">e.g. Rocq · LLM agent: AutoRocq</span>
+      <span class="ts-cite">e.g. Rocq · LLM agent: [AutoRocq](#14-autorocq-agentic-verification-of-software-systems)</span>
       <span class="ts-note">You write every proof step; the checker verifies each one.</span>
     </div>
   </div>

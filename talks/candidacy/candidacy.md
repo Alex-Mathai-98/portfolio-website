@@ -109,6 +109,16 @@ Deductive verifiers such as Verus prove code correct for every input, but only i
 
 {% include_relative _llm-deductive/01-exverus.md %}
 
+## LLM + Proof Generation
+
+Interactive provers such as Rocq give the strongest guarantee, but every proof step must be written out. AutoRocq lets an LLM agent write those steps, searching Rocq's libraries for the lemmas it needs. LemmaNet goes further and has the LLM invent new helper lemmas that no library contains.
+
+{% include_relative _llm-proof-gen/01-basics.md %}
+
+{% include_relative _llm-proof-gen/02-autorocq.md %}
+
+{% include_relative _llm-proof-gen/03-lemmanet.md %}
+
 ## References
 
 Papers covered on this page, in the order they appear. Each title links to its section above.
@@ -146,17 +156,23 @@ Papers covered on this page, in the order they appear. Each title links to its s
 {:start="14"}
 14. Yang, Sun, Wu, Caridad, Yuan, Yao, Lu and Pei. [ExVerus: Verus Proof Repair via Counterexample Reasoning](#12-exverus-verus-proof-repair-via-counterexample-reasoning). [arXiv:2603.25810](https://arxiv.org/abs/2603.25810), 2026.
 
-**LLM Agents for Crash Resolution**
+**LLM + Proof Generation**
 
 {:start="15"}
-15. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
-16. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
-17. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
+15. Tu et al. [Agentic Verification of Software Systems](#14-autorocq-agentic-verification-of-software-systems). *FSE*, 2026. [doi:10.1145/3808164](https://doi.org/10.1145/3808164).
+16. Zhao, Tu, Liu, Rinard and Roychoudhury. [Automated Lemma Discovery in Agentic Program Verification](#15-lemmanet-automated-lemma-discovery-in-agentic-program-verification). *ASE*, 2026. [doi:10.1145/3832783.3834356](https://doi.org/10.1145/3832783.3834356).
+
+**LLM Agents for Crash Resolution**
+
+{:start="17"}
+17. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
+18. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
+19. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
 
 **LLM Code Slop Reduction**
 
-{:start="18"}
-18. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
+{:start="20"}
+20. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
 
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
