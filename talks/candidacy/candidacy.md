@@ -93,6 +93,57 @@ Finding a concurrency bug is only half the job. These two papers fix races autom
 
 {% include_relative _verification/01-spectrum.md %}
 
+## LLM Agents + Model Checking
+
+Model checkers prove properties exhaustively, but someone has to write the model or the specification. These two papers let LLM agents write them and keep the checker as the judge: BMC-Agent infers function contracts for C and Rust code, and PAT-Agent writes a whole system model from English.
+
+{% include_relative _llm-model-checking/01-bmc-agent.md %}
+
+{% include_relative _llm-model-checking/02-pat-agent.md %}
+
+## References
+
+Papers covered on this page, in the order they appear. Each title links to its section above.
+
+**Data races: How to find them?**
+
+1. Leslie Lamport. [Time, Clocks, and the Ordering of Events in a Distributed System](#1-lamports-algorithm-happens-before-algorithm). *Communications of the ACM*, 1978.
+2. Colin J. Fidge. [Timestamps in Message-Passing Systems That Preserve the Partial Ordering](https://www.cs.uky.edu/~manivann/cs570/Fidge.pdf). *Australian Computer Science Conference*, 1988.
+3. Friedemann Mattern. [Virtual Time and Global States of Distributed Systems](https://www.vs.inf.ethz.ch/publ/papers/VirtTimeGlobStates.pdf). *Workshop on Parallel and Distributed Algorithms*, 1988.
+4. Bernadette Charron-Bost. Concerning the Size of Logical Clocks in Distributed Systems. *Information Processing Letters*, 1991.
+5. Stefan Savage, Michael Burrows, Greg Nelson, Patrick Sobalvarro and Thomas Anderson. [Eraser: A Dynamic Data Race Detector for Multithreaded Programs](#2-lockset-analysis-eraser). *SOSP* 1997 and *ACM Transactions on Computer Systems*, 1997.
+6. Robert O'Callahan and Jong-Deok Choi. [Hybrid Dynamic Data Race Detection](#3-hybrid-detection-lockset-plus-limited-happens-before). *PPoPP*, 2003.
+7. Koushik Sen. [Race Directed Random Testing of Concurrent Programs](#4-racefuzzer-race-directed-random-testing). *PLDI*, 2008. [doi:10.1145/1375581.1375584](https://doi.org/10.1145/1375581.1375584).
+
+**Concurrency Bugs are more than "just" Data Races**
+
+{:start="8"}
+8. Shan Lu, Soyeon Park, Eunsoo Seo and Yuanyuan Zhou. [Learning from Mistakes: A Comprehensive Study on Real World Concurrency Bug Characteristics](#5-learning-from-mistakes-real-world-concurrency-bug-characteristics). *ASPLOS*, 2008.
+
+**Concurrency Fixing**
+
+{:start="9"}
+9. Jingyue Wu, Heming Cui and Junfeng Yang. [Bypassing Races in Live Applications with Execution Filters](#6-loom-bypassing-races-in-live-applications). *OSDI*, 2010. [USENIX page](https://www.usenix.org/conference/osdi10/bypassing-races-live-applications-execution-filters).
+10. Guoliang Jin, Linhai Song, Wei Zhang, Shan Lu and Ben Liblit. [Automated Atomicity-Violation Fixing](#7-afix-automated-atomicity-violation-fixing). *PLDI*, 2011.
+
+**LLM Agents + Model Checking**
+
+{:start="11"}
+11. Youcheng Sun, Jiawen Liu, Daniel Kroening and Jason Xue. [Agentic Model Checking](#9-bmc-agent-agentic-model-checking). [arXiv:2605.21434](https://arxiv.org/abs/2605.21434), 2026.
+12. Xinyue Zuo, Yifan Zhang, Hongshu Wang, Yufan Cai, Zhe Hou, Jun Sun and Jin Song Dong. [PAT-Agent: Autoformalization for Model Checking](#10-pat-agent-autoformalization-for-model-checking). *ASE*, 2025. [arXiv:2509.23675](https://arxiv.org/abs/2509.23675).
+
+**LLM Agents for Crash Resolution**
+
+{:start="13"}
+13. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
+14. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
+15. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
+
+**LLM Code Slop Reduction**
+
+{:start="16"}
+16. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
+
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
      (so an h2 nests its papers and an h3 its subsections). h4s are numbered "<paper>.<n>" here, not in the .md:
