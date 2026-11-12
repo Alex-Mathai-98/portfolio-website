@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1420 862" width="1420" height="862" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: candidacy page only; redraw of the post's racefuzzer/03-phase1-trace.png with the actual statement in each box. -->
+  <rect width="1420" height="862" fill="#ffffff"/>
+  <text x="42" y="48" font-size="26" fill="#1f1f1f" font-weight="600">One Phase 1 run: four conflicting pairs share no lock, so all four are reported</text>
+  <text x="42" y="82" font-size="19" fill="#555">M runs to m5, then W runs to the end, then M runs m6. Each box is one memory access, with the locks held in braces.</text>
+  <text x="70" y="162" font-size="21" fill="#1f1f1f" font-weight="600" text-anchor="middle">#</text>
+  <text x="300" y="162" font-size="21" fill="#1f1f1f" font-weight="600" text-anchor="middle">Thread M</text>
+  <text x="680" y="162" font-size="21" fill="#1f1f1f" font-weight="600" text-anchor="middle">Thread W</text>
+  <line x1="42" y1="178" x2="880" y2="178" stroke="#b5b4a8" stroke-width="2"/>
+  <text x="70" y="224" font-size="20" fill="#555" text-anchor="middle">1</text>
+  <rect x="110" y="192" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="128" y="224" font-size="18" fill="#555" font-weight="700">m1</text>
+  <text x="172" y="224" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">cfg = new Config(10);</text>
+  <text x="462" y="224" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="250" x2="880" y2="250" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="290" font-size="20" fill="#555" text-anchor="middle">2</text>
+  <rect x="110" y="258" width="370" height="50" rx="10" fill="#ececea" stroke="#cfcec6" stroke-width="2"/>
+  <text x="128" y="290" font-size="18" fill="#555" font-weight="700">m3</text>
+  <text x="172" y="290" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">ready = true;</text>
+  <text x="462" y="290" font-size="18" fill="#444" text-anchor="end">{L}</text>
+  <line x1="42" y1="316" x2="880" y2="316" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="356" font-size="20" fill="#555" text-anchor="middle">3</text>
+  <rect x="110" y="324" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="128" y="356" font-size="18" fill="#555" font-weight="700">m5</text>
+  <text x="172" y="356" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">lastActive = M;</text>
+  <text x="462" y="356" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="382" x2="880" y2="382" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="422" font-size="20" fill="#555" text-anchor="middle">4</text>
+  <rect x="490" y="390" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="508" y="422" font-size="18" fill="#555" font-weight="700">w1</text>
+  <text x="552" y="422" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">lastActive = W;</text>
+  <text x="842" y="422" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="448" x2="880" y2="448" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="488" font-size="20" fill="#555" text-anchor="middle">5</text>
+  <rect x="490" y="456" width="370" height="50" rx="10" fill="#ececea" stroke="#cfcec6" stroke-width="2"/>
+  <text x="508" y="488" font-size="18" fill="#555" font-weight="700">w3</text>
+  <text x="552" y="488" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">r = ready;</text>
+  <text x="842" y="488" font-size="18" fill="#444" text-anchor="end">{L}</text>
+  <line x1="42" y1="514" x2="880" y2="514" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="554" font-size="20" fill="#555" text-anchor="middle">6</text>
+  <rect x="490" y="522" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="508" y="554" font-size="18" fill="#555" font-weight="700">w6</text>
+  <text x="552" y="554" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">n = cfg.max;</text>
+  <text x="842" y="554" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="580" x2="880" y2="580" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="620" font-size="20" fill="#555" text-anchor="middle">7</text>
+  <rect x="490" y="588" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="508" y="620" font-size="18" fill="#555" font-weight="700">w7</text>
+  <text x="552" y="620" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">if (log != null)</text>
+  <text x="842" y="620" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="646" x2="880" y2="646" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="686" font-size="20" fill="#555" text-anchor="middle">8</text>
+  <rect x="490" y="654" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="508" y="686" font-size="18" fill="#555" font-weight="700">w8</text>
+  <text x="552" y="686" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">log.append(&quot;done&quot;);</text>
+  <text x="842" y="686" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="712" x2="880" y2="712" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="752" font-size="20" fill="#555" text-anchor="middle">9</text>
+  <rect x="110" y="720" width="370" height="50" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="128" y="752" font-size="18" fill="#555" font-weight="700">m6</text>
+  <text x="172" y="752" font-size="18" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">log = null;</text>
+  <text x="462" y="752" font-size="18" fill="#444" text-anchor="end">{ }</text>
+  <line x1="42" y1="778" x2="880" y2="778" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="920" y="162" font-size="21" fill="#1f1f1f" font-weight="600">Conflicting cross-thread pairs</text>
+  <rect x="920" y="184" width="458" height="104" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="944" y="218" font-size="20" fill="#666" font-weight="700">#2 × #5 · ready</text>
+  <text x="944" y="246" font-size="18" fill="#555">{L} ∩ {L} = {L}: a common lock</text>
+  <text x="944" y="274" font-size="18" fill="#666">Not reported</text>
+  <rect x="920" y="302" width="458" height="104" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="944" y="336" font-size="20" fill="#1f1f1f" font-weight="700">#1 × #6 · cfg</text>
+  <text x="944" y="364" font-size="18" fill="#555">{ } ∩ { } = ∅, and no happens-before edge</text>
+  <text x="944" y="392" font-size="18" fill="#1f1f1f" font-weight="700">Reported as P1 (a false alarm)</text>
+  <rect x="920" y="420" width="458" height="104" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="944" y="454" font-size="20" fill="#1f1f1f" font-weight="700">#3 × #4 · lastActive</text>
+  <text x="944" y="482" font-size="18" fill="#555">{ } ∩ { } = ∅, and no happens-before edge</text>
+  <text x="944" y="510" font-size="18" fill="#1f1f1f" font-weight="700">Reported as P2</text>
+  <rect x="920" y="538" width="458" height="104" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="944" y="572" font-size="20" fill="#1f1f1f" font-weight="700">#7 × #9 · log</text>
+  <text x="944" y="600" font-size="18" fill="#555">{ } ∩ { } = ∅, and no happens-before edge</text>
+  <text x="944" y="628" font-size="18" fill="#1f1f1f" font-weight="700">Reported as P3</text>
+  <rect x="920" y="656" width="458" height="104" rx="12" fill="#e3ecf7" stroke="#2f7bd6" stroke-width="3"/>
+  <text x="944" y="690" font-size="20" fill="#1f1f1f" font-weight="700">#8 × #9 · log</text>
+  <text x="944" y="718" font-size="18" fill="#555">{ } ∩ { } = ∅, and no happens-before edge</text>
+  <text x="944" y="746" font-size="18" fill="#1f1f1f" font-weight="700">Reported as P4 (harmless in this run)</text>
+  <text x="42" y="830" font-size="18" fill="#555">No start, join or notify links M and W, so no event of one thread is ordered with any event of the other. Shaded = holds lock L.</text>
+</svg>

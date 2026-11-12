@@ -8,13 +8,17 @@
 
 `LogService` has two threads. **M** sets up a config, signals readiness under a lock `L`, serves requests for a while, then shuts the logger down. **W** is a worker: it reads the config if the service is ready, then writes to the logger if the logger still exists. A launcher starts both threads together, so nothing like `start` or `join` orders them.
 
-![LogService: the running example](/assets/img/posts/racefuzzer/01-logservice-code.png)
+![Figure 1: LogService, the running example](/assets/img/posts/racefuzzer/01-logservice-code.png)
+
+***Figure 1: LogService. M sets up a config, signals readiness under `L`, serves, then shuts the logger down. W reads the config if the service is ready, then appends to the logger if it still exists.***
 
 The paper's model assumes each statement touches at most one shared variable. That's why the null check (`w7`) and the call (`w8`) are separate statements. In practice this holds automatically, because the tool works on Java bytecode, where every field access is its own instruction.
 
 Only `ready` is accessed under `L`. The other three shared variables are touched with no lock held:
 
-![Every access to shared state, by thread](/assets/img/posts/racefuzzer/02-shared-accesses.png)
+![Figure 2: Every access to shared state, by thread](/assets/img/posts/racefuzzer/02-shared-accesses.png)
+
+***Figure 2: Every access to shared state, by thread. Only `ready` is accessed under `L`.***
 
 So any lock-based detector will suspect four pairs of statements. Here is what is actually true of each:
 
@@ -25,48 +29,36 @@ So any lock-based detector will suspect four pairs of statements. Here is what i
 | **P3** (m6, w7) | `log` | **Real, harmless.** If the shutdown wins, the null check sees `null` and W skips the append. |
 | **P4** (m6, w8) | `log` | **Real, harmful.** If the shutdown lands between the check and the use, W throws a `NullPointerException`. |
 
+***Table 1: The four pairs a lock-based detector suspects, and what is actually true of each.***
+
 A good tool should stay quiet on P1, confirm P2 through P4, and show that P4 can crash.
 
 #### Phase 1: where the suspects come from
 
 RaceFuzzer doesn't invent its suspects. It takes them from an existing predictive detector. The paper uses the **hybrid** detector of O'Callahan and Choi (PPoPP 2003), but says any static or dynamic detector would do. This phase is not the paper's contribution.
 
-The hybrid detector watches one run and flags two memory accesses when all of these hold:
-
-- different threads, same memory location, at least one write;
-- **no common lock** held (the lockset part, from Eraser);
-- **not ordered** by `start`, `join` or `wait/notify` (a happens-before check that deliberately ignores lock release → acquire edges).
-
-Formally, a memory event is `MEM(σ, m, a, t, L)`: thread `t`, executing statement `σ`, performs access `a` (READ or WRITE) on location `m` while holding lock set `L`. Two events are reported when:
-
-$$
-\begin{aligned}
-& e_i = \mathrm{MEM}(\sigma_i, m_i, a_i, t_i, L_i) \;\wedge\; e_j = \mathrm{MEM}(\sigma_j, m_j, a_j, t_j, L_j) \\
-& \wedge\; t_i \neq t_j \;\wedge\; m_i = m_j \;\wedge\; (a_i = \mathrm{WRITE} \vee a_j = \mathrm{WRITE}) \\
-& \wedge\; L_i \cap L_j = \emptyset \;\wedge\; \neg(e_i \prec e_j) \;\wedge\; \neg(e_j \prec e_i)
-\end{aligned}
-$$
-
-Here `≺` is happens-before built only from `start`, `join` and `wait/notify`. When the condition holds, the statements (σi, σj) become a racing pair.
+It is the [hybrid check from section 3](#3-hybrid-detection-lockset-plus-limited-happens-before): two accesses are flagged when they share no common lock and are not ordered by `start`, `join` or `wait/notify`. The statements behind a flagged pair become a **racing pair**.
 
 Here is one run of LogService in which M runs up to `m5`, W runs to the end, and then M shuts down:
 
-![One Phase 1 run, event by event](/assets/img/posts/racefuzzer/03-phase1-trace.png)
+![Figure 3: One Phase 1 run, event by event](/assets/img/talks/candidacy/racefuzzer-figure-3-phase1-trace.svg)
+
+***Figure 3: One Phase 1 run of LogService, event by event. M runs up to `m5`, W runs to the end, then M shuts down. All four pairs are flagged, and nothing crashes.***
 
 All four suspects are flagged, including the false alarm P1: the real ordering goes through `ready` and `L`, and the hybrid test ignores lock edges. Notice also that nothing crashed in this run. Phase 1 predicts P4 from a run where it did not crash. That's the payoff of lockset-style reasoning.
 
 Two terms are worth keeping apart here:
 
 - An **event race** is two specific executions in one run, such as events #8 and #9 above.
-- A **racing pair** is the two *statements* behind them, here (m6, w8). Many event races, from many schedules, converge on the same pair, and the pair is what Phase 1 hands to Phase 2.
-
-Phase 1 is not schedule-free either. It can only flag statements that actually executed: if W happens to read `ready == false`, it never runs `w6`, and P1 is never flagged. But that's only a coverage requirement. A happens-before detector needs coverage **and** a lucky ordering: the two accesses must also be unordered in the interleaving it saw.
+- A **racing pair** is the two *statements* (static program text) behind them, here (m6, w8). Many event races, from many schedules, converge on the same pair, and the pair is what Phase 1 hands to Phase 2.
 
 #### Phase 2: postpone, then flip a coin
 
 Phase 2 is the contribution. It takes **one** racing pair at a time, `RaceSet = {σ1, σ2}`, and runs the program under its own scheduler. Only one thread runs at a time, and every choice comes from a seeded random number generator:
 
-![Algorithms 1 and 2, with the paper's line numbers](/assets/img/posts/racefuzzer/04-pseudocode.png)
+![Figure 4: The RaceFuzzer scheduler and the Racing check](/assets/img/posts/racefuzzer/04-pseudocode.png)
+
+***Figure 4: The Phase 2 scheduler and its `Racing` check (the paper's Algorithms 1 and 2, with its line numbers).***
 
 The idea, step by step:
 
@@ -91,18 +83,21 @@ To check the traces and numbers below, I wrote a small simulator of the algorith
 
 With `RaceSet = {m6, w8}`, one run goes like this:
 
-1. W runs `w1`–`w7`. It sees a live logger at `w7`, so it heads for `w8`.
-2. W arrives at `w8`. No partner is postponed yet, so **W is postponed**.
-3. M runs through its setup and `serve()`. W just waits, however long that takes.
-4. M arrives at `m6`. `Racing` finds W, so a **real race is reported**.
-5. The coin says "run M first": `log = null`. M finishes.
-6. Now everyone enabled is postponed, so W is released and runs `log.append(...)`: **NullPointerException**.
+![Figure 5: RaceFuzzer on P4, step by step: W is postponed at w8, M reaches m6, the race is reported, M runs first and W crashes](/assets/img/talks/candidacy/racefuzzer-figure-5-p4-run.svg)
+
+***Figure 5: One seed's run with `RaceSet = {m6, w8}`. W waits at `w8` until M is one step from `m6`; the coin runs M first, and W's append then throws.***
 
 If the coin had gone the other way, W would have appended first and nothing would break. If M had reached `m6` first, M would have waited for W instead, and the race would be found from W's side. Over 2,000 seeds, the race was created in **100%** of runs and the crash happened in about **50%**.
 
 ##### P1: the partner never comes
 
-With `RaceSet = {m1, w6}`, M gets postponed at `m1` before even setting `cfg`. W then reads `ready == false`, skips `w6`, and finishes. Everyone enabled is now postponed, so M is released and runs to the end. W can only reach `w6` after `m3`, which comes after `m1`, so the two threads can never meet. **0 of 2,000** runs reported a race. RaceFuzzer stays silent without anyone reading the code.
+With `RaceSet = {m1, w6}`, one run goes like this:
+
+![Figure 6: RaceFuzzer on P1, step by step: M is postponed at m1, W reads ready == false and skips w6, M is released, and no race is reported](/assets/img/talks/candidacy/racefuzzer-figure-6-p1-run.svg)
+
+***Figure 6: One seed's run with `RaceSet = {m1, w6}`. M waits at `m1` for a partner that never arrives: W skips `w6`, so M is released and no race is reported.***
+
+RaceFuzzer stays silent on this false alarm without anyone reading the code.
 
 ##### The scorecard
 
@@ -113,4 +108,33 @@ With `RaceSet = {m1, w6}`, M gets postponed at `m1` before even setting `cfg`. W
 | P3 (m6, w7) | suspected | 100% | 0% | real |
 | P4 (m6, w8) | suspected | 100% | ≈ 50% | real **and harmful** |
 
+***Table 2: RaceFuzzer on each pair over 2,000 seeds of my simulator.***
+
 Phase 1 gave four identical-looking warnings. Phase 2 sorted them into three tiers.
+
+#### What the paper found on real programs
+
+The paper ran RaceFuzzer on 14 Java programs and libraries (about 600K lines), using the hybrid detector as Phase 1:
+
+| Program | Hybrid warnings | Confirmed real by RaceFuzzer | Not confirmed | Exceptions: RaceFuzzer / default scheduler |
+| --- | --- | --- | --- | --- |
+| moldyn | 59 | 2 | 57 | 0 / 0 |
+| raytracer | 2 | 2 | 0 | 0 / 0 |
+| montecarlo | 5 | 1 | 4 | 0 / 0 |
+| cache4j | 18 | 2 | 16 | 1 / 0 |
+| sor | 8 | 0 | 8 | 0 / 0 |
+| hedc | 9 | 1 | 8 | 1 / 0 |
+| weblech | 27 | 2 | 25 | 1 / 1 |
+| jspider | 29 | 0 | 29 | 0 / 0 |
+| jigsaw | 547 | 36 | 511 | 0 / 0 |
+| vector 1.1 | 9 | 9 | 0 | 0 / 0 |
+| LinkedList | 12 | 12 | 0 | 5 / 0 |
+| ArrayList | 14 | 7 | 7 | 7 / 0 |
+| HashSet | 11 | 11 | 0 | 8 / 1 |
+| TreeSet | 13 | 8 | 5 | 8 / 1 |
+| **Total** | **763** | **93** | **670** | **31 / 3** |
+
+***Table 3: Hybrid warnings and the races RaceFuzzer confirmed, per program (the paper's Table 1). "Not confirmed" pairs were never created in Phase 2: likely false alarms, though RaceFuzzer cannot prove it.***
+
+- **Far fewer warnings to inspect:** 763 hybrid warnings became 93 confirmed races. On the jigsaw web server, 547 became 36.
+- **More crashes found:** RaceFuzzer's scheduler triggered exceptions on 31 pairs, against 3 with the JVM's default scheduler.

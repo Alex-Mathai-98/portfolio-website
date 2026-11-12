@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 782" width="1440" height="782" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: candidacy page only (RaceFuzzer, P4 walk-through). Replaces the post's numbered step list. -->
+  <rect width="1440" height="782" fill="#ffffff"/>
+  <text x="42" y="48" font-size="26" fill="#1f1f1f" font-weight="600">RaceFuzzer on P4 (m6, w8): postpone W, wait for M, flip a coin</text>
+  <text x="42" y="82" font-size="19" fill="#555">RaceSet = {m6, w8}. One seed&#x27;s run, step by step; time runs down.</text>
+  <text x="70" y="162" font-size="20" fill="#1f1f1f" font-weight="600" text-anchor="middle">Step</text>
+  <text x="290.0" y="162" font-size="21" fill="#1f1f1f" font-weight="600" text-anchor="middle">Thread M</text>
+  <text x="680.0" y="162" font-size="21" fill="#1f1f1f" font-weight="600" text-anchor="middle">Thread W</text>
+  <text x="900" y="162" font-size="21" fill="#1f1f1f" font-weight="600">Scheduler</text>
+  <line x1="42" y1="178" x2="1400" y2="178" stroke="#b5b4a8" stroke-width="2"/>
+  <text x="70" y="242" font-size="20" fill="#555" text-anchor="middle">1</text>
+  <rect x="500" y="204" width="360" height="64" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="516" y="234" font-size="17" fill="#555" font-weight="700">w1–w7</text>
+  <text x="580" y="234" font-size="17" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">…  if (log != null)</text>
+  <text x="900" y="230" font-size="17" fill="#1f1f1f">W runs; it sees a live logger</text>
+  <text x="900" y="254" font-size="17" fill="#1f1f1f">at w7, so it heads for w8.</text>
+  <line x1="42" y1="282" x2="1400" y2="282" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="334" font-size="20" fill="#555" text-anchor="middle">2</text>
+  <rect x="500" y="296" width="360" height="64" rx="10" fill="#fff8e8" stroke="#b07c12" stroke-width="2.5"/>
+  <text x="516" y="326" font-size="17" fill="#555" font-weight="700">w8</text>
+  <text x="580" y="326" font-size="17" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">log.append(&quot;done&quot;);</text>
+  <text x="516" y="349" font-size="15" fill="#b07c12" font-weight="700">postponed here</text>
+  <text x="900" y="322" font-size="17" fill="#1f1f1f">w8 is in RaceSet and no partner is</text>
+  <text x="900" y="346" font-size="17" fill="#1f1f1f">postponed yet: postpone W.</text>
+  <line x1="42" y1="374" x2="1400" y2="374" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="426" font-size="20" fill="#555" text-anchor="middle">3</text>
+  <rect x="110" y="388" width="360" height="64" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="126" y="418" font-size="17" fill="#555" font-weight="700">m1–m5</text>
+  <text x="190" y="418" font-size="17" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">…  serve();</text>
+  <rect x="500" y="388" width="360" height="64" rx="10" fill="#fff8e8" stroke="#b07c12" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="680.0" y="426" font-size="17" fill="#b07c12" font-weight="600" text-anchor="middle">postponed at w8</text>
+  <text x="900" y="414" font-size="17" fill="#1f1f1f">M runs its setup and serve().</text>
+  <text x="900" y="438" font-size="17" fill="#1f1f1f">W just waits, however long it takes.</text>
+  <line x1="42" y1="466" x2="1400" y2="466" stroke="#e4e3dc" stroke-width="1.5"/>
+  <rect x="96" y="468" width="778" height="88" rx="14" fill="#e3ecf7" stroke="#2f7bd6" stroke-width="2.5"/>
+  <text x="70" y="518" font-size="20" fill="#555" text-anchor="middle">4</text>
+  <rect x="110" y="480" width="360" height="64" rx="10" fill="#fff" stroke="#2f7bd6" stroke-width="2.5"/>
+  <text x="126" y="510" font-size="17" fill="#555" font-weight="700">m6</text>
+  <text x="190" y="510" font-size="17" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">log = null;</text>
+  <text x="126" y="533" font-size="15" fill="#2f7bd6" font-weight="700">about to run</text>
+  <rect x="500" y="480" width="360" height="64" rx="10" fill="#fff8e8" stroke="#b07c12" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="680.0" y="518" font-size="17" fill="#b07c12" font-weight="600" text-anchor="middle">postponed at w8</text>
+  <text x="900" y="506" font-size="17" fill="#1f1f1f">M reaches m6: Racing finds W. Both are</text>
+  <text x="900" y="530" font-size="17" fill="#1f1f1f" font-weight="700">one step from log: real race reported.</text>
+  <line x1="42" y1="558" x2="1400" y2="558" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="610" font-size="20" fill="#555" text-anchor="middle">5</text>
+  <rect x="110" y="572" width="360" height="64" rx="10" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="126" y="602" font-size="17" fill="#555" font-weight="700">m6</text>
+  <text x="190" y="602" font-size="17" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">log = null;</text>
+  <rect x="500" y="572" width="360" height="64" rx="10" fill="#fff8e8" stroke="#b07c12" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="680.0" y="610" font-size="17" fill="#b07c12" font-weight="600" text-anchor="middle">postponed at w8</text>
+  <text x="900" y="598" font-size="17" fill="#1f1f1f">Coin: heads, so run M first.</text>
+  <text x="900" y="622" font-size="17" fill="#1f1f1f">log is now null; M finishes.</text>
+  <line x1="42" y1="650" x2="1400" y2="650" stroke="#e4e3dc" stroke-width="1.5"/>
+  <text x="70" y="702" font-size="20" fill="#555" text-anchor="middle">6</text>
+  <rect x="500" y="664" width="360" height="64" rx="10" fill="#f7dedd" stroke="#d1342f" stroke-width="3"/>
+  <text x="516" y="694" font-size="17" fill="#555" font-weight="700">w8</text>
+  <text x="580" y="694" font-size="17" fill="#1f1f1f" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">log.append(&quot;done&quot;);</text>
+  <text x="516" y="717" font-size="15" fill="#d1342f" font-weight="700">NullPointerException</text>
+  <text x="900" y="690" font-size="17" fill="#1f1f1f">Everyone enabled is postponed, so W is</text>
+  <text x="900" y="714" font-size="17" fill="#d1342f" font-weight="700">released: NullPointerException.</text>
+  <line x1="42" y1="742" x2="1400" y2="742" stroke="#e4e3dc" stroke-width="1.5"/>
+</svg>
