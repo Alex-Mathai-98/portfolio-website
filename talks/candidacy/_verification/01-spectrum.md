@@ -8,6 +8,35 @@ The three approaches differ in who writes the proof and how much the result cove
 - Rocq covers everything, but you write every step.
 - Verus sits in between: you write the key facts (invariants), and Z3 works out the rest.
 
+<!-- AIDEV-NOTE: proof-effort/guarantee scale; reuses the .tradeoff-scale styles in candidacy.md (.ts-pm = centred mark). -->
+<div class="tradeoff-scale" role="figure" aria-label="Verification techniques from least proof effort to strongest guarantee">
+  <div class="ts-ends">
+    <span><strong>&larr; Less proof to write</strong><small>result holds only up to a bound</small></span>
+    <span><strong>Stronger guarantee &rarr;</strong><small>holds for every input, more proof to write</small></span>
+  </div>
+  <div class="ts-track">
+    <div class="ts-line" aria-hidden="true"></div>
+    <div class="ts-mark ts-p0">
+      <span class="ts-dot" aria-hidden="true"></span>
+      <span class="ts-name">Bounded model checking</span>
+      <span class="ts-cite">e.g. CBMC · LLM agent: <a href="#9-bmc-agent-agentic-model-checking">BMC-Agent</a></span>
+      <span class="ts-note">No proof to write: the tool unrolls loops up to a bound and checks every run within it.</span>
+    </div>
+    <div class="ts-mark ts-pm">
+      <span class="ts-dot" aria-hidden="true"></span>
+      <span class="ts-name">SMT-based deductive verification</span>
+      <span class="ts-cite">e.g. Verus · LLM agent: <a href="#12-exverus-verus-proof-repair-via-counterexample-reasoning">ExVerus</a></span>
+      <span class="ts-note">You write the key facts (invariants); Z3 proves the rest, for every input.</span>
+    </div>
+    <div class="ts-mark ts-p3">
+      <span class="ts-dot" aria-hidden="true"></span>
+      <span class="ts-name">Interactive proof</span>
+      <span class="ts-cite">e.g. Rocq · LLM agent: AutoRocq</span>
+      <span class="ts-note">You write every proof step; the checker verifies each one.</span>
+    </div>
+  </div>
+</div>
+
 #### The spectrum
 
 ![Figure 1: Where SMT-based deductive verification sits between bounded model checking and interactive proving](/assets/img/posts/verification-techniques/vt-01-verification-spectrum.png)

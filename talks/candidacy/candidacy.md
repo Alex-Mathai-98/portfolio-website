@@ -103,6 +103,12 @@ Model checkers prove properties exhaustively, but someone has to write the model
 
 {% include_relative _llm-model-checking/03-sysmobench.md %}
 
+## LLM Agents + Deductive Verification
+
+Deductive verifiers such as Verus prove code correct for every input, but only if someone supplies the right loop invariants and proof hints. When an LLM writes them and the proof fails, the verifier's error message says little about why. ExVerus turns that failure into concrete counterexamples the LLM can reason about.
+
+{% include_relative _llm-deductive/01-exverus.md %}
+
 ## References
 
 Papers covered on this page, in the order they appear. Each title links to its section above.
@@ -135,17 +141,22 @@ Papers covered on this page, in the order they appear. Each title links to its s
 12. Xinyue Zuo, Yifan Zhang, Hongshu Wang, Yufan Cai, Zhe Hou, Jun Sun and Jin Song Dong. [PAT-Agent: Autoformalization for Model Checking](#10-pat-agent-autoformalization-for-model-checking). *ASE*, 2025. [arXiv:2509.23675](https://arxiv.org/abs/2509.23675).
 13. Qian Cheng, Ruize Tang, Emilie Ma, Finn Hackett, Peiyang He, Yiming Su, Ivan Beschastnikh, Yu Huang, Xiaoxing Ma and Tianyin Xu. [SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems](#11-sysmobench-evaluating-ai-on-formally-modeling-complex-real-world-systems). *ICLR*, 2026. [arXiv:2509.23130](https://arxiv.org/abs/2509.23130).
 
-**LLM Agents for Crash Resolution**
+**LLM Agents + Deductive Verification**
 
 {:start="14"}
-14. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
-15. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
-16. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
+14. Yang, Sun, Wu, Caridad, Yuan, Yao, Lu and Pei. [ExVerus: Verus Proof Repair via Counterexample Reasoning](#12-exverus-verus-proof-repair-via-counterexample-reasoning). [arXiv:2603.25810](https://arxiv.org/abs/2603.25810), 2026.
+
+**LLM Agents for Crash Resolution**
+
+{:start="15"}
+15. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
+16. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
+17. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
 
 **LLM Code Slop Reduction**
 
-{:start="17"}
-17. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
+{:start="18"}
+18. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
 
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
@@ -185,6 +196,7 @@ Papers covered on this page, in the order they appear. Each title links to its s
   .ts-p1 { left: 37%; transform: translateX(-50%); align-items: center; text-align: center; }
   .ts-p2 { left: 63%; transform: translateX(-50%); align-items: center; text-align: center; }
   .ts-p3 { right: .9rem; align-items: flex-end; text-align: right; }
+  .ts-pm { left: 50%; transform: translateX(-50%); align-items: center; text-align: center; }
   .ts-caption { color: var(--text-muted-color); font-size: .8rem; margin-top: .4rem; }
   @media (max-width: 640px) {
     .ts-ends { display: none; }
@@ -200,6 +212,7 @@ Papers covered on this page, in the order they appear. Each title links to its s
     .ts-dot { position: absolute; left: -1.6rem; top: .1rem; margin: 0; }
   }
   .content table.wrap th, .content table.wrap td { white-space: normal; min-width: 7rem; vertical-align: top; }
+  .content table.wrap code { white-space: nowrap; }
   .content table.compact th, .content table.compact td { padding: .4rem .55rem; text-align: center; }
   .content table.compact td:first-child { text-align: left; }
   .content table.compact thead th { white-space: normal; }
