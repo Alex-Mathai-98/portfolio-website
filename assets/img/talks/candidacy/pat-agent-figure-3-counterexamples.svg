@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1340 800" width="1340" height="800" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: candidacy page only (PAT-Agent Figure 3). Redraw of the post's figure-5-counterexamples.png with
+       blue = action the LLM changed (matches the blue fix boxes) and grey = rank-1 action left alone. -->
+  <rect width="1340" height="800" fill="#ffffff"/>
+  <text x="42" y="48" font-size="24" fill="#1f1f1f" font-weight="600">Real counterexamples from the PAT-Agent run, rounds 0 and 1</text>
+  <text x="42" y="82" font-size="18" fill="#555">PAT&#x27;s shortest witness traces, copied from the repo&#x27;s logs. Owner 1 never moves in either trace.</text>
+  <rect x="42" y="112" width="622" height="460" rx="14" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="70" y="156" font-size="21" fill="#1f1f1f" font-weight="700">Round 0: keylockinside reached</text>
+  <text x="70" y="188" font-size="18" fill="#555">key locked in the car, nobody inside</text>
+  <text x="80" y="240" font-size="17" fill="#555" text-anchor="middle">1</text>
+  <text x="108" y="240" font-size="18" fill="#1f1f1f">owner0_approach_car</text>
+  <text x="642" y="240" font-size="17" fill="#555" text-anchor="end">owner 0 → near</text>
+  <text x="80" y="279" font-size="17" fill="#555" text-anchor="middle">2</text>
+  <text x="108" y="279" font-size="18" fill="#1f1f1f">owner0_pickup_key_far</text>
+  <text x="642" y="279" font-size="17" fill="#555" text-anchor="end">key → with owner</text>
+  <text x="80" y="318" font-size="17" fill="#555" text-anchor="middle">3</text>
+  <text x="108" y="318" font-size="18" fill="#1f1f1f">unlock_door_owner0</text>
+  <text x="642" y="318" font-size="17" fill="#555" text-anchor="end">door → unlocked</text>
+  <text x="80" y="357" font-size="17" fill="#555" text-anchor="middle">4</text>
+  <text x="108" y="357" font-size="18" fill="#1f1f1f">open_door_owner0</text>
+  <text x="642" y="357" font-size="17" fill="#555" text-anchor="end">door → open</text>
+  <text x="80" y="396" font-size="17" fill="#555" text-anchor="middle">5</text>
+  <text x="108" y="396" font-size="18" fill="#1f1f1f">owner0_enter_car</text>
+  <text x="642" y="396" font-size="17" fill="#555" text-anchor="end">owner 0 → in car</text>
+  <text x="80" y="435" font-size="17" fill="#555" text-anchor="middle">6</text>
+  <text x="108" y="435" font-size="18" fill="#1f1f1f">owner0_drop_key_in_car</text>
+  <text x="642" y="435" font-size="17" fill="#555" text-anchor="end">key → in car</text>
+  <text x="80" y="474" font-size="17" fill="#555" text-anchor="middle">7</text>
+  <text x="108" y="474" font-size="18" fill="#1f1f1f">owner0_exit_car</text>
+  <text x="642" y="474" font-size="17" fill="#555" text-anchor="end">owner 0 → near</text>
+  <text x="80" y="513" font-size="17" fill="#555" text-anchor="middle">8</text>
+  <text x="108" y="513" font-size="18" fill="#1f1f1f">close_door_owner0</text>
+  <text x="642" y="513" font-size="17" fill="#555" text-anchor="end">door → unlocked</text>
+  <rect x="56" y="528" width="594" height="34" rx="6" fill="#e3ecf8"/>
+  <circle cx="80" cy="545" r="13" fill="#fff" stroke="#2f7bd6" stroke-width="2"/>
+  <text x="80" y="551" font-size="16" fill="#1f1f1f" font-weight="700" text-anchor="middle">9</text>
+  <text x="108" y="552" font-size="18" fill="#1f1f1f" font-weight="700">lock_door_using_key_in_car</text>
+  <text x="642" y="552" font-size="17" fill="#555" text-anchor="end">door → locked</text>
+  <rect x="42" y="590" width="622" height="102" rx="14" fill="#e3ecf8" stroke="#2f7bd6" stroke-width="2.5"/>
+  <text x="70" y="630" font-size="19" fill="#1f1f1f" font-weight="700">LLM&#x27;s fix: rank-1 action, as the heuristic says</text>
+  <text x="70" y="664" font-size="18" fill="#444">lock with key in car only if an owner is inside</text>
+  <rect x="678" y="112" width="622" height="460" rx="14" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="706" y="156" font-size="21" fill="#1f1f1f" font-weight="700">Round 1: runwithoutowner reached</text>
+  <text x="706" y="188" font-size="18" fill="#555">car moving, both owners far away</text>
+  <text x="716" y="240" font-size="17" fill="#555" text-anchor="middle">1</text>
+  <text x="744" y="240" font-size="18" fill="#1f1f1f">owner0_approach_car</text>
+  <text x="1278" y="240" font-size="17" fill="#555" text-anchor="end">owner 0 → near</text>
+  <text x="716" y="279" font-size="17" fill="#555" text-anchor="middle">2</text>
+  <text x="744" y="279" font-size="18" fill="#1f1f1f">owner0_pickup_key_far</text>
+  <text x="1278" y="279" font-size="17" fill="#555" text-anchor="end">key → with owner</text>
+  <text x="716" y="318" font-size="17" fill="#555" text-anchor="middle">3</text>
+  <text x="744" y="318" font-size="18" fill="#1f1f1f">unlock_door_owner0</text>
+  <text x="1278" y="318" font-size="17" fill="#555" text-anchor="end">door → unlocked</text>
+  <text x="716" y="357" font-size="17" fill="#555" text-anchor="middle">4</text>
+  <text x="744" y="357" font-size="18" fill="#1f1f1f">open_door_owner0</text>
+  <text x="1278" y="357" font-size="17" fill="#555" text-anchor="end">door → open</text>
+  <text x="716" y="396" font-size="17" fill="#555" text-anchor="middle">5</text>
+  <text x="744" y="396" font-size="18" fill="#1f1f1f">owner0_enter_car</text>
+  <text x="1278" y="396" font-size="17" fill="#555" text-anchor="end">owner 0 → in car</text>
+  <text x="716" y="435" font-size="17" fill="#555" text-anchor="middle">6</text>
+  <text x="744" y="435" font-size="18" fill="#1f1f1f">start_engine</text>
+  <text x="1278" y="435" font-size="17" fill="#555" text-anchor="end">engine on</text>
+  <text x="716" y="474" font-size="17" fill="#555" text-anchor="middle">7</text>
+  <text x="744" y="474" font-size="18" fill="#1f1f1f">drive_consume_fuel_from_full</text>
+  <text x="1278" y="474" font-size="17" fill="#555" text-anchor="end">moving, fuel 75</text>
+  <rect x="692" y="489" width="594" height="34" rx="6" fill="#e3ecf8"/>
+  <circle cx="716" cy="506" r="13" fill="#fff" stroke="#2f7bd6" stroke-width="2"/>
+  <text x="716" y="512" font-size="16" fill="#1f1f1f" font-weight="700" text-anchor="middle">8</text>
+  <text x="744" y="513" font-size="18" fill="#1f1f1f" font-weight="700">owner0_exit_car</text>
+  <text x="1278" y="513" font-size="17" fill="#555" text-anchor="end">owner 0 → near</text>
+  <rect x="692" y="528" width="594" height="34" rx="6" fill="#efefec"/>
+  <circle cx="716" cy="545" r="13" fill="#fff" stroke="#8a8a80" stroke-width="2"/>
+  <text x="716" y="551" font-size="16" fill="#1f1f1f" font-weight="700" text-anchor="middle">9</text>
+  <text x="744" y="552" font-size="18" fill="#1f1f1f" font-weight="700">owner0_leave_car</text>
+  <text x="1278" y="552" font-size="17" fill="#555" text-anchor="end">owner 0 → far</text>
+  <rect x="678" y="590" width="622" height="102" rx="14" fill="#e3ecf8" stroke="#2f7bd6" stroke-width="2.5"/>
+  <text x="706" y="630" font-size="19" fill="#1f1f1f" font-weight="700">LLM&#x27;s fix: rank-2 action, not rank 1</text>
+  <text x="706" y="664" font-size="18" fill="#444">owner0_exit_car needs isMoving == 0</text>
+  <rect x="42" y="716" width="20" height="20" rx="4" fill="#e3ecf8" stroke="#2f7bd6" stroke-width="2"/>
+  <text x="72" y="732" font-size="17" fill="#1f1f1f">the action the LLM changed</text>
+  <rect x="330" y="716" width="20" height="20" rx="4" fill="#efefec" stroke="#8a8a80" stroke-width="2"/>
+  <text x="360" y="732" font-size="17" fill="#1f1f1f">rank-1 action the LLM left alone</text>
+  <text x="42" y="770" font-size="17" fill="#555">Ranks follow the paper&#x27;s locality heuristic: the last event ranks first.</text>
+</svg>

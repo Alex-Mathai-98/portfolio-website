@@ -29,7 +29,7 @@ The paper's running example is a car with **keyless entry** (the benchmark calls
 
 ***Figure 2:*** *The first model PAT-Agent generated for the keyless car (repair round 0), abridged. Source: the authors' repo, `Experiments_Demo/generated_code/keyless_car/0.csp`.*
 
-Each process is a loop of guarded actions joined by `[]`. Here `[]` is not a pair of brackets but CSP#'s choice operator: the process offers every alternative whose guard is currently true, and whichever one happens next decides the step. A condition inside single brackets, like `[doorStatus == DOOR_OPEN]`, is a guard. The last line interleaves all six processes. The six are one process per owner (the benchmark specifies two owners), plus the key, the door, the motor and the engine. Red and amber rows mark the guards the repair loop changed in rounds 1 and 2 (see the walkthrough below).
+The last line interleaves all six processes. The six are one process per owner (the benchmark specifies two owners), plus the key, the door, the motor and the engine. Red and amber rows mark the guards the repair loop changed in rounds 1 and 2 (see the walkthrough below).
 
 How to read one line of Figure 2, for example `[] [ownerPositions[0] == OWNER_NEAR_CAR] owner0_leave_car{ownerPositions[0] = OWNER_FAR_AWAY;}`:
 
@@ -86,7 +86,7 @@ The repo logs a complete run on the keyless car. The first model fails three of 
 | drivewithoutfuel | INVALID | VALID | 8 events: four drive steps empty the tank, then `start_engine` and `start_driving` |
 {: .wrap}
 
-![Figure 3: real counterexamples from repair rounds 0 and 1](/assets/img/posts/pat-agent-autoformalization/figure-5-counterexamples.png)
+![Figure 3: real counterexamples from repair rounds 0 and 1](/assets/img/talks/candidacy/pat-agent-figure-3-counterexamples.svg)
 
 ***Figure 3:*** *The real counterexamples from round 0 (left) and round 1 (right). Source: the authors' repo, `mismatch_traces.json` for each round.*
 
