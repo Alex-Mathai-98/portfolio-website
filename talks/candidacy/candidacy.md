@@ -14,7 +14,7 @@ Summaries of the papers I read for my PhD candidacy exam, grouped by topic. For 
 
 <!-- AIDEV-NOTE: keep at least one raw <h2>: for pages, page.content is still Markdown when the layout
      runs, so toc-status.html never sees "<h2" and the TOC stays off. Later sections can use ##. -->
-<h2 id="data-races-and-how-to-find-them">Data races: And how to find them?</h2>
+<h2 id="data-races-how-to-find-them">Data races: How to find them?</h2>
 
 A data race is two accesses to the same memory location from different threads, at least one of them a write, with nothing ordering them. 
 I will discuss four data-race detection techniques that build on each other:
@@ -75,6 +75,12 @@ I will discuss four data-race detection techniques that build on each other:
 
 {% include_relative _data-races/04-racefuzzer.md %}
 
+## Concurrency Bugs are more than "just" Data Races
+
+Data-race detectors look for one kind of mistake. A study of 105 real bugs shows that most concurrency bugs are about broken intentions, atomicity or order, and many of them involve no data race at all.
+
+{% include_relative _concurrency-bugs/01-lu-learning-from-mistakes.md %}
+
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
      (so an h2 nests its papers and an h3 its subsections). h4s are numbered "<paper>.<n>" here, not in the .md:
@@ -84,6 +90,7 @@ I will discuss four data-race detection techniques that build on each other:
      Everything starts expanded; following a link into collapsed content opens every collapsed level above it.
      Figures are lazy and unsized, so after a jump they load late and push the target down: settle()
      loads the ones above the target right away, then re-aligns the target once they are in.
+     h5 (accent bar) and h6 (indented) are restyled below so sub-parts read as semi-titles.
      No // comments in the script: the compress layout minifies HTML. -->
 <style>
   .tradeoff-scale { margin: 2rem 0 1.5rem; }
@@ -125,6 +132,13 @@ I will discuss four data-race detection techniques that build on each other:
       align-items: flex-start; text-align: left; margin-bottom: 1rem;
     }
     .ts-dot { position: absolute; left: -1.6rem; top: .1rem; margin: 0; }
+  }
+  article .content h5 {
+    font-size: 1.2rem; font-weight: 600; margin-top: 2.2rem; padding: .15rem 0 .15rem .7rem;
+    border-left: 4px solid var(--link-color);
+  }
+  article .content h6 {
+    font-size: 1.02rem; font-weight: 600; margin: 1.6rem 0 .6rem 1rem; color: var(--heading-color, var(--text-color));
   }
   article .content h2 {
     font-size: 1.875rem; font-weight: 500; margin-top: 3rem; padding-bottom: .5rem;
