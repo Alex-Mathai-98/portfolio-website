@@ -81,6 +81,14 @@ Data-race detectors look for one kind of mistake. A study of 105 real bugs shows
 
 {% include_relative _concurrency-bugs/01-lu-learning-from-mistakes.md %}
 
+## Concurrency Fixing
+
+Finding a concurrency bug is only half the job. These two papers fix races automatically: LOOM installs a developer's workaround into a running program, and AFix synthesizes a lock-based patch from a bug report.
+
+{% include_relative _concurrency-fixing/01-loom.md %}
+
+{% include_relative _concurrency-fixing/02-afix.md %}
+
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
      (so an h2 nests its papers and an h3 its subsections). h4s are numbered "<paper>.<n>" here, not in the .md:
@@ -133,6 +141,9 @@ Data-race detectors look for one kind of mistake. A study of 105 real bugs shows
     }
     .ts-dot { position: absolute; left: -1.6rem; top: .1rem; margin: 0; }
   }
+  .content table.compact th, .content table.compact td { padding: .4rem .55rem; text-align: center; }
+  .content table.compact td:first-child { text-align: left; }
+  .content table.compact thead th { white-space: normal; }
   article .content h5 {
     font-size: 1.2rem; font-weight: 600; margin-top: 2.2rem; padding: .15rem 0 .15rem .7rem;
     border-left: 4px solid var(--link-color);
