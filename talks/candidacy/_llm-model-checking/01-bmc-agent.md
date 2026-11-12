@@ -12,6 +12,12 @@ BMC-Agent takes a C or Rust codebase with no specs at all, invents a contract fo
 
 ***Figure 1:*** *The BMC-Agent pipeline. Blue boxes are LLM agents; every LLM output passes through a deterministic step before it can change a verdict.*
 
+The work is split across the codebase's call graph in two passes, in opposite directions:
+
+![Figure 2: Specs are generated top-down and verification runs bottom-up on a sample call graph](/assets/img/talks/candidacy/bmc-agent-call-graph.svg)
+
+***Figure 2:*** *A sample call graph. Specs are generated top-down, because a function's contract comes from how its callers use it. Verification runs bottom-up, one function at a time: by the time a caller is checked, every callee has a spec that stands in for it as a stub.*
+
 #### End-to-end walkthrough: the `kapi_file_size` bug
 
 **The paper's motivating example is a 5-line function in VibeOS (an LLM-written ARM64 hobby kernel) that looks safe because it checks for NULL — and BMC-Agent proves it still crashes.** Follow it phase by phase.
@@ -39,7 +45,21 @@ Notice the **gap**: the precondition admits *any* non-null pointer, but the post
 
 ##### Phase 2 — BMC (CBMC)
 
-The harness picks `node` nondeterministically, calls the function, and asserts the postcondition. CBMC returns a counterexample: a **non-null pointer that doesn't point to a valid `vfs_node_t`**. The NULL check passes; `n->size` reads garbage memory.
+The harness picks `node` nondeterministically, calls the function, and asserts the postcondition. A sketch of it, in the style BMC-Agent generates:
+
+```c
+void harness_kapi_file_size(void) {
+    void *node = nondet_pointer();   // any pointer: NULL, valid, or bogus
+    // pre: null(node) || valid(node) admits any value, so nothing is assumed
+    int r = kapi_file_size(node);
+    if (node == NULL)
+        __CPROVER_assert(r == -1, "post: NULL case");
+    else
+        __CPROVER_assert(r == (int)((vfs_node_t *)node)->size, "post: non-NULL case");
+}
+```
+
+CBMC also adds its own memory-safety checks to every pointer dereference. It returns a counterexample: a **non-null pointer that doesn't point to a valid `vfs_node_t`**. The NULL check passes; `n->size` reads garbage memory.
 
 ##### Phase 3, Stage 1 — Reachability
 
@@ -47,7 +67,23 @@ A call-site scan finds **no callers inside the codebase** — the function is on
 
 ##### Phase 3, Stage 3 — Dynamic replay
 
-BMC-Agent compiles a real C harness with GCC that calls `kapi_file_size` with a non-null bogus pointer, with signal handlers installed. Result: **SIGSEGV**. → upgraded to **CONFIRMED\_DYNAMIC** (the strongest tier).
+BMC-Agent compiles a real C harness with GCC that calls `kapi_file_size` with a non-null bogus pointer, with signal handlers installed. A simple version:
+
+```c
+static void on_crash(int sig) {
+    printf("crashed: signal %d\n", sig);
+    exit(1);
+}
+
+int main(void) {
+    signal(SIGSEGV, on_crash);           // catch the crash instead of dying silently
+    void *bogus = (void *)0xdeadbeef;    // non-null, but no vfs_node_t lives here
+    kapi_file_size(bogus);               // the NULL check passes, n->size faults
+    return 0;
+}
+```
+
+Result: **SIGSEGV**. → upgraded to **CONFIRMED\_DYNAMIC** (the strongest tier).
 
 ##### Phase 3, Stage 4 — Realism audit
 

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 720" width="1240" height="720" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <!-- AIDEV-NOTE: candidacy page only (BMC-Agent). Illustrative call graph, not from the paper: spec order is
+       breadth-first from the root (callers first); verification order is post-order (callees first). -->
+  <defs>
+    <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b5b4a8"/></marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f7bd6"/></marker>
+    <marker id="ahgr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f9d6b"/></marker>
+  </defs>
+  <rect width="1240" height="720" fill="#ffffff"/>
+  <text x="42" y="48" font-size="26" fill="#1f1f1f" font-weight="600">Specs are generated top-down; verification runs bottom-up</text>
+  <text x="42" y="82" font-size="18" fill="#555">A sample call graph. Arrows between boxes mean &quot;calls&quot;. Each box shows when its spec is written and when it is verified.</text>
+  <line x1="620" y1="213.0" x2="400" y2="279.0" stroke="#b5b4a8" stroke-width="2.5" marker-end="url(#ahg)"/>
+  <line x1="620" y1="213.0" x2="840" y2="279.0" stroke="#b5b4a8" stroke-width="2.5" marker-end="url(#ahg)"/>
+  <line x1="400" y1="373.0" x2="260" y2="439.0" stroke="#b5b4a8" stroke-width="2.5" marker-end="url(#ahg)"/>
+  <line x1="400" y1="373.0" x2="540" y2="439.0" stroke="#b5b4a8" stroke-width="2.5" marker-end="url(#ahg)"/>
+  <line x1="840" y1="373.0" x2="840" y2="439.0" stroke="#b5b4a8" stroke-width="2.5" marker-end="url(#ahg)"/>
+  <rect x="505.0" y="127.0" width="230" height="86" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="620" y="159.0" font-size="18" fill="#1f1f1f" font-weight="600" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">handle_request()</text>
+  <rect x="521.0" y="173.0" width="92" height="28" rx="14" fill="#eaf2fd" stroke="#2f7bd6" stroke-width="1.5"/>
+  <text x="567.0" y="193.0" font-size="15" fill="#2f7bd6" font-weight="700" text-anchor="middle">spec 1</text>
+  <rect x="627.0" y="173.0" width="92" height="28" rx="14" fill="#e9f7f0" stroke="#1f9d6b" stroke-width="1.5"/>
+  <text x="673.0" y="193.0" font-size="15" fill="#1f9d6b" font-weight="700" text-anchor="middle">verify 6</text>
+  <rect x="285.0" y="287.0" width="230" height="86" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="400" y="319.0" font-size="18" fill="#1f1f1f" font-weight="600" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">parse_request()</text>
+  <rect x="301.0" y="333.0" width="92" height="28" rx="14" fill="#eaf2fd" stroke="#2f7bd6" stroke-width="1.5"/>
+  <text x="347.0" y="353.0" font-size="15" fill="#2f7bd6" font-weight="700" text-anchor="middle">spec 2</text>
+  <rect x="407.0" y="333.0" width="92" height="28" rx="14" fill="#e9f7f0" stroke="#1f9d6b" stroke-width="1.5"/>
+  <text x="453.0" y="353.0" font-size="15" fill="#1f9d6b" font-weight="700" text-anchor="middle">verify 3</text>
+  <rect x="725.0" y="287.0" width="230" height="86" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="840" y="319.0" font-size="18" fill="#1f1f1f" font-weight="600" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">serve_file()</text>
+  <rect x="741.0" y="333.0" width="92" height="28" rx="14" fill="#eaf2fd" stroke="#2f7bd6" stroke-width="1.5"/>
+  <text x="787.0" y="353.0" font-size="15" fill="#2f7bd6" font-weight="700" text-anchor="middle">spec 3</text>
+  <rect x="847.0" y="333.0" width="92" height="28" rx="14" fill="#e9f7f0" stroke="#1f9d6b" stroke-width="1.5"/>
+  <text x="893.0" y="353.0" font-size="15" fill="#1f9d6b" font-weight="700" text-anchor="middle">verify 5</text>
+  <rect x="145.0" y="447.0" width="230" height="86" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="260" y="479.0" font-size="18" fill="#1f1f1f" font-weight="600" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">read_header()</text>
+  <rect x="161.0" y="493.0" width="92" height="28" rx="14" fill="#eaf2fd" stroke="#2f7bd6" stroke-width="1.5"/>
+  <text x="207.0" y="513.0" font-size="15" fill="#2f7bd6" font-weight="700" text-anchor="middle">spec 4</text>
+  <rect x="267.0" y="493.0" width="92" height="28" rx="14" fill="#e9f7f0" stroke="#1f9d6b" stroke-width="1.5"/>
+  <text x="313.0" y="513.0" font-size="15" fill="#1f9d6b" font-weight="700" text-anchor="middle">verify 1</text>
+  <rect x="425.0" y="447.0" width="230" height="86" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="540" y="479.0" font-size="18" fill="#1f1f1f" font-weight="600" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">check_length()</text>
+  <rect x="441.0" y="493.0" width="92" height="28" rx="14" fill="#eaf2fd" stroke="#2f7bd6" stroke-width="1.5"/>
+  <text x="487.0" y="513.0" font-size="15" fill="#2f7bd6" font-weight="700" text-anchor="middle">spec 5</text>
+  <rect x="547.0" y="493.0" width="92" height="28" rx="14" fill="#e9f7f0" stroke="#1f9d6b" stroke-width="1.5"/>
+  <text x="593.0" y="513.0" font-size="15" fill="#1f9d6b" font-weight="700" text-anchor="middle">verify 2</text>
+  <rect x="725.0" y="447.0" width="230" height="86" rx="12" fill="#fff" stroke="#cfcec6" stroke-width="2"/>
+  <text x="840" y="479.0" font-size="18" fill="#1f1f1f" font-weight="600" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">lookup_node()</text>
+  <rect x="741.0" y="493.0" width="92" height="28" rx="14" fill="#eaf2fd" stroke="#2f7bd6" stroke-width="1.5"/>
+  <text x="787.0" y="513.0" font-size="15" fill="#2f7bd6" font-weight="700" text-anchor="middle">spec 6</text>
+  <rect x="847.0" y="493.0" width="92" height="28" rx="14" fill="#e9f7f0" stroke="#1f9d6b" stroke-width="1.5"/>
+  <text x="893.0" y="513.0" font-size="15" fill="#1f9d6b" font-weight="700" text-anchor="middle">verify 4</text>
+  <line x1="70" y1="140" x2="70" y2="520" stroke="#2f7bd6" stroke-width="6" marker-end="url(#ahb)"/>
+  <text x="48" y="330" font-size="18" fill="#2f7bd6" font-weight="700" text-anchor="middle" transform="rotate(-90 48 330)">Spec generation: top-down</text>
+  <line x1="1170" y1="520" x2="1170" y2="140" stroke="#1f9d6b" stroke-width="6" marker-end="url(#ahgr)"/>
+  <text x="1196" y="330" font-size="18" fill="#1f9d6b" font-weight="700" text-anchor="middle" transform="rotate(90 1196 330)">Verification: bottom-up</text>
+  <rect x="60" y="580" width="560" height="112" rx="12" fill="#f5f9fe" stroke="#2f7bd6" stroke-width="2"/>
+  <text x="82" y="612" font-size="17" fill="#2f7bd6" font-weight="700">Spec generation (top-down)</text>
+  <text x="82" y="639" font-size="17" fill="#1f1f1f">A function&#x27;s contract is inferred from how its callers</text>
+  <text x="82" y="666" font-size="17" fill="#1f1f1f">use it, so callers get their specs first.</text>
+  <rect x="640" y="580" width="560" height="112" rx="12" fill="#f3fbf7" stroke="#1f9d6b" stroke-width="2"/>
+  <text x="662" y="612" font-size="17" fill="#1f9d6b" font-weight="700">Verification (bottom-up)</text>
+  <text x="662" y="639" font-size="17" fill="#1f1f1f">Callees are checked first. When a caller is checked,</text>
+  <text x="662" y="666" font-size="17" fill="#1f1f1f">each callee is replaced by its spec (a stub).</text>
+</svg>
