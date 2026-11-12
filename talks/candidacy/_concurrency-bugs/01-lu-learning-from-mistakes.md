@@ -83,11 +83,50 @@ An order violation breaks an intention of the form **"A must happen before B"**.
 - **The intention:** an order between two **groups** of operations: every mark must finish before the unpin.
 - **What goes wrong:** the unpin runs first, and a later mark touches freed atoms.
 - **Result:** the program crashes.
-- **Fix:** a spin flag makes the last thread wait for every in-progress mark before it unpins (Figure 6, in the fixes below).
+- **Fix:** a spin flag makes the last thread wait for every in-progress mark before it unpins (Figure 7, in the fixes below).
 
 #### The "Other" category: MySQL
 
 Only 2 bugs fit neither pattern. In one, a monitor thread crashes the server if any thread waits on a lock longer than `fatal_timeout`, assuming that means deadlock. Under heavy load (2,048 worker threads), normal waits exceeded the timeout and the server kept killing itself. The broken assumption was about **performance**, not atomicity or order.
+
+#### Telling order from atomicity violations, from a schedule
+
+The patterns above are defined by the programmer's intent. In practice you start from a **schedule**: you have a flaky crash, and a tool has found a realizable interleaving that reproduces it every time. Is it an order or an atomicity violation?
+
+##### The idea
+
+The code's own switch points (`wait` / `signal`, `unlock`…`lock`, `yield`, `await`, blocking calls, joins) already fix the order of large chunks of the run. Only the accesses *between* two switch points can move. So find the window where the crash happens, then push the two racing accesses to opposite edges of that window, once in each direction.
+
+![Figure 5: Finding the crashing window W1 and pushing its racing pair both ways](/assets/img/posts/concurrency-bugs/figure-24.png)
+
+***Figure 5:*** *The whole picture. T1 and T2 hand control back and forth at switch points the code creates. Window W1 is where both run at once; ① marks the induced schedule found there (B before A), which crashes 100% of the time. ② and ③ push A and B to opposite edges of W1, once in each direction.*
+
+##### Classifying the race
+
+**Input:** a realizable interleaving ① that reproduces the original crash report 100% of the time.
+
+1. **Mark the switch points.** These are every place the code hands control to another thread: `wait` / `signal`, `unlock`…`lock`, `yield`, `await`, blocking calls, joins. They split the run into **windows** whose order the program already fixes.
+2. **Locate ①.** Find the window containing the two accesses whose order the crash depends on: one from T1 and one from T2, to the same data.
+3. **Push both ways, to the edges.** Inside that window only, and without crossing a switch point:
+   - **②:** T1's access at the top edge, T2's access at the bottom edge.
+   - **③:** the reverse.
+
+   Push all the way to the edge, not just past the neighbouring access.
+4. **Run ② and ③ several times each** under the enforced schedule, and score each one:
+   - **Fail:** reproduces the **same crash signature as the original crash report** (same sanitizer report and access pair), **100% of the time**.
+   - **Pass:** never produces that crash.
+   - **Anything else** (an intermittent crash, or a different crash): the schedule isn't controlling everything that matters.
+5. **Read the verdict.**
+
+| ② | ③ | Verdict |
+| --- | --- | --- |
+| Pass | Fail | **Order violation**: one direction is wrong |
+| Fail | Pass | **Order violation**: one direction is wrong |
+| Pass | Pass | **Atomicity violation**: the crash needs one access to land *between* two of the other thread's |
+| Fail | Fail | **Undecided**: another access, thread or window is involved. Widen the window and repeat from step 2. |
+| Anything else | Anything else | **Undecided**: same as above |
+
+This tells you **which race causes the flakiness**, and whether it is an order or an atomicity race.
 
 #### Manifestation: what does it take to trigger a bug? (Findings 3–8)
 
@@ -178,9 +217,9 @@ The paper looks at fixes separately for the 74 **non-deadlock** bugs and the 31 
 - **The expectation:** most fixes would add or change locks.
 - **The reality:** locks fixed only 27% of them.
 
-![Figure 5: Fix strategies for the 74 non-deadlock bugs (Lu et al., ASPLOS'08)](/assets/img/posts/concurrency-bugs/figure-17.png)
+![Figure 6: Fix strategies for the 74 non-deadlock bugs (Lu et al., ASPLOS'08)](/assets/img/posts/concurrency-bugs/figure-17.png)
 
-***Figure 5:*** *Fix strategies for the 74 non-deadlock bugs (Lu et al., ASPLOS'08).*
+***Figure 6:*** *Fix strategies for the 74 non-deadlock bugs (Lu et al., ASPLOS'08).*
 
 > **Finding 9.** Adding or changing locks fixed only 20 of 74 non-deadlock bugs. **Implication:** there is no silver bullet. A tool that only says "these accesses aren't under a common lock" is not enough. Developers also need the bug pattern (atomicity or order?) and the consistency condition that must hold.
 
@@ -197,19 +236,19 @@ The paper looks at fixes separately for the 74 **non-deadlock** bugs and the 31 
 
 **Spin on a flag (order violation).** Wait until the other thread signals it is done.
 
-![Figure 6: Spin-flag fix, the final fix for the group-to-group bug in Figure 4](/assets/img/posts/concurrency-bugs/figure-18.png)
+![Figure 7: Spin-flag fix, the final fix for the group-to-group bug in Figure 4](/assets/img/posts/concurrency-bugs/figure-18.png)
 
-***Figure 6:*** *Spin-flag fix: the final fix for the group-to-group order bug (Figure 4). Thread 1 spins at step 4 until Thread 2 clears `gcLevel` at step 6.*
+***Figure 7:*** *Spin-flag fix: the final fix for the group-to-group order bug (Figure 4). Thread 1 spins at step 4 until Thread 2 clears `gcLevel` at step 6.*
 
 **Optimistic retry (atomicity violation), MySQL `btr0sea.c`.** Run without a lock, then check whether anything changed, and retry if it did.
 
-![Figure 7: The MySQL btr0sea.c bug before the fix (reconstructed from the paper's description)](/assets/img/posts/concurrency-bugs/figure-20.png)
+![Figure 8: The MySQL btr0sea.c bug before the fix (reconstructed from the paper's description)](/assets/img/posts/concurrency-bugs/figure-20.png)
 
-***Figure 7:*** *The MySQL `btr0sea.c` bug before the fix. The paper shows only the fixed code; this buggy version is reconstructed from its description.*
+***Figure 8:*** *The MySQL `btr0sea.c` bug before the fix. The paper shows only the fixed code; this buggy version is reconstructed from its description.*
 
-![Figure 8: The MySQL btr0sea.c fix: optimistic retry](/assets/img/posts/concurrency-bugs/figure-21.png)
+![Figure 9: The MySQL btr0sea.c fix: optimistic retry](/assets/img/posts/concurrency-bugs/figure-21.png)
 
-***Figure 8:*** *The MySQL `btr0sea.c` fix: optimistic retry.*
+***Figure 9:*** *The MySQL `btr0sea.c` fix: optimistic retry.*
 
 - **How it works:** it does not stop the bad interleaving; it **detects and recovers** from it.
 - **Why use it:** it is faster than locking when conflicts are rare.
@@ -219,9 +258,9 @@ The paper looks at fixes separately for the 74 **non-deadlock** bugs and the 31 
 - **The idea:** reorder statements so the intended order holds naturally.
 - **Example:** the `macio.c` bug (Figure 3) was fixed by swapping S1 and S2: set `io_pending = TRUE` *before* starting the async read, so the callback can never run first.
 
-![Figure 9: Code-switch fix for the macio.c bug in Figure 3](/assets/img/posts/concurrency-bugs/figure-22.png)
+![Figure 10: Code-switch fix for the macio.c bug in Figure 3](/assets/img/posts/concurrency-bugs/figure-22.png)
 
-***Figure 9:*** *Code-switch fix for the `macio.c` bug (Figure 3): S2 now runs before S1, so the callback's S4 can only come after it. The paper describes this fix in words; the code is reconstructed from that description.*
+***Figure 10:*** *Code-switch fix for the `macio.c` bug (Figure 3): S2 now runs before S1, so the callback's S4 can only come after it. The paper describes this fix in words; the code is reconstructed from that description.*
 
 ###### 3. Design change (Design, 19 bugs)
 
