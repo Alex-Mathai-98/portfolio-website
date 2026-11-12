@@ -95,11 +95,13 @@ Finding a concurrency bug is only half the job. These two papers fix races autom
 
 ## LLM Agents + Model Checking
 
-Model checkers prove properties exhaustively, but someone has to write the model or the specification. These two papers let LLM agents write them and keep the checker as the judge: BMC-Agent infers function contracts for C and Rust code, and PAT-Agent writes a whole system model from English.
+Model checkers prove properties exhaustively, but someone has to write the model or the specification. BMC-Agent and PAT-Agent let LLM agents write them and keep the checker as the judge: BMC-Agent infers function contracts for C and Rust code, and PAT-Agent writes a whole system model from English. SysMoBench measures how well LLMs can model real systems in the first place.
 
 {% include_relative _llm-model-checking/01-bmc-agent.md %}
 
 {% include_relative _llm-model-checking/02-pat-agent.md %}
+
+{% include_relative _llm-model-checking/03-sysmobench.md %}
 
 ## References
 
@@ -131,18 +133,19 @@ Papers covered on this page, in the order they appear. Each title links to its s
 {:start="11"}
 11. Youcheng Sun, Jiawen Liu, Daniel Kroening and Jason Xue. [Agentic Model Checking](#9-bmc-agent-agentic-model-checking). [arXiv:2605.21434](https://arxiv.org/abs/2605.21434), 2026.
 12. Xinyue Zuo, Yifan Zhang, Hongshu Wang, Yufan Cai, Zhe Hou, Jun Sun and Jin Song Dong. [PAT-Agent: Autoformalization for Model Checking](#10-pat-agent-autoformalization-for-model-checking). *ASE*, 2025. [arXiv:2509.23675](https://arxiv.org/abs/2509.23675).
+13. Qian Cheng, Ruize Tang, Emilie Ma, Finn Hackett, Peiyang He, Yiming Su, Ivan Beschastnikh, Yu Huang, Xiaoxing Ma and Tianyin Xu. [SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems](#11-sysmobench-evaluating-ai-on-formally-modeling-complex-real-world-systems). *ICLR*, 2026. [arXiv:2509.23130](https://arxiv.org/abs/2509.23130).
 
 **LLM Agents for Crash Resolution**
 
-{:start="13"}
-13. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
-14. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
-15. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
+{:start="14"}
+14. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
+15. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
+16. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
 
 **LLM Code Slop Reduction**
 
-{:start="16"}
-16. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
+{:start="17"}
+17. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
 
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
