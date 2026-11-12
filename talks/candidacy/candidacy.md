@@ -89,6 +89,10 @@ Finding a concurrency bug is only half the job. These two papers fix races autom
 
 {% include_relative _concurrency-fixing/02-afix.md %}
 
+## Software Verification — the entire spectrum
+
+{% include_relative _verification/01-spectrum.md %}
+
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
      (so an h2 nests its papers and an h3 its subsections). h4s are numbered "<paper>.<n>" here, not in the .md:
@@ -141,6 +145,7 @@ Finding a concurrency bug is only half the job. These two papers fix races autom
     }
     .ts-dot { position: absolute; left: -1.6rem; top: .1rem; margin: 0; }
   }
+  .content table.wrap th, .content table.wrap td { white-space: normal; min-width: 7rem; vertical-align: top; }
   .content table.compact th, .content table.compact td { padding: .4rem .55rem; text-align: center; }
   .content table.compact td:first-child { text-align: left; }
   .content table.compact thead th { white-space: normal; }
