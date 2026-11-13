@@ -132,59 +132,59 @@ Interactive provers such as Rocq give the strongest guarantee, but every proof s
 
 ## References
 
-Papers covered on this page, in the order they appear. Each title links to its section above.
+Papers covered on this page, in the order they appear. Each title links to the paper.
 
 **Data races: How to find them?**
 
-1. Leslie Lamport. [Time, Clocks, and the Ordering of Events in a Distributed System](#1-lamports-algorithm-happens-before-algorithm). *Communications of the ACM*, 1978.
+1. Leslie Lamport. [Time, Clocks, and the Ordering of Events in a Distributed System](https://doi.org/10.1145/359545.359563). *Communications of the ACM*, 1978. [doi:10.1145/359545.359563](https://doi.org/10.1145/359545.359563).
 2. Colin J. Fidge. [Timestamps in Message-Passing Systems That Preserve the Partial Ordering](https://www.cs.uky.edu/~manivann/cs570/Fidge.pdf). *Australian Computer Science Conference*, 1988.
 3. Friedemann Mattern. [Virtual Time and Global States of Distributed Systems](https://www.vs.inf.ethz.ch/publ/papers/VirtTimeGlobStates.pdf). *Workshop on Parallel and Distributed Algorithms*, 1988.
-4. Bernadette Charron-Bost. Concerning the Size of Logical Clocks in Distributed Systems. *Information Processing Letters*, 1991.
-5. Stefan Savage, Michael Burrows, Greg Nelson, Patrick Sobalvarro and Thomas Anderson. [Eraser: A Dynamic Data Race Detector for Multithreaded Programs](#2-lockset-analysis-eraser). *SOSP* 1997 and *ACM Transactions on Computer Systems*, 1997.
-6. Robert O'Callahan and Jong-Deok Choi. [Hybrid Dynamic Data Race Detection](#3-hybrid-detection-lockset-plus-limited-happens-before). *PPoPP*, 2003.
-7. Koushik Sen. [Race Directed Random Testing of Concurrent Programs](#4-racefuzzer-race-directed-random-testing). *PLDI*, 2008. [doi:10.1145/1375581.1375584](https://doi.org/10.1145/1375581.1375584).
+4. Bernadette Charron-Bost. [Concerning the Size of Logical Clocks in Distributed Systems](https://doi.org/10.1016/0020-0190(91)90055-M). *Information Processing Letters*, 1991. [doi:10.1016/0020-0190(91)90055-M](https://doi.org/10.1016/0020-0190(91)90055-M).
+5. Stefan Savage, Michael Burrows, Greg Nelson, Patrick Sobalvarro and Thomas Anderson. [Eraser: A Dynamic Data Race Detector for Multithreaded Programs](https://doi.org/10.1145/265924.265927). *SOSP* 1997 and *ACM Transactions on Computer Systems*, 1997. [doi:10.1145/265924.265927](https://doi.org/10.1145/265924.265927).
+6. Robert O'Callahan and Jong-Deok Choi. [Hybrid Dynamic Data Race Detection](https://doi.org/10.1145/781498.781528). *PPoPP*, 2003. [doi:10.1145/781498.781528](https://doi.org/10.1145/781498.781528).
+7. Koushik Sen. [Race Directed Random Testing of Concurrent Programs](https://doi.org/10.1145/1375581.1375584). *PLDI*, 2008. [doi:10.1145/1375581.1375584](https://doi.org/10.1145/1375581.1375584).
 
 **Concurrency Bugs are more than "just" Data Races**
 
 {:start="8"}
-8. Shan Lu, Soyeon Park, Eunsoo Seo and Yuanyuan Zhou. [Learning from Mistakes: A Comprehensive Study on Real World Concurrency Bug Characteristics](#5-learning-from-mistakes-real-world-concurrency-bug-characteristics). *ASPLOS*, 2008.
+8. Shan Lu, Soyeon Park, Eunsoo Seo and Yuanyuan Zhou. [Learning from Mistakes: A Comprehensive Study on Real World Concurrency Bug Characteristics](https://doi.org/10.1145/1346281.1346323). *ASPLOS*, 2008. [doi:10.1145/1346281.1346323](https://doi.org/10.1145/1346281.1346323).
 
 **Concurrency Fixing**
 
 {:start="9"}
-9. Jingyue Wu, Heming Cui and Junfeng Yang. [Bypassing Races in Live Applications with Execution Filters](#6-loom-bypassing-races-in-live-applications). *OSDI*, 2010. [USENIX page](https://www.usenix.org/conference/osdi10/bypassing-races-live-applications-execution-filters).
-10. Guoliang Jin, Linhai Song, Wei Zhang, Shan Lu and Ben Liblit. [Automated Atomicity-Violation Fixing](#7-afix-automated-atomicity-violation-fixing). *PLDI*, 2011.
+9. Jingyue Wu, Heming Cui and Junfeng Yang. [Bypassing Races in Live Applications with Execution Filters](https://www.usenix.org/conference/osdi10/bypassing-races-live-applications-execution-filters). *OSDI*, 2010. [USENIX page](https://www.usenix.org/conference/osdi10/bypassing-races-live-applications-execution-filters).
+10. Guoliang Jin, Linhai Song, Wei Zhang, Shan Lu and Ben Liblit. [Automated Atomicity-Violation Fixing](https://doi.org/10.1145/1993498.1993544). *PLDI*, 2011. [doi:10.1145/1993498.1993544](https://doi.org/10.1145/1993498.1993544).
 
 **SV Part 1: LLM Agents + Model Checking**
 
 {:start="11"}
-11. Youcheng Sun, Jiawen Liu, Daniel Kroening and Jason Xue. [Agentic Model Checking](#9-bmc-agent-agentic-model-checking). [arXiv:2605.21434](https://arxiv.org/abs/2605.21434), 2026.
-12. Xinyue Zuo, Yifan Zhang, Hongshu Wang, Yufan Cai, Zhe Hou, Jun Sun and Jin Song Dong. [PAT-Agent: Autoformalization for Model Checking](#10-pat-agent-autoformalization-for-model-checking). *ASE*, 2025. [arXiv:2509.23675](https://arxiv.org/abs/2509.23675).
-13. Qian Cheng, Ruize Tang, Emilie Ma, Finn Hackett, Peiyang He, Yiming Su, Ivan Beschastnikh, Yu Huang, Xiaoxing Ma and Tianyin Xu. [SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems](#11-sysmobench-evaluating-ai-on-formally-modeling-real-systems). *ICLR*, 2026. [arXiv:2509.23130](https://arxiv.org/abs/2509.23130).
+11. Youcheng Sun, Jiawen Liu, Daniel Kroening and Jason Xue. [Agentic Model Checking](https://arxiv.org/abs/2605.21434). [arXiv:2605.21434](https://arxiv.org/abs/2605.21434), 2026.
+12. Xinyue Zuo, Yifan Zhang, Hongshu Wang, Yufan Cai, Zhe Hou, Jun Sun and Jin Song Dong. [PAT-Agent: Autoformalization for Model Checking](https://arxiv.org/abs/2509.23675). *ASE*, 2025. [arXiv:2509.23675](https://arxiv.org/abs/2509.23675).
+13. Qian Cheng, Ruize Tang, Emilie Ma, Finn Hackett, Peiyang He, Yiming Su, Ivan Beschastnikh, Yu Huang, Xiaoxing Ma and Tianyin Xu. [SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems](https://arxiv.org/abs/2509.23130). *ICLR*, 2026. [arXiv:2509.23130](https://arxiv.org/abs/2509.23130).
 
 **SV Part 2: LLM Agents + Deductive Verification**
 
 {:start="14"}
-14. Yang, Sun, Wu, Caridad, Yuan, Yao, Lu and Pei. [ExVerus: Verus Proof Repair via Counterexample Reasoning](#12-exverus-verus-proof-repair-via-counterexample-reasoning). [arXiv:2603.25810](https://arxiv.org/abs/2603.25810), 2026.
+14. Yang, Sun, Wu, Caridad, Yuan, Yao, Lu and Pei. [ExVerus: Verus Proof Repair via Counterexample Reasoning](https://arxiv.org/abs/2603.25810). [arXiv:2603.25810](https://arxiv.org/abs/2603.25810), 2026.
 
 **SV Part 3: LLM + Proof Generation**
 
 {:start="15"}
-15. Tu et al. [Agentic Verification of Software Systems](#14-autorocq-agentic-verification-of-software-systems). *FSE*, 2026. [doi:10.1145/3808164](https://doi.org/10.1145/3808164).
-16. Zhao, Tu, Liu, Rinard and Roychoudhury. [Automated Lemma Discovery in Agentic Program Verification](#15-lemmanet-automated-lemma-discovery-in-agentic-program-verification). *ASE*, 2026. [doi:10.1145/3832783.3834356](https://doi.org/10.1145/3832783.3834356).
-17. Anthropic. [Library-level verification of memory safety](#16-anthropic-library-level-verification-of-memory-safety). [Research post](https://www.anthropic.com/research/formal-verification); proofs at [theorem-labs/oss-verify-proofs](https://github.com/theorem-labs/oss-verify-proofs).
+15. Tu et al. [Agentic Verification of Software Systems](https://doi.org/10.1145/3808164). *FSE*, 2026. [doi:10.1145/3808164](https://doi.org/10.1145/3808164).
+16. Zhao, Tu, Liu, Rinard and Roychoudhury. [Automated Lemma Discovery in Agentic Program Verification](https://doi.org/10.1145/3832783.3834356). *ASE*, 2026. [doi:10.1145/3832783.3834356](https://doi.org/10.1145/3832783.3834356).
+17. Anthropic. [Library-level verification of memory safety](https://www.anthropic.com/research/formal-verification). [Research post](https://www.anthropic.com/research/formal-verification); proofs at [theorem-labs/oss-verify-proofs](https://github.com/theorem-labs/oss-verify-proofs).
 
 **LLM Agents for Crash Resolution**
 
 {:start="18"}
-18. **kGym.** kGym: A Platform and Dataset to Benchmark Large Language Models on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
-19. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
-20. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
+18. **kGym.** [kGym: A Platform and Dataset to Benchmark Large Language Models on Linux Kernel Crash Resolution](https://arxiv.org/abs/2407.02680). *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
+19. **Live-kGym.** [Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All](https://arxiv.org/abs/2602.02690). *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
+20. **kAgent.** [kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel](https://arxiv.org/abs/2504.20412). *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
 
 **LLM Code Slop Reduction**
 
 {:start="21"}
-21. **TRIM.** TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization. Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
+21. **TRIM.** [TRIM: Reducing AI-Generated Code Slop via Agent Trajectory Minimization](https://arxiv.org/abs/2607.18161). Under submission, 2026. [arXiv:2607.18161](https://arxiv.org/abs/2607.18161).
 
 <!-- AIDEV-NOTE: h2 = topic section (big, ruled; styled below), h3 = paper, h4 = paper subsection. Each gets
      a ">" toggle that wraps what follows it in a .fold-body, up to the next heading of the same or higher level
