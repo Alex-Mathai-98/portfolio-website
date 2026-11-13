@@ -51,14 +51,33 @@ The premise `inv state0` requires the starting state to be non-negative: the pro
 
 ##### Step 4: the proof, unrolled
 
-The proof of `prog_safe` runs the program on a symbolic starting state, one instruction at a time, just as an LPS proof steps through the binary:
+The proof rests on two lemmas, one per kind of instruction. Each is proved once, for any state:
+
+```coq
+(* Lemma 1: Add keeps the invariant and does not fault as long as the number added is positive *)
+Lemma add_preserves :
+  forall state n,
+    inv state -> 0 <= n ->
+    exists state2, performing (Add n) on state results in (CalcOk state2) /\ inv state2.
+
+(* Lemma 2: Sqrt keeps the invariant and does not fault *)
+Lemma sqrt_preserves :
+  forall state,
+    inv state ->
+    exists state2, performing Sqrt on state results in (CalcOk state2) /\ inv state2.
+```
+
+- **Each lemma says two things:** the instruction gives `CalcOk` (no fault), and the new state `state2` still satisfies `inv`.
+- **`0 <= n` in Lemma 1** is why `Add -20` would break the proof: the lemma would not apply.
+
+The proof of `prog_safe` runs the program on a symbolic starting state, one instruction at a time, just as an LPS proof steps through the binary. Each step applies one of the two lemmas:
 
 | Instruction # | Program | Proof |
 | --- | --- | --- |
 |  |  | <code class="language-plaintext highlighter-rouge">intros state<sub>0</sub> Hinv.</code><br><code class="language-plaintext highlighter-rouge">Hinv : state<sub>0</sub> &gt;= 0</code> |
-| 1 | <code class="language-plaintext highlighter-rouge">Add 16 state<sub>0</sub></code><br><code class="language-plaintext highlighter-rouge">state<sub>1</sub> := state<sub>0</sub> + 16</code> | never faults<br><code class="language-plaintext highlighter-rouge">show inv state<sub>1</sub></code>: state<sub>0</sub> &gt;= 0, so state<sub>1</sub> &gt;= 0 (`lia`) |
-| 2 | <code class="language-plaintext highlighter-rouge">Sqrt state<sub>1</sub></code><br><code class="language-plaintext highlighter-rouge">state<sub>2</sub> := sqrt state<sub>1</sub></code> | faults if <code class="language-plaintext highlighter-rouge">state<sub>1</sub> &lt; 0</code><br><code class="language-plaintext highlighter-rouge">show ~ (state<sub>1</sub> &lt; 0)</code>: rules out the fault, from <code class="language-plaintext highlighter-rouge">inv state<sub>1</sub></code><br><code class="language-plaintext highlighter-rouge">show inv state<sub>2</sub></code>: a square root is &gt;= 0 |
-| 3 | <code class="language-plaintext highlighter-rouge">Add 5 state<sub>2</sub></code><br><code class="language-plaintext highlighter-rouge">state<sub>3</sub> := state<sub>2</sub> + 5</code> | never faults<br><code class="language-plaintext highlighter-rouge">show inv state<sub>3</sub></code>: state<sub>2</sub> &gt;= 0, so state<sub>3</sub> &gt;= 0 (`lia`) |
+| 1 | <code class="language-plaintext highlighter-rouge">Add 16 state<sub>0</sub></code><br><code class="language-plaintext highlighter-rouge">state<sub>1</sub> := state<sub>0</sub> + 16</code> | **by `add_preserves`, n = 16**<br>never faults<br><code class="language-plaintext highlighter-rouge">show inv state<sub>1</sub></code>: state<sub>0</sub> &gt;= 0, so state<sub>1</sub> &gt;= 0 (`lia`) |
+| 2 | <code class="language-plaintext highlighter-rouge">Sqrt state<sub>1</sub></code><br><code class="language-plaintext highlighter-rouge">state<sub>2</sub> := sqrt state<sub>1</sub></code> | **by `sqrt_preserves`**<br>faults if <code class="language-plaintext highlighter-rouge">state<sub>1</sub> &lt; 0</code><br><code class="language-plaintext highlighter-rouge">show ~ (state<sub>1</sub> &lt; 0)</code>: rules out the fault, from <code class="language-plaintext highlighter-rouge">inv state<sub>1</sub></code><br><code class="language-plaintext highlighter-rouge">show inv state<sub>2</sub></code>: a square root is &gt;= 0 |
+| 3 | <code class="language-plaintext highlighter-rouge">Add 5 state<sub>2</sub></code><br><code class="language-plaintext highlighter-rouge">state<sub>3</sub> := state<sub>2</sub> + 5</code> | **by `add_preserves`, n = 5**<br>never faults<br><code class="language-plaintext highlighter-rouge">show inv state<sub>3</sub></code>: state<sub>2</sub> &gt;= 0, so state<sub>3</sub> &gt;= 0 (`lia`) |
 |  |  | <code class="language-plaintext highlighter-rouge">CalcOk state<sub>3</sub> &lt;&gt; CalcFault.</code><br>`Qed.` |
 {: .wrap}
 
