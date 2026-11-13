@@ -202,48 +202,48 @@ done:
               (with_pc (bv_and (rget c 1 + sext 64 0) (bv_not w1)) c))
 ```
 
-**After Layer 2 (`interp_eff_accesses`): the answers.** Layer 2 takes each request together with the memory `m` and answers it. Every instruction gives `MachineOk` with the new core and memory, plus the memory ranges it read (`accessed_ranges`). The only exception is `lbu`, whose read can fail:
+**After Layer 2 (`interp_eff_accesses`): the answers.** Layer 2 takes each request together with the memory `mem` and answers it. Every instruction gives `MachineOk` with the new core and memory, plus the memory ranges it read (`accessed_ranges`). The only exception is `lbu`, whose read can fail:
 
 ```coq
 (* 0x10000: beq a1, zero, 8 *)
-λ (c : core) (m : word → option (bv 8)),
+λ (c : core) (mem : word → option (bv 8)),
   MachineOk
     {| access_value :=
          (with_pc (if branch_taken BC_EQ (rget c 11) (rget c 0)
                    then c_pc c + sext 64 8
                    else c_pc c + four) c,
-          m);
+          mem);
        accessed_ranges := [] |}
 
 (* 0x10004: lbu a0, 0(a0) *)
-λ (c : core) (m : word → option (bv 8)),
-  match ov_read_bytes [] m (rget c 10 + sext 64 0) (width_bytes 8) with
+λ (c : core) (mem : word → option (bv 8)),
+  match ov_read_bytes [] mem (rget c 10 + sext 64 0) (width_bytes 8) with
   | Some bs =>
       MachineOk
         {| access_value :=
              (rset 10 (zext 64 (bv_extract 0 8 (BvBase.le_bytes_to_word bs)))
                 (with_pc (c_pc c + four) c),
-              m);
+              mem);
            accessed_ranges := [(rget c 10 + sext 64 0, width_bytes 8)] |}
   | None => MachineFault
   end
 
 (* 0x10008: addi a0, zero, 0 *)
-λ (c : core) (m : word → option (bv 8)),
+λ (c : core) (mem : word → option (bv 8)),
   MachineOk
     {| access_value :=
          (rset 10 (alu64 ALU_ADD (rget c 0) (sext 64 0))
             (with_pc (c_pc c + four) c),
-          m);
+          mem);
        accessed_ranges := [] |}
 
 (* 0x1000c: jalr zero, 0(ra) *)
-λ (c : core) (m : word → option (bv 8)),
+λ (c : core) (mem : word → option (bv 8)),
   MachineOk
     {| access_value :=
          (rset 0 (c_pc c + four)
             (with_pc (bv_and (rget c 1 + sext 64 0) (bv_not w1)) c),
-          m);
+          mem);
        accessed_ranges := [] |}
 ```
 
@@ -264,7 +264,7 @@ done:
 So the whole proof comes down to one obligation: when `lbu` runs, `readable mem a0` holds.
 
 - **`Hbytes` plays the role of `inv`** from the calculator: a condition on the starting state, assumed by the theorem.
-- **It never has to be re-proved:** there is no loop, and no instruction writes memory (every answer passes `m` through unchanged), so `Hbytes` still holds when `lbu` runs.
+- **It never has to be re-proved:** there is no loop, and no instruction writes memory (every instruction returns the memory `mem` it was given, unchanged), so `Hbytes` still holds when `lbu` runs.
 
 ![Figure 4: The whole proof, both ways: Frama-C next to LPS](/assets/img/posts/frama-c-vs-anthropic-verification/frama-c-vs-lps-side-by-side.png)
 
