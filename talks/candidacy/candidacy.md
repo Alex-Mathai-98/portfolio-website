@@ -96,7 +96,7 @@ Finding a concurrency bug is only half the job. These two papers fix races autom
 
 {% include_relative _verification/01-spectrum.md %}
 
-## LLM Agents + Model Checking
+## SV Part 1: LLM Agents + Model Checking
 
 Model checkers prove properties exhaustively, but someone has to write the model or the specification. BMC-Agent and PAT-Agent let LLM agents write them and keep the checker as the judge: BMC-Agent infers function contracts for C and Rust code, and PAT-Agent writes a whole system model from English. SysMoBench measures how well LLMs can model real systems in the first place.
 
@@ -106,13 +106,13 @@ Model checkers prove properties exhaustively, but someone has to write the model
 
 {% include_relative _llm-model-checking/03-sysmobench.md %}
 
-## LLM Agents + Deductive Verification
+## SV Part 2: LLM Agents + Deductive Verification
 
 Deductive verifiers such as Verus prove code correct for every input, but only if someone supplies the right loop invariants and proof hints. When an LLM writes them and the proof fails, the verifier's error message says little about why. ExVerus turns that failure into concrete counterexamples the LLM can reason about.
 
 {% include_relative _llm-deductive/01-exverus.md %}
 
-## LLM + Proof Generation
+## SV Part 3: LLM + Proof Generation
 
 Interactive provers such as Rocq give the strongest guarantee, but every proof step must be written out. AutoRocq lets an LLM agent write those steps, searching Rocq's libraries for the lemmas it needs. LemmaNet goes further and has the LLM invent new helper lemmas that no library contains. Anthropic's work drops the per-program spec altogether and proves whole libraries free of memory errors at the binary level.
 
@@ -155,19 +155,19 @@ Papers covered on this page, in the order they appear. Each title links to its s
 9. Jingyue Wu, Heming Cui and Junfeng Yang. [Bypassing Races in Live Applications with Execution Filters](#6-loom-bypassing-races-in-live-applications). *OSDI*, 2010. [USENIX page](https://www.usenix.org/conference/osdi10/bypassing-races-live-applications-execution-filters).
 10. Guoliang Jin, Linhai Song, Wei Zhang, Shan Lu and Ben Liblit. [Automated Atomicity-Violation Fixing](#7-afix-automated-atomicity-violation-fixing). *PLDI*, 2011.
 
-**LLM Agents + Model Checking**
+**SV Part 1: LLM Agents + Model Checking**
 
 {:start="11"}
 11. Youcheng Sun, Jiawen Liu, Daniel Kroening and Jason Xue. [Agentic Model Checking](#9-bmc-agent-agentic-model-checking). [arXiv:2605.21434](https://arxiv.org/abs/2605.21434), 2026.
 12. Xinyue Zuo, Yifan Zhang, Hongshu Wang, Yufan Cai, Zhe Hou, Jun Sun and Jin Song Dong. [PAT-Agent: Autoformalization for Model Checking](#10-pat-agent-autoformalization-for-model-checking). *ASE*, 2025. [arXiv:2509.23675](https://arxiv.org/abs/2509.23675).
 13. Qian Cheng, Ruize Tang, Emilie Ma, Finn Hackett, Peiyang He, Yiming Su, Ivan Beschastnikh, Yu Huang, Xiaoxing Ma and Tianyin Xu. [SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems](#11-sysmobench-evaluating-ai-on-formally-modeling-real-systems). *ICLR*, 2026. [arXiv:2509.23130](https://arxiv.org/abs/2509.23130).
 
-**LLM Agents + Deductive Verification**
+**SV Part 2: LLM Agents + Deductive Verification**
 
 {:start="14"}
 14. Yang, Sun, Wu, Caridad, Yuan, Yao, Lu and Pei. [ExVerus: Verus Proof Repair via Counterexample Reasoning](#12-exverus-verus-proof-repair-via-counterexample-reasoning). [arXiv:2603.25810](https://arxiv.org/abs/2603.25810), 2026.
 
-**LLM + Proof Generation**
+**SV Part 3: LLM + Proof Generation**
 
 {:start="15"}
 15. Tu et al. [Agentic Verification of Software Systems](#14-autorocq-agentic-verification-of-software-systems). *FSE*, 2026. [doi:10.1145/3808164](https://doi.org/10.1145/3808164).
@@ -177,7 +177,7 @@ Papers covered on this page, in the order they appear. Each title links to its s
 **LLM Agents for Crash Resolution**
 
 {:start="18"}
-18. **kGym.** kBench: A Benchmark & Platform to Test LLMs on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
+18. **kGym.** kGym: A Platform and Dataset to Benchmark Large Language Models on Linux Kernel Crash Resolution. *NeurIPS*, 2024. [arXiv:2407.02680](https://arxiv.org/abs/2407.02680). [Project](https://github.com/Alex-Mathai-98/kGym-Kernel-Gym).
 19. **Live-kGym.** Outrunning LLM Cutoffs: A Live Kernel Crash Resolution Benchmark for All. *ICML*, 2026. [arXiv:2602.02690](https://arxiv.org/abs/2602.02690).
 20. **kAgent.** kAgent: An Execution-Guided Crash Resolution Agent for the Linux Kernel. *DL4C Workshop at ICML*, 2025. [arXiv:2504.20412](https://arxiv.org/abs/2504.20412).
 
