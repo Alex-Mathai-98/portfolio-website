@@ -133,6 +133,105 @@ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
 }
 ```
 
+LPS works on the compiled RISC-V instead (simplified). Register `a0` holds `data` and `a1` holds `size`. The loaded byte also goes into `a0`: it is never used, since `a0` is set to 0 right after, so the compiler reuses the register:
+
+```text
+LLVMFuzzerTestOneInput:
+    # if size == 0, jump to done
+    beqz  a1, done
+    # load 1 byte from address a0 into a0   <- the memory access
+    lbu   a0, 0(a0)
+done:
+    # return value 0
+    li    a0, 0
+    ret
+```
+
+**After Layer 1 (`exec`): the requests.** Each of the four instructions becomes a function of the core `c` (registers and `pc`) that returns an effect tree. Register numbers are used directly: `a0` is 10, `a1` is 11, `ra` is 1 and `zero` is 0. Only `lbu` asks for memory, with an `ELoad`; the rest end straight in `EDone`:
+
+```coq
+(* 0x10000: beq a1, zero, 8 *)
+λ c, EDone (with_pc (if branch_taken BC_EQ (rget c 11) (rget c 0)
+                     then (c_pc c + sext 64 8)
+                     else (c_pc c + four)) c)
+
+(* 0x10004: lbu a0, 0(a0) *)
+λ c, ELoad 8 (rget c 10 + sext 64 0)
+       (λ v : bv 8, EDone (rset 10 (zext 64 v) (with_pc (c_pc c + four) c)))
+
+(* 0x10008: addi a0, zero, 0 *)
+λ c, EDone (rset 10 (alu64 ALU_ADD (rget c 0) (sext 64 0))
+              (with_pc (c_pc c + four) c))
+
+(* 0x1000c: jalr zero, 0(ra) *)
+λ c, EDone (rset 0 (c_pc c + four)
+              (with_pc (bv_and (rget c 1 + sext 64 0) (bv_not w1)) c))
+```
+
+**After Layer 2 (`interp_eff_accesses`): the answers.** Layer 2 takes each request together with the memory `m` and answers it. Every instruction gives `MachineOk` with the new core and memory, plus the memory ranges it read (`accessed_ranges`). The only exception is `lbu`, whose read can fail:
+
+```coq
+(* 0x10000: beq a1, zero, 8 *)
+λ (c : core) (m : word → option (bv 8)),
+  MachineOk
+    {| access_value :=
+         (with_pc (if branch_taken BC_EQ (rget c 11) (rget c 0)
+                   then c_pc c + sext 64 8
+                   else c_pc c + four) c,
+          m);
+       accessed_ranges := [] |}
+
+(* 0x10004: lbu a0, 0(a0) *)
+λ (c : core) (m : word → option (bv 8)),
+  match ov_read_bytes [] m (rget c 10 + sext 64 0) (width_bytes 8) with
+  | Some bs =>
+      MachineOk
+        {| access_value :=
+             (rset 10 (zext 64 (bv_extract 0 8 (BvBase.le_bytes_to_word bs)))
+                (with_pc (c_pc c + four) c),
+              m);
+           accessed_ranges := [(rget c 10 + sext 64 0, width_bytes 8)] |}
+  | None => MachineFault
+  end
+
+(* 0x10008: addi a0, zero, 0 *)
+λ (c : core) (m : word → option (bv 8)),
+  MachineOk
+    {| access_value :=
+         (rset 10 (alu64 ALU_ADD (rget c 0) (sext 64 0))
+            (with_pc (c_pc c + four) c),
+          m);
+       accessed_ranges := [] |}
+
+(* 0x1000c: jalr zero, 0(ra) *)
+λ (c : core) (m : word → option (bv 8)),
+  MachineOk
+    {| access_value :=
+         (rset 0 (c_pc c + four)
+            (with_pc (bv_and (rget c 1 + sext 64 0) (bv_not w1)) c),
+          m);
+       accessed_ranges := [] |}
+```
+
+**The proof, in short.** Reading the answers off instruction by instruction:
+
+| Program | Proof |
+| --- | --- |
+|  | `intros s0 Hbytes.`<br>`Hbytes`: every input byte `a0 + i`, for `0 <= i < size`, is readable |
+| `beqz a1, done` | `MachineOk`: no memory request, so it cannot fault<br>split on `size = 0`: if so, jump to `done` |
+| `lbu a0, 0(a0)` | `MachineOk` if `readable mem a0` (`a0` gets the byte)<br>`MachineFault` otherwise: the only way to crash<br>`show readable mem a0`: `Hbytes` with i = 0, since `size > 0` on this path |
+| `li a0, 0` | `MachineOk` |
+| `ret` | `MachineOk` |
+|  | `Qed.` |
+{: .wrap}
+
+***Table 3:*** *The proof of the fuzz test, read off the answers. Each row is one instruction, next to what Layer 2 answers for it. No new invariant is needed here: with no loop and no memory writes, the assumed `Hbytes` still holds when `lbu` runs.*
+
+So the whole proof comes down to one obligation: when `lbu` runs, `readable mem a0` holds.
+
+- **`Hbytes` plays the role of `inv`** from the calculator: a condition on the starting state, assumed by the theorem.
+- **It never has to be re-proved:** there is no loop, and no instruction writes memory (every answer passes `m` through unchanged), so `Hbytes` still holds when `lbu` runs.
+
 ![Figure 4: The whole proof, both ways: Frama-C next to LPS](/assets/img/posts/frama-c-vs-anthropic-verification/frama-c-vs-lps-side-by-side.png)
 
 ***Figure 4:*** *The same program proved both ways. Left: Frama-C on the C source. Right: LPS on the RISC-V binary. Highlighted: the memory check, the goal it becomes, and the step that proves it. The LPS proof is pseudocode.*
