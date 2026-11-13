@@ -49,7 +49,41 @@ Theorem prog_safe : forall state0, inv state0 -> run state0 prog <> CalcFault.
 
 The premise `inv state0` requires the starting state to be non-negative: the proof only covers starts where `inv` already holds, the same starts the fuzzer samples. Once `prog_safe` is proved, the fuzzer can never report a bug, because there is none to find, even for states it would never try, such as 10^100.
 
-##### Step 4: the proof, unrolled
+##### Step 4: the three instructions, after each layer
+
+**After Layer 1 (`ask`): the requests.** Each instruction becomes a function of the current `state` that returns a request. Nothing is computed yet:
+
+```coq
+(* instruction 1: Add 16 *)
+λ state, Plus state 16
+
+(* instruction 2: Sqrt *)
+λ state, Root state
+
+(* instruction 3: Add 5 *)
+λ state, Plus state 5
+```
+
+**After Layer 2 (`answer`): the answers.** `answer (ask state i)` answers each request. Every instruction gives `CalcOk` with the new state, except `Sqrt`, which can fault:
+
+```coq
+(* instruction 1: Add 16 *)
+λ state, CalcOk (state + 16)
+
+(* instruction 2: Sqrt *)
+λ state,
+  if state <? 0
+  then CalcFault
+  else CalcOk (Z.sqrt state)
+
+(* instruction 3: Add 5 *)
+λ state, CalcOk (state + 5)
+```
+
+> **The proof must be about this code.** The Layer 2 answers above are what the program actually does, so the proof in Step 5 must be stated and checked against them, not against an informal description of the calculator. In particular, the `CalcFault` branch of `Sqrt` is exactly what it has to rule out.
+{: .prompt-tip }
+
+##### Step 5: the proof, unrolled
 
 The proof rests on two lemmas, one per kind of instruction. Each is proved once, for any state:
 
