@@ -123,6 +123,27 @@ The proof of `prog_safe` runs the program on a symbolic starting state, one inst
 
 Anthropic's work is this idea at full scale: the fixed program is one library's compiled fuzz test, Layers 1 and 2 are `exec` and `interp_eff_accesses`, `CalcFault` is `MachineFault`, and the invariant says the input bytes are readable. The unrolling works the same way, but over a real binary with loops and memory, which is why its proofs are so large.
 
+#### The machine state
+
+In the calculator, the state was a single number: the running total. LPS models a real RISC-V machine running one Linux process, so its state is a whole machine: everything an instruction can read or change, in two parts:
+
+```coq
+(* the core: the CPU's own state *)
+Record core := {
+  pc  : Z;          (* the address of the next instruction *)
+  reg : Z -> Z      (* the registers *)
+}.
+
+(* the machine state = the core + the memory *)
+Record machine_state := {
+  c   : core;
+  mem : Z -> option Z
+}.
+```
+
+- **The core `c`** is the CPU: the program counter and the registers. Layer 1 (`exec`) reads and updates only the core.
+- **The memory `mem`** maps each address to `Some byte` if it holds a byte, or `None` if not. Only Layer 2 reads it, and a load from a `None` address is a fault.
+
 #### The idea
 
 AutoRocq and LemmaNet prove goals that Frama-C generates from a human-written spec. Here there is no per-program spec at all:
