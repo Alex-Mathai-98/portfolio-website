@@ -1,4 +1,4 @@
-### 11. SysMoBench: evaluating AI on formally modeling complex real-world systems
+### 11. SysMoBench: evaluating AI on formally modeling real systems
 
 **Paper:** Qian Cheng, Ruize Tang, Emilie Ma, Finn Hackett, Peiyang He, Yiming Su, Ivan Beschastnikh, Yu Huang, Xiaoxing Ma and Tianyin Xu, *SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems*, ICLR 2026 ([arXiv:2509.23130](https://arxiv.org/abs/2509.23130)). [Read the full post]({% post_url 2026-10-18-sysmobench %}).
 
