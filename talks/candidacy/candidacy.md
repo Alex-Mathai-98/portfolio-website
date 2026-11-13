@@ -12,6 +12,9 @@ mermaid: false
 
 Summaries of the papers I read for my PhD candidacy exam, grouped by topic. For each paper I keep only the part of my full post that runs the method end to end on a worked example. The full posts add the background, results and limitations.
 
+**Advisors:** Prof. Junfeng Yang and Prof. Baishakhi Ray<br>
+**Panel Members:** Prof. Franjo Ivančić
+
 <!-- AIDEV-NOTE: keep at least one raw <h2>: for pages, page.content is still Markdown when the layout
      runs, so toc-status.html never sees "<h2" and the TOC stays off. Later sections can use ##. -->
 <h2 id="data-races-how-to-find-them">Data races: How to find them?</h2>
