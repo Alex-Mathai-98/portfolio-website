@@ -1,0 +1,3 @@
+### 17. LLM agents with domain knowledge of concurrency bugs
+
+Today's LLM agents fix a concurrency bug like any other bug: edit the code and rerun the tests. But [Lu et al.](#5-learning-from-mistakes-real-world-concurrency-bug-characteristics) show that locks fix only a minority of these bugs, and [AFix](#7-afix-automated-atomicity-violation-fixing) shows how easily a lock patch deadlocks. Tools like AFix and [LOOM](#6-loom-bypassing-races-in-live-applications) encode the right domain knowledge, but only as fixed algorithms for one pattern each. I want agents that use that knowledge: classify the bug from its interleaving, pick the matching kind of fix, and validate it by replaying the bad schedule rather than by rerunning tests.

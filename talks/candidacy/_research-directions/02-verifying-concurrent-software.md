@@ -1,0 +1,3 @@
+### 18. Verifying concurrent software
+
+The code-level agents on this page all prove properties of single-threaded code, while [PAT-Agent](#10-pat-agent-autoformalization-for-model-checking) and [SysMoBench](#11-sysmobench-evaluating-ai-on-formally-modeling-complex-real-world-systems) verify concurrent *models*, not code. [Anthropic's work](#16-anthropic-library-level-verification-of-memory-safety) proved whole libraries free of memory errors with no per-program spec, but only for single-threaded binaries. I want to bring that kind of guarantee to concurrent code, with generic statements such as "no data races" and "no deadlock", and with the LLM writing the hard part: the lock invariants that say which lock protects which data.

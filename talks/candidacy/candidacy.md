@@ -121,6 +121,12 @@ Interactive provers such as Rocq give the strongest guarantee, but every proof s
 
 {% include_relative _llm-proof-gen/04-anthropic.md %}
 
+## Research Directions
+
+{% include_relative _research-directions/01-concurrency-fixing-agents.md %}
+
+{% include_relative _research-directions/02-verifying-concurrent-software.md %}
+
 ## References
 
 Papers covered on this page, in the order they appear. Each title links to its section above.
